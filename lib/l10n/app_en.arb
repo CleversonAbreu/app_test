@@ -12,7 +12,10 @@
     "forgetPassword":"Forget password?",
     "next":"Next",
     "newMember":"New Member?",
-    "registerNow":" Register Now"
-
-}
-
+    "registerNow":" Register Now",
+    "pleaseInsertYourEmail":"Please, insert your email",
+    "pleaseInsertValidEmail":"Please,insert a valid email",
+    "pleaseInsertYourPassword":"Please, insert your password",
+    "invalidCredentials":"Invalid credentials",
+    "loginError": "Error when try to login"
+    }

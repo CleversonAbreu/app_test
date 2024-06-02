@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:app_test/modules/app_module.dart';
-import 'package:app_test/modules/login/data/models/login_model.dart';
-import 'package:app_test/modules/login/domain/usecases/result_login_usecase.dart';
+import 'package:app_test/modules/authentication/data/models/login_model.dart';
+import 'package:app_test/modules/authentication/domain/usecases/result_login_usecase.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';

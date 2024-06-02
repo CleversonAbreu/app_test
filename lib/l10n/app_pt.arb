@@ -12,6 +12,11 @@
     "forgetPassword":"Esqueceu sua senha?",
     "next":"Próximo",
     "newMember":"Nova Conta?",
-    "registerNow":" Registre agora"
+    "registerNow":" Registre agora", 
+    "pleaseInsertYourEmail":"Por favor, insira seu email",
+    "pleaseInsertValidEmail":"Por favor, insira um email valido",
+    "pleaseInsertYourPassword":"Por favor, insira sua senha",
+    "invalidCredentials":"Credenciais inválidas",
+    "loginError": "Erro ao tentar fazer login"
 }
 

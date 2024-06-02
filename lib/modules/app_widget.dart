@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'login/presenter/pages/login_page.dart';
+import 'authentication/presenter/cubit/auth_cubit.dart';
+import 'authentication/presenter/pages/login_page.dart';
 import 'settings/presenter/cubit/language_cubit.dart';
 import 'settings/presenter/cubit/theme_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +17,7 @@ class AppWidget extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
+        BlocProvider(create: (context) => AuthCubit()),
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
         builder: (context, locale) {
@@ -26,11 +28,10 @@ class AppWidget extends StatelessWidget {
                 designSize: const Size(360, 690),
                 minTextAdapt: true,
                 splitScreenMode: true,
-                // Use builder only if you need to use library outside ScreenUtilInit context
                 builder: (_, child) {
                   return MaterialApp.router(
                     debugShowCheckedModeBanner: false,
-                    theme: themeCubit.themeData, // Acessando state.themeData
+                    theme: themeCubit.themeData,
                     locale: locale,
                     localizationsDelegates: const [
                       AppLocalizations.delegate,

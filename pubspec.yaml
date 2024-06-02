@@ -39,7 +39,8 @@ dependencies:
   dartz: ^0.10.1
   dio: ^5.4.3+1
   flutter_modular: ^5.0.3
-
+  equatable: ^2.0.3
+  validators: ^3.0.0
 
 
 
