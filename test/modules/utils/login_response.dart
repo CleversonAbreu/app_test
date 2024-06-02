@@ -1,0 +1,3 @@
+const loginResponse = """{
+  "token":"aiuSIUAhibIDUBiudbibAOZZZxIIUS" 
+}""";

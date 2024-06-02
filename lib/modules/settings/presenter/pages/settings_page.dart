@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'cubit/language_cubit.dart';
+import '../cubit/language_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'cubit/theme_cubit.dart';
+import '../cubit/theme_cubit.dart';
 
 class SettingsPage extends StatelessWidget {
   @override

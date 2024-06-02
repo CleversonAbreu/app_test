@@ -3,6 +3,15 @@
     "homeTitle": "Home Screen",
     "welcomeMessage":"Bem Vindo",
     "settingsTitle":"Configurações",
-    "darkMode":"Modo Escuro"
+    "darkMode":"Modo Escuro",
+    "welcomeBack":"Bem vindo novamente",
+    "signInToAccessYourAccount":"faça login para acessar sua conta",
+    "enterYourEmail":"Entre com seu email",
+    "password":"Senha",
+    "rememberMe":"Lembrar me",
+    "forgetPassword":"Esqueceu sua senha?",
+    "next":"Próximo",
+    "newMember":"Nova Conta?",
+    "registerNow":" Registre agora"
 }
 
