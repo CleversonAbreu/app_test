@@ -14,7 +14,6 @@ void main() {
   final repository = LoginRepositoryImpl(datasource);
   final LoginModel loginModel =
       LoginModel(email: 'teste@teste.com', password: 'password');
-  final LoginModel loginModelEmpty = LoginModel(email: '', password: '');
   final ResultLoginModel resultLoginModel =
       ResultLoginModel(token: 'pqlawhbdasdiuabdaskjbAASASkjbkb12kbn');
 

@@ -17,6 +17,8 @@
     "pleaseInsertValidEmail":"Por favor, insira um email valido",
     "pleaseInsertYourPassword":"Por favor, insira sua senha",
     "invalidCredentials":"Credenciais inválidas",
-    "loginError": "Erro ao tentar fazer login"
+    "loginError": "Erro ao tentar fazer login",
+     "errorLoadingToken": "Erro ao carregar token",
+     "logout":"Deslogar"
 }
 

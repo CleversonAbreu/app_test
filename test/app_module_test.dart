@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:app_test/modules/app_module.dart';
 import 'package:app_test/modules/authentication/data/models/login_model.dart';
 import 'package:app_test/modules/authentication/domain/usecases/result_login_usecase.dart';
 import 'package:dio/dio.dart';
@@ -14,10 +13,6 @@ class DioMock extends Mock implements Dio {}
 
 void main() {
   final dio = DioMock();
-
-  // initModule(AppModule(), changeBinds: [
-  //   Bind<Dio>((i) => dio);
-  // ]);
 
   test('should return usecase without error', () {
     final usecase = Modular.get<ResultLoginUsecase>();

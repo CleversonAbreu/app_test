@@ -16,7 +16,6 @@ void main() {
   final datasource = LoginDataSourceImpl(dio);
   final LoginModel loginModel =
       LoginModel(email: 'teste@teste.com', password: 'password');
-  final LoginModel loginModelEmpty = LoginModel(email: '', password: '');
   test('should return ResultLoginEntity', () async {
     final requestOptions = RequestOptions(path: '');
 
@@ -47,8 +46,6 @@ void main() {
   });
 
   test('should return Exception if Dio return error', () async {
-    final requestOptions = RequestOptions(path: '');
-
     when(dio.get('')).thenThrow(Exception());
     final future = datasource.login(loginModel);
     expect(future, throwsA(isA<Exception>()));

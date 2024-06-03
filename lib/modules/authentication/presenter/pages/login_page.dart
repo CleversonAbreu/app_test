@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:validators/validators.dart';
 import '../../../../core/constants/app_constants.dart';
+import '../../../settings/presenter/cubit/theme_cubit.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
 import '../widgets/bottom.dart';
@@ -15,7 +17,7 @@ import '../widgets/link.dart';
 import '../widgets/logo.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -48,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState?.validate() ?? false) {
       final email = _emailController.text;
       final password = _passwordController.text;
-      context.read<AuthCubit>().login(email, password);
+      ReadContext(context).read<AuthCubit>().login(email, password);
     }
   }
 
@@ -62,94 +64,96 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => AuthCubit(),
-        child: BlocListener<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state is AuthAuthenticated) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Login bem-sucedido!')),
-              );
-            } else if (state is AuthError) {
-              String message = '';
-              if (state.message == 'invalidCredentials') {
-                message = AppLocalizations.of(context)!.invalidCredentials;
-              } else {
-                message = AppLocalizations.of(context)!.loginError;
-              }
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(message)),
-              );
+      body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthAuthenticated) {
+            // ignore: use_build_context_synchronously
+            Navigator.pushReplacementNamed(context, '/home');
+          } else if (state is AuthError) {
+            String message = '';
+            if (state.message == 'invalidCredentials') {
+              message = AppLocalizations.of(context)!.invalidCredentials;
+            } else {
+              message = AppLocalizations.of(context)!.loginError;
             }
-          },
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 100.h),
-                const Logo(path: AppConstants.logo_path),
-                SizedBox(height: 30.h),
-                Header(
-                  title: AppLocalizations.of(context)!.welcomeBack,
-                  subtitle:
-                      AppLocalizations.of(context)!.signInToAccessYourAccount,
-                ),
-                SizedBox(height: 40.h),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      CustomTextField(
-                        controller: _emailController,
-                        validator: validateEmail,
-                        label: AppLocalizations.of(context)!.enterYourEmail,
-                        icon: const Icon(Icons.email),
-                      ),
-                      SizedBox(height: 20.h),
-                      CustomTextField(
-                        controller: _passwordController,
-                        validator: validatePassword,
-                        label: AppLocalizations.of(context)!.password,
-                        obscureText: true,
-                        icon: const Icon(Icons.lock),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                Row(
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(message)),
+            );
+          }
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 100.h),
+              BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, themeState) {
+                  final logoPath = themeState == ThemeState.dark
+                      ? AppConstants.logo_white_path
+                      : AppConstants.logo_black_path;
+                  return Logo(path: logoPath);
+                },
+              ),
+              SizedBox(height: 30.h),
+              Header(
+                title: AppLocalizations.of(context)!.welcomeBack,
+                subtitle:
+                    AppLocalizations.of(context)!.signInToAccessYourAccount,
+              ),
+              SizedBox(height: 40.h),
+              Form(
+                key: _formKey,
+                child: Column(
                   children: [
-                    CustomCheck(
-                        title: AppLocalizations.of(context)!.rememberMe),
-                    const Spacer(),
-                    Link(
-                      title: AppLocalizations.of(context)!.forgetPassword,
-                      url: '',
+                    CustomTextField(
+                      controller: _emailController,
+                      validator: validateEmail,
+                      label: AppLocalizations.of(context)!.enterYourEmail,
+                      icon: const Icon(Icons.email),
+                    ),
+                    SizedBox(height: 20.h),
+                    CustomTextField(
+                      controller: _passwordController,
+                      validator: validatePassword,
+                      label: AppLocalizations.of(context)!.password,
+                      obscureText: true,
+                      icon: const Icon(Icons.lock),
                     ),
                   ],
                 ),
-                const Spacer(),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    return DefaultBtn(
-                      title: AppLocalizations.of(context)!.next,
-                      icon: const Icon(Icons.arrow_forward_ios,
-                          color: Colors.white, size: 18),
-                      onPressed: () => validate(context),
-                      isLoading: state is AuthLoading,
-                    );
-                  },
-                ),
-                SizedBox(height: 20.h),
-                Bottom(
-                  title: AppLocalizations.of(context)!.newMember,
-                  textLink: AppLocalizations.of(context)!.registerNow,
-                ),
-                SizedBox(height: 30.h),
-              ],
-            ),
+              ),
+              SizedBox(height: 10.h),
+              Row(
+                children: [
+                  CustomCheck(title: AppLocalizations.of(context)!.rememberMe),
+                  const Spacer(),
+                  Link(
+                    title: AppLocalizations.of(context)!.forgetPassword,
+                    url: '',
+                  ),
+                ],
+              ),
+              const Spacer(),
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return DefaultBtn(
+                    title: AppLocalizations.of(context)!.next,
+                    icon: const Icon(Icons.arrow_forward_ios,
+                        color: Colors.white, size: 18),
+                    onPressed: () => validate(context),
+                    isLoading: state is AuthLoading,
+                  );
+                },
+              ),
+              SizedBox(height: 20.h),
+              Bottom(
+                title: AppLocalizations.of(context)!.newMember,
+                textLink: AppLocalizations.of(context)!.registerNow,
+              ),
+              SizedBox(height: 30.h),
+            ],
           ),
         ),
       ),

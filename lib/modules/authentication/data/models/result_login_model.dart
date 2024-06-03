@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:app_test/modules/authentication/domain/entities/result_login_entity.dart';
 
 class ResultLoginModel extends ResultLoginEntity {
+  @override
+  // ignore: overridden_fields
   final String token;
   ResultLoginModel({
     required this.token,

@@ -18,7 +18,7 @@ class LoginRepositoryImpl implements LoginRepository {
     } on DataSourceError catch (e) {
       return Left(e);
     } catch (e) {
-      return Left(DataSourceError());
+      return Left(DataSourceError(message: e.toString()));
     }
   }
 }

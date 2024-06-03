@@ -1,4 +1,6 @@
+import 'package:app_test/core/theme/app_collors.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Link extends StatelessWidget {
@@ -18,7 +20,7 @@ class Link extends StatelessWidget {
         title,
         style: TextStyle(
           fontSize: 12.sp,
-          color: const Color(0xFFFF3951),
+          color: AppColors.lightSecondary,
         ),
       ),
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/theme/app_collors.dart';
 
 class Bottom extends StatelessWidget {
   final String title;
@@ -19,16 +22,15 @@ class Bottom extends StatelessWidget {
           style: TextStyle(
             fontSize: 13.sp,
             fontWeight: FontWeight.w500,
-            color: const Color(0xFF252525),
+            color: AppColors.primaryText(context),
           ),
           children: [
             TextSpan(
               text: textLink,
               style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFFFF3951),
-              ),
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.lightSecondary),
             ),
           ],
         ),

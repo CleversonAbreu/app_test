@@ -1,4 +1,6 @@
+import 'package:app_test/core/theme/app_collors.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultBtn extends StatelessWidget {
@@ -20,7 +22,7 @@ class DefaultBtn extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(double.infinity, 50.h),
-        backgroundColor: const Color(0xFFFF3951),
+        backgroundColor: AppColors.lightSecondary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.r),
         ),

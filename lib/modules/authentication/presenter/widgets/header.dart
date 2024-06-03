@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/theme/app_collors.dart';
 
 class Header extends StatelessWidget {
   final String title;
@@ -20,7 +23,7 @@ class Header extends StatelessWidget {
           style: TextStyle(
             fontSize: 24.sp,
             fontWeight: FontWeight.w800,
-            color: const Color(0xFF252525),
+            color: AppColors.primaryText(context),
             fontFamily: 'Mulish',
           ),
         ),
@@ -29,7 +32,7 @@ class Header extends StatelessWidget {
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w300,
-            color: const Color(0xFF252525),
+            color: AppColors.primaryText(context),
             fontFamily: 'Mulish',
           ),
         ),

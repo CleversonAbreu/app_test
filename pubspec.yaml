@@ -41,7 +41,7 @@ dependencies:
   flutter_modular: ^5.0.3
   equatable: ^2.0.3
   validators: ^3.0.0
-
+  flutter_secure_storage:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -76,6 +76,7 @@ flutter:
 
   assets:
     - assets/images/logo.png
+    - assets/images/logo2.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
