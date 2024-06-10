@@ -30,8 +30,15 @@ class AuthCubit extends Cubit<AuthState> {
           if (kDebugMode) {
             print('Token: ${success.token}');
           }
-          await tokenRepository.saveToken(success.token);
-          emit(AuthAuthenticated());
+          try {
+            await tokenRepository.saveToken(success.token);
+            emit(AuthAuthenticated());
+          } catch (e) {
+            if (kDebugMode) {
+              print('Error saving token: $e');
+            }
+            emit(const AuthError('tokenSaveError'));
+          }
         },
       );
     } catch (e) {

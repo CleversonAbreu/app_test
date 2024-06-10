@@ -41,7 +41,7 @@ dependencies:
   flutter_modular: ^5.0.3
   equatable: ^2.0.3
   validators: ^3.0.0
-  flutter_secure_storage:
+  flutter_secure_storage: ^7.0.0 
 
 
   # The following adds the Cupertino Icons font to your application.

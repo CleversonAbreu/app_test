@@ -11,73 +11,98 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AppWidget extends StatelessWidget {
-  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
-
+class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<String?>(
-      future: _secureStorage.read(key: 'token'),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        }
-        if (snapshot.hasError) {
-          return Text(AppLocalizations.of(context)!.errorLoadingToken);
-        }
-        final token = snapshot.data;
+  _AppWidgetState createState() => _AppWidgetState();
+}
 
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => ThemeCubit()),
-            BlocProvider(create: (context) => LanguageCubit()),
-            BlocProvider(
-              create: (context) => AuthCubit(Modular.get(), Modular.get()),
-            ),
-          ],
-          child: BlocBuilder<LanguageCubit, Locale>(
-            builder: (context, locale) {
-              return BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, themeState) {
-                  final themeCubit = BlocProvider.of<ThemeCubit>(context);
-                  return ScreenUtilInit(
-                    designSize: const Size(360, 690),
-                    minTextAdapt: true,
-                    splitScreenMode: true,
-                    builder: (_, child) {
-                      return MaterialApp.router(
-                        debugShowCheckedModeBanner: false,
-                        theme: themeCubit.themeData,
-                        locale: locale,
-                        localizationsDelegates: const [
-                          AppLocalizations.delegate,
-                          GlobalMaterialLocalizations.delegate,
-                          GlobalWidgetsLocalizations.delegate,
-                          GlobalCupertinoLocalizations.delegate,
-                        ],
-                        supportedLocales: const [
-                          Locale('en'),
-                          Locale('pt'),
-                        ],
-                        routeInformationParser: Modular.routeInformationParser,
-                        routerDelegate: Modular.routerDelegate,
-                        routeInformationProvider:
-                            PlatformRouteInformationProvider(
-                          initialRouteInformation: RouteInformation(
-                              // ignore: deprecated_member_use
-                              location: token != null ? '/home' : '/login'),
-                        ),
-                      );
-                    },
+class _AppWidgetState extends State<AppWidget> {
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+  );
+  String? _token;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadToken();
+  }
+
+  Future<void> _loadToken() async {
+    try {
+      _token = await _secureStorage.read(key: 'token');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _checkToken() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await _loadToken();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    _checkToken();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ThemeCubit()),
+        BlocProvider(create: (context) => LanguageCubit()),
+        BlocProvider(
+          create: (context) => AuthCubit(Modular.get(), Modular.get()),
+        ),
+      ],
+      child: BlocBuilder<LanguageCubit, Locale>(
+        builder: (context, locale) {
+          return BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, themeState) {
+              final themeCubit = BlocProvider.of<ThemeCubit>(context);
+              return ScreenUtilInit(
+                designSize: const Size(360, 690),
+                minTextAdapt: true,
+                splitScreenMode: true,
+                builder: (_, child) {
+                  return MaterialApp.router(
+                    debugShowCheckedModeBanner: false,
+                    theme: themeCubit.themeData,
+                    locale: locale,
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: const [
+                      Locale('en'),
+                      Locale('pt'),
+                    ],
+                    routeInformationParser: Modular.routeInformationParser,
+                    routerDelegate: Modular.routerDelegate,
+                    routeInformationProvider: PlatformRouteInformationProvider(
+                      initialRouteInformation: RouteInformation(
+                        // ignore: deprecated_member_use
+                        location: _token != null ? '/home' : '/login',
+                      ),
+                    ),
                   );
                 },
               );
             },
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
