@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../data/models/auth_model.dart';
 import '../../domain/repositories/token_repository.dart';
-import '../../domain/usecases/result_login_usecase.dart';
+import '../../domain/usecases/result_auth_usecase.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {

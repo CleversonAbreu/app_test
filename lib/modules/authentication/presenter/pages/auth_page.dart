@@ -138,7 +138,8 @@ class _AuthPageState extends State<AuthPage> {
                         const Spacer(),
                         Link(
                           title: AppLocalizations.of(context)!.forgetPassword,
-                          url: '',
+                          onPressed: () =>
+                              Navigator.pushReplacementNamed(context, '/login'),
                         ),
                       ],
                     ),
@@ -154,10 +155,12 @@ class _AuthPageState extends State<AuthPage> {
                         );
                       },
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 1.h),
                     Bottom(
                       title: AppLocalizations.of(context)!.newMember,
                       textLink: AppLocalizations.of(context)!.registerNow,
+                      onPressed: () =>
+                          Navigator.pushReplacementNamed(context, '/login'),
                     ),
                     SizedBox(height: 30.h),
                   ],

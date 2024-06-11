@@ -15,7 +15,7 @@ class TokenRepositoryImpl implements TokenRepository {
     try {
       await _secureStorage.write(key: 'token', value: token);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -25,7 +25,7 @@ class TokenRepositoryImpl implements TokenRepository {
       final token = await _secureStorage.read(key: 'token');
       return token;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -34,7 +34,7 @@ class TokenRepositoryImpl implements TokenRepository {
     try {
       await _secureStorage.delete(key: 'token');
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

@@ -2,7 +2,7 @@ import 'package:app_test/modules/authentication/data/models/auth_model.dart';
 import 'package:app_test/modules/authentication/domain/entities/result_auth_entity.dart';
 import 'package:app_test/modules/authentication/domain/errors/errors.dart';
 import 'package:app_test/modules/authentication/domain/repositories/auth_repository.dart';
-import 'package:app_test/modules/authentication/domain/usecases/result_login_usecase.dart';
+import 'package:app_test/modules/authentication/domain/usecases/result_auth_usecase.dart';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';

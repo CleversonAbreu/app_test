@@ -5,21 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Link extends StatelessWidget {
   final String title;
-  final String url;
+  final VoidCallback onPressed;
   const Link({
     super.key,
     required this.title,
-    required this.url,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 12.sp,
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w700,
           color: AppColors.lightSecondary,
         ),
       ),
