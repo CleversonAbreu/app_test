@@ -3,6 +3,21 @@
     "homeTitle": "Home Screen",
     "welcomeMessage":"Welcome ",
     "settingsTitle":"Settings",
-    "darkMode":"Dark Mode"
-}
-
+    "darkMode":"Dark Mode",
+    "welcomeBack":"Welcome back",
+    "signInToAccessYourAccount":"sign in to access your account",
+    "enterYourEmail":"Enter your email",
+    "password":"Password",
+    "rememberMe":"Remember me",
+    "forgetPassword":"Forget password?",
+    "next":"Next",
+    "newMember":"New Member?",
+    "registerNow":" Register Now",
+    "pleaseInsertYourEmail":"Please, insert your email",
+    "pleaseInsertValidEmail":"Please,insert a valid email",
+    "pleaseInsertYourPassword":"Please, insert your password",
+    "invalidCredentials":"Invalid credentials",
+    "authError": "Error when try to auth",
+    "errorLoadingToken": "Error loading token",
+    "logout":"Logout"
+    }

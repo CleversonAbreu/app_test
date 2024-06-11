@@ -1,0 +1,3 @@
+const authResponse = """{
+  "token":"aiuSIUAhibIDUBiudbibAOZZZxIIUS" 
+}""";

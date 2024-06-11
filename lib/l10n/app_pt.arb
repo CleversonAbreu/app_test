@@ -3,6 +3,22 @@
     "homeTitle": "Home Screen",
     "welcomeMessage":"Bem Vindo",
     "settingsTitle":"Configurações",
-    "darkMode":"Modo Escuro"
+    "darkMode":"Modo Escuro",
+    "welcomeBack":"Bem vindo novamente",
+    "signInToAccessYourAccount":"faça auth para acessar sua conta",
+    "enterYourEmail":"Entre com seu email",
+    "password":"Senha",
+    "rememberMe":"Lembrar me",
+    "forgetPassword":"Esqueceu sua senha?",
+    "next":"Próximo",
+    "newMember":"Nova Conta?",
+    "registerNow":" Registre agora", 
+    "pleaseInsertYourEmail":"Por favor, insira seu email",
+    "pleaseInsertValidEmail":"Por favor, insira um email valido",
+    "pleaseInsertYourPassword":"Por favor, insira sua senha",
+    "invalidCredentials":"Credenciais inválidas",
+    "authError": "Erro ao tentar fazer auth",
+     "errorLoadingToken": "Erro ao carregar token",
+     "logout":"Deslogar"
 }
 
