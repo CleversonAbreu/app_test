@@ -16,14 +16,14 @@ import '../widgets/header.dart';
 import '../widgets/link.dart';
 import '../widgets/logo.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class AuthPage extends StatefulWidget {
+  const AuthPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<AuthPage> createState() => _AuthPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _AuthPageState extends State<AuthPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState?.validate() ?? false) {
       final email = _emailController.text;
       final password = _passwordController.text;
-      ReadContext(context).read<AuthCubit>().login(email, password);
+      ReadContext(context).read<AuthCubit>().auth(email, password);
     }
   }
 
@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
             if (state.message == 'invalidCredentials') {
               message = AppLocalizations.of(context)!.invalidCredentials;
             } else {
-              message = AppLocalizations.of(context)!.loginError;
+              message = AppLocalizations.of(context)!.authError;
             }
 
             ScaffoldMessenger.of(context).showSnackBar(

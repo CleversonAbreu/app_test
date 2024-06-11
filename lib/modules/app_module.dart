@@ -2,14 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'authentication/data/repositories/auth_repository_impl.dart';
 import 'authentication/data/repositories/token_repository_impl.dart';
-import 'authentication/data/repositories/login_repository_impl.dart';
+
+import 'authentication/domain/repositories/auth_repository.dart';
 import 'authentication/domain/repositories/token_repository.dart';
-import 'authentication/domain/repositories/login_repository.dart';
 import 'authentication/domain/usecases/result_login_usecase.dart';
-import 'authentication/external/datasources/login_datasource_impl.dart';
+import 'authentication/external/datasources/auth_datasource_impl.dart';
 import 'authentication/presenter/cubit/auth_cubit.dart';
-import 'authentication/presenter/pages/login_page.dart';
+
+import 'authentication/presenter/pages/auth_page.dart';
 import 'home/presenter/pages/home_page.dart';
 
 class AppModule extends Module {
@@ -18,11 +20,11 @@ class AppModule extends Module {
     AsyncBind<SharedPreferences>(
         (i) async => await SharedPreferences.getInstance()),
     Bind((i) => Dio()),
-    Bind((i) => LoginDataSourceImpl(i())),
-    Bind<LoginRepository>((i) => LoginRepositoryImpl(i())),
-    Bind((i) => ResultLoginUsecaseImpl(repository: i<LoginRepository>())),
-    Bind.lazySingleton<AuthCubit>((i) =>
-        AuthCubit(i.get<ResultLoginUsecase>(), i.get<TokenRepository>())),
+    Bind((i) => AuthDataSourceImpl(i())),
+    Bind<AuthRepository>((i) => AuthRepositoryImpl(i())),
+    Bind((i) => ResultAuthUsecaseImpl(repository: i<AuthRepository>())),
+    Bind.lazySingleton<AuthCubit>(
+        (i) => AuthCubit(i.get<ResultAuthUsecase>(), i.get<TokenRepository>())),
     Bind.lazySingleton<TokenRepository>(
       (i) => TokenRepositoryImpl(),
     ),
@@ -30,7 +32,7 @@ class AppModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/login', child: (_, __) => const LoginPage()),
+    ChildRoute('/auth', child: (_, __) => const AuthPage()),
     ChildRoute('/home', child: (_, __) => const HomePage()),
   ];
 }

@@ -1,3 +1,3 @@
-const loginResponse = """{
+const authResponse = """{
   "token":"aiuSIUAhibIDUBiudbibAOZZZxIIUS" 
 }""";

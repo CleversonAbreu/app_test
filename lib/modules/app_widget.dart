@@ -93,7 +93,7 @@ class _AppWidgetState extends State<AppWidget> {
                     routeInformationProvider: PlatformRouteInformationProvider(
                       initialRouteInformation: RouteInformation(
                         // ignore: deprecated_member_use
-                        location: _token != null ? '/home' : '/login',
+                        location: _token != null ? '/home' : '/auth',
                       ),
                     ),
                   );

@@ -55,7 +55,7 @@
 //                   // ignore: use_build_context_synchronously
 //                   context.read<AuthCubit>().logout();
 //                   // ignore: use_build_context_synchronously
-//                   Navigator.pushReplacementNamed(context, '/login');
+//                   Navigator.pushReplacementNamed(context, '/auth');
 //                 },
 //               );
 //             },
@@ -122,7 +122,7 @@ class SettingsPage extends StatelessWidget {
                   // ignore: use_build_context_synchronously
                   context.read<AuthCubit>().logout();
                   // ignore: use_build_context_synchronously
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushReplacementNamed(context, '/auth');
                 },
               );
             },

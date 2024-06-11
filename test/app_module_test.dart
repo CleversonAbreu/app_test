@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app_test/modules/authentication/data/models/login_model.dart';
+import 'package:app_test/modules/authentication/data/models/auth_model.dart';
 import 'package:app_test/modules/authentication/domain/usecases/result_login_usecase.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,19 +15,19 @@ void main() {
   final dio = DioMock();
 
   test('should return usecase without error', () {
-    final usecase = Modular.get<ResultLoginUsecase>();
-    expect(usecase, isA<ResultLoginUsecaseImpl>());
+    final usecase = Modular.get<ResultAuthUsecase>();
+    expect(usecase, isA<ResultAuthUsecaseImpl>());
   });
 
-  test('should return ResultLoginEntity', () async {
+  test('should return ResultAuthEntity', () async {
     final requestOptions = RequestOptions(path: '');
     when(dio.get('')).thenAnswer((_) async => Response(
-        data: jsonDecode(loginResponse),
+        data: jsonDecode(authResponse),
         statusCode: 200,
         requestOptions: requestOptions));
-    final usecase = Modular.get<ResultLoginUsecase>();
+    final usecase = Modular.get<ResultAuthUsecase>();
     final result = await usecase(
-        LoginModel(email: 'teste@teste.com', password: 'password'));
-    expect(result, isA<ResultLoginUsecaseImpl>());
+        AuthModel(email: 'teste@teste.com', password: 'password'));
+    expect(result, isA<ResultAuthUsecaseImpl>());
   });
 }

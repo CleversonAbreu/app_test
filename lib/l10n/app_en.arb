@@ -17,7 +17,7 @@
     "pleaseInsertValidEmail":"Please,insert a valid email",
     "pleaseInsertYourPassword":"Please, insert your password",
     "invalidCredentials":"Invalid credentials",
-    "loginError": "Error when try to login",
+    "authError": "Error when try to auth",
     "errorLoadingToken": "Error loading token",
     "logout":"Logout"
     }

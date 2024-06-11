@@ -5,7 +5,7 @@
     "settingsTitle":"Configurações",
     "darkMode":"Modo Escuro",
     "welcomeBack":"Bem vindo novamente",
-    "signInToAccessYourAccount":"faça login para acessar sua conta",
+    "signInToAccessYourAccount":"faça auth para acessar sua conta",
     "enterYourEmail":"Entre com seu email",
     "password":"Senha",
     "rememberMe":"Lembrar me",
@@ -17,7 +17,7 @@
     "pleaseInsertValidEmail":"Por favor, insira um email valido",
     "pleaseInsertYourPassword":"Por favor, insira sua senha",
     "invalidCredentials":"Credenciais inválidas",
-    "loginError": "Erro ao tentar fazer login",
+    "authError": "Erro ao tentar fazer auth",
      "errorLoadingToken": "Erro ao carregar token",
      "logout":"Deslogar"
 }
