@@ -19,5 +19,13 @@
     "invalidCredentials":"Invalid credentials",
     "authError": "Error when try to auth",
     "errorLoadingToken": "Error loading token",
-    "logout":"Logout"
+    "logout":"Logout",
+    "enterYourFullName":"Enter your full name",
+    "enterYourPhoneNumber":"Enter your phone number",
+    "enterYourPassword":"Enter your password",
+    "pleaseInsertYourFullName":"Please, insert your full name",
+    "pleaseInsertYourPhoneNumber":"Please, insert your phone number",
+    "byCheckingBoxAgreeTerms":"By checking the box you agree to our Terms and Conditions.",
+    "alreadyMember":"Already a member?",
+    "logIn":" Log In"
     }

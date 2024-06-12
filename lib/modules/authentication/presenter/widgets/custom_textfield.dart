@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,6 +10,8 @@ class CustomTextField extends StatelessWidget {
   final bool? obscureText;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
   const CustomTextField({
     Key? key,
     required this.label,
@@ -16,11 +19,15 @@ class CustomTextField extends StatelessWidget {
     this.obscureText,
     required this.controller,
     this.validator,
+    this.keyboardType,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
       obscureText: obscureText ?? false,
       controller: controller,
       validator: validator,

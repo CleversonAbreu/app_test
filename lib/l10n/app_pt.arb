@@ -18,7 +18,15 @@
     "pleaseInsertYourPassword":"Por favor, insira sua senha",
     "invalidCredentials":"Credenciais inválidas",
     "authError": "Erro ao tentar fazer auth",
-     "errorLoadingToken": "Erro ao carregar token",
-     "logout":"Deslogar"
+    "errorLoadingToken": "Erro ao carregar token",
+    "logout":"Deslogar",
+    "enterYourFullName":"Insira seu nome completo",
+    "enterYourPhoneNumber":"Insira seu número de telefone",
+    "enterYourPassword":"Insira sua senha",
+    "pleaseInsertYourFullName":"Por favor, insira seu nome completo",
+    "pleaseInsertYourPhoneNumber":"Por favor, insira seu número de telefone",
+    "byCheckingBoxAgreeTerms":"Ao marcar a caixa você concorda com nossos Termos e Condições.",
+    "alreadyMember":"Já tem conta?",
+    "logIn":" Logar"
 }
 

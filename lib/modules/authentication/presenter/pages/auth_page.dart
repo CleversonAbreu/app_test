@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:validators/validators.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../settings/presenter/cubit/theme_cubit.dart';
+import '../../../signup/presenter/page/signup_page.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
 import '../widgets/bottom.dart';
@@ -159,8 +160,9 @@ class _AuthPageState extends State<AuthPage> {
                     Bottom(
                       title: AppLocalizations.of(context)!.newMember,
                       textLink: AppLocalizations.of(context)!.registerNow,
-                      onPressed: () =>
-                          Navigator.pushReplacementNamed(context, '/login'),
+                      onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpPage())),
                     ),
                     SizedBox(height: 30.h),
                   ],
