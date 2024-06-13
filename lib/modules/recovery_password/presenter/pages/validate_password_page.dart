@@ -6,59 +6,51 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:validators/validators.dart';
 import '../../../authentication/presenter/cubit/auth_cubit.dart';
 import '../../../authentication/presenter/cubit/auth_state.dart';
+import '../../../authentication/presenter/pages/auth_page.dart';
 import '../../../authentication/presenter/widgets/bottom.dart';
 import '../../../authentication/presenter/widgets/custom_textfield.dart';
 import '../../../authentication/presenter/widgets/default_btn.dart';
+import '../../../authentication/presenter/widgets/header.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class ValidatePasswordPage extends StatefulWidget {
+  const ValidatePasswordPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<ValidatePasswordPage> createState() => _ValidatePasswordPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+class _ValidatePasswordPageState extends State<ValidatePasswordPage> {
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmationPasswordController =
+      TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool isChecked = false;
-  final maskFormatter = MaskTextInputFormatter(
-    mask: '(##) ####-####',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
-
-  String? validateFullName(String? value) {
-    if (value == null || value.isEmpty) {
-      return AppLocalizations.of(context)!.pleaseInsertYourFullName;
-    }
-    return null;
-  }
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context)!.pleaseInsertYourPassword;
+    } else if (value.length < 6) {
+      return AppLocalizations.of(context)!.passwordMustBeGreater;
+    } else if (!RegExp(r'^(?=.*[A-Z])').hasMatch(value)) {
+      return AppLocalizations.of(context)!
+          .passwordShouldContainUppercaseCharacter;
+    } else if (!RegExp(r'^(?=.*[a-z])').hasMatch(value)) {
+      return AppLocalizations.of(context)!.passwordMustContainLowercaseLetter;
+    } else if (!RegExp(r'^(?=.*[0-9])').hasMatch(value)) {
+      return AppLocalizations.of(context)!.passwordMustContainOneNumber;
+    } else if (!RegExp(r'^(?=.*[!@#$%^&*(),.?":{}|<>])').hasMatch(value)) {
+      return AppLocalizations.of(context)!
+          .passwordMusContainOneSpecialCharacter;
     }
+
     return null;
   }
 
-  String? validatePhoneNumber(String? value) {
-    if (value == null || value.isEmpty) {
-      return AppLocalizations.of(context)!.pleaseInsertYourPhoneNumber;
-    }
-    return null;
-  }
-
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return AppLocalizations.of(context)!.pleaseInsertYourEmail;
-    } else if (!isEmail(value)) {
-      return AppLocalizations.of(context)!.pleaseInsertValidEmail;
+  String? samePasswords(String? value) {
+    if (value != _passwordController.text) {
+      return AppLocalizations.of(context)!.passwordsMustBeSame;
     }
     return null;
   }
@@ -97,6 +89,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       return Logo(path: logoPath);
                     },
                   ),
+                  SizedBox(height: 30.h),
+                  Header(
+                    title: AppLocalizations.of(context)!.enterYourNewPassword,
+                    subtitle: AppLocalizations.of(context)!
+                        .enterYourNewAndConfirmationPassword,
+                  ),
                   SizedBox(height: 20.h),
                   Expanded(
                     child: SingleChildScrollView(
@@ -106,60 +104,26 @@ class _SignUpPageState extends State<SignUpPage> {
                           Form(
                               key: _formKey,
                               child: Column(children: [
-                                CustomTextField(
-                                  controller: _fullNameController,
-                                  validator: validateFullName,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourFullName,
-                                  icon: const Icon(Icons.person),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  controller: _emailController,
-                                  validator: validateEmail,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourEmail,
-                                  icon: const Icon(Icons.email),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  inputFormatters: [maskFormatter],
-                                  controller: _phoneNumberController,
-                                  keyboardType: TextInputType.phone,
-                                  validator: validatePhoneNumber,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourPhoneNumber,
-                                  icon: const Icon(Icons.phone),
-                                ),
                                 SizedBox(height: 16.h),
                                 CustomTextField(
                                   obscureText: true,
                                   controller: _passwordController,
                                   validator: validatePassword,
                                   label: AppLocalizations.of(context)!
-                                      .enterYourPassword,
-                                  icon: const Icon(Icons.lock),
+                                      .enterYourNewPassword,
+                                  icon: const Icon(Icons.password),
                                 ),
+                                SizedBox(height: 16.h),
+                                CustomTextField(
+                                  obscureText: true,
+                                  controller: _confirmationPasswordController,
+                                  validator: samePasswords,
+                                  label: AppLocalizations.of(context)!
+                                      .enterYourConfirmationPassword,
+                                  icon: const Icon(Icons.password),
+                                ),
+                                SizedBox(height: 16.h),
                               ])),
-                          SizedBox(height: 16.h),
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: isChecked,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isChecked = value!;
-                                  });
-                                },
-                              ),
-                              Expanded(
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .byCheckingBoxAgreeTerms,
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),
@@ -180,7 +144,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     title: AppLocalizations.of(context)!.alreadyMember,
                     textLink: AppLocalizations.of(context)!.logIn,
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const AuthPage(),
+                        ),
+                      );
                     },
                   ),
                 ],
