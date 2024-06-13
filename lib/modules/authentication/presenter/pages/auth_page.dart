@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:validators/validators.dart';
 import '../../../../core/constants/app_constants.dart';
+import '../../../recovery_password/presenter/pages/otp_page.dart';
 import '../../../settings/presenter/cubit/theme_cubit.dart';
 import '../../../signup/presenter/page/signup_page.dart';
 import '../cubit/auth_cubit.dart';
@@ -138,9 +140,14 @@ class _AuthPageState extends State<AuthPage> {
                             title: AppLocalizations.of(context)!.rememberMe),
                         const Spacer(),
                         Link(
-                          title: AppLocalizations.of(context)!.forgetPassword,
-                          onPressed: () =>
-                              Navigator.pushReplacementNamed(context, '/login'),
+                          title: AppLocalizations.of(context)!.forgotPassword,
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const OTPPage(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -158,12 +165,15 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     SizedBox(height: 1.h),
                     Bottom(
-                      title: AppLocalizations.of(context)!.newMember,
-                      textLink: AppLocalizations.of(context)!.registerNow,
-                      onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => const SignUpPage())),
-                    ),
+                        title: AppLocalizations.of(context)!.newMember,
+                        textLink: AppLocalizations.of(context)!.registerNow,
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpPage(),
+                            ),
+                          );
+                        }),
                     SizedBox(height: 30.h),
                   ],
                 ),
