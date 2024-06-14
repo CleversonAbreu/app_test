@@ -2,8 +2,8 @@
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-import '../../domain/usecases/send_otp_usecase.dart';
-import '../../domain/usecases/verify_otp_usecase.dart';
+import '../../../otp/domain/usecases/send_otp_usecase.dart';
+import '../../../otp/domain/usecases/verify_otp_usecase.dart';
 
 part 'otp_state.dart';
 
