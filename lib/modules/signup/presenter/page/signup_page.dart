@@ -15,7 +15,8 @@ import '../../../authentication/presenter/widgets/default_btn.dart';
 import '../../../authentication/presenter/widgets/header.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  final String email;
+  const SignUpPage({super.key, required this.email});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -85,6 +86,12 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   @override
+  void initState() {
+    _emailController.text = widget.email;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -130,19 +137,19 @@ class _SignUpPageState extends State<SignUpPage> {
                               key: _formKey,
                               child: Column(children: [
                                 CustomTextField(
+                                  controller: _emailController,
+                                  readOnly: true,
+                                  label: AppLocalizations.of(context)!
+                                      .enterYourEmail,
+                                  icon: const Icon(Icons.email),
+                                ),
+                                SizedBox(height: 16.h),
+                                CustomTextField(
                                   controller: _fullNameController,
                                   validator: validateFullName,
                                   label: AppLocalizations.of(context)!
                                       .enterYourFullName,
                                   icon: const Icon(Icons.person),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  controller: _emailController,
-                                  validator: validateEmail,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourEmail,
-                                  icon: const Icon(Icons.email),
                                 ),
                                 SizedBox(height: 16.h),
                                 CustomTextField(

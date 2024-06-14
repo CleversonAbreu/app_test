@@ -45,5 +45,6 @@
   "passwordMusContainOneSpecialCharacter":"The password must contain at least one special character",
   "passwordsMustBeSame":"Password and password confirmation must be the same",
   "createAccount":"Create your account",
-  "insertYourdataToCreateAccount":"Enter your details to create an account"
+  "insertYourdataToCreateAccount":"Enter your details to create an account",
+  "enterYourEmailToCreateAccount":"Enter your email to create an account"
 }
