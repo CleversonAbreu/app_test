@@ -179,9 +179,16 @@ class _AuthPageState extends State<AuthPage> {
                         title: AppLocalizations.of(context)!.newMember,
                         textLink: AppLocalizations.of(context)!.registerNow,
                         onPressed: () {
+                          final oTPPageData = OTPPageData(
+                            title: AppLocalizations.of(context)!.createAccount,
+                            subtitle: AppLocalizations.of(context)!
+                                .enterYourEmailToCreateAccount,
+                            nextPage: (email) => SignUpPage(email: email),
+                          );
+
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const SignUpPage(),
+                              builder: (context) => OTPPage(data: oTPPageData),
                             ),
                           );
                         }),
