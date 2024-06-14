@@ -14,14 +14,16 @@ import '../../../authentication/presenter/widgets/custom_textfield.dart';
 import '../../../authentication/presenter/widgets/default_btn.dart';
 import '../../../authentication/presenter/widgets/header.dart';
 
-class ValidatePasswordPage extends StatefulWidget {
-  const ValidatePasswordPage({super.key});
+class RecoveryPasswordPage extends StatefulWidget {
+  final String? email;
+  const RecoveryPasswordPage({super.key, this.email});
 
   @override
-  State<ValidatePasswordPage> createState() => _ValidatePasswordPageState();
+  State<RecoveryPasswordPage> createState() => _RecoveryPasswordPageState();
 }
 
-class _ValidatePasswordPageState extends State<ValidatePasswordPage> {
+class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmationPasswordController =
       TextEditingController();
@@ -56,6 +58,12 @@ class _ValidatePasswordPageState extends State<ValidatePasswordPage> {
 
   void validate(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {}
+  }
+
+  @override
+  void initState() {
+    _emailController.text = widget.email!;
+    super.initState();
   }
 
   @override
@@ -103,6 +111,14 @@ class _ValidatePasswordPageState extends State<ValidatePasswordPage> {
                           Form(
                               key: _formKey,
                               child: Column(children: [
+                                SizedBox(height: 16.h),
+                                CustomTextField(
+                                  readOnly: true,
+                                  controller: _emailController,
+                                  label: AppLocalizations.of(context)!
+                                      .enterYourEmail,
+                                  icon: const Icon(Icons.email),
+                                ),
                                 SizedBox(height: 16.h),
                                 CustomTextField(
                                   obscureText: true,
