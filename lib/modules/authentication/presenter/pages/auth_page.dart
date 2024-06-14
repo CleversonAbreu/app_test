@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -8,7 +7,7 @@ import 'package:validators/validators.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../otp/data/model/ottp_data_page_model.dart';
 import '../../../otp/presenter/pages/otp_page.dart';
-import '../../../recovery_password/presenter/pages/validate_password_page.dart';
+import '../../../recovery_password/presenter/pages/recovery_password_page.dart';
 import '../../../settings/presenter/cubit/theme_cubit.dart';
 import '../../../signup/presenter/page/signup_page.dart';
 import '../cubit/auth_cubit.dart';
@@ -145,11 +144,14 @@ class _AuthPageState extends State<AuthPage> {
                           title: AppLocalizations.of(context)!.forgotPassword,
                           onPressed: () {
                             final oTPPageData = OTPPageData(
-                                title: AppLocalizations.of(context)!
-                                    .forgotPassword,
-                                subtitle: AppLocalizations.of(context)!
-                                    .enterYourRegisteredEmailToRecoverYourPassword,
-                                nextPage: const ValidatePasswordPage());
+                              title:
+                                  AppLocalizations.of(context)!.forgotPassword,
+                              subtitle: AppLocalizations.of(context)!
+                                  .enterYourRegisteredEmailToRecoverYourPassword,
+                              nextPage: (email) =>
+                                  RecoveryPasswordPage(email: email),
+                            );
+
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
