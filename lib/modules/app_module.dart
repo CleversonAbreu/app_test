@@ -14,13 +14,12 @@ import 'authentication/presenter/cubit/auth_cubit.dart';
 import 'authentication/presenter/pages/auth_page.dart';
 import 'home/presenter/pages/home_page.dart';
 
-import 'recovery_password/data/datasources/otp_remote_datasource.dart';
-import 'recovery_password/data/repositories/otp_repository_impl.dart';
-import 'recovery_password/domain/repositories/otp_repository.dart';
-import 'recovery_password/domain/usecases/send_otp_usecase.dart';
-import 'recovery_password/domain/usecases/verify_otp_usecase.dart';
-import 'recovery_password/presenter/cubit/otp_cubit.dart';
-import 'recovery_password/presenter/pages/otp_page.dart';
+import 'otp/data/datasources/otp_remote_datasource.dart';
+import 'otp/data/repositories/otp_repository_impl.dart';
+import 'otp/domain/repositories/otp_repository.dart';
+import 'otp/domain/usecases/send_otp_usecase.dart';
+import 'otp/domain/usecases/verify_otp_usecase.dart';
+import 'otp/presenter/cubit/otp_cubit.dart';
 
 class AppModule extends Module {
   @override

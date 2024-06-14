@@ -1,4 +1,4 @@
-import 'package:app_test/modules/recovery_password/domain/repositories/otp_repository.dart';
+import 'package:app_test/modules/otp/domain/repositories/otp_repository.dart';
 
 class VerifyOTP {
   final OTPRepository repository;
