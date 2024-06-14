@@ -13,6 +13,7 @@ import '../../../authentication/presenter/cubit/auth_state.dart';
 import '../../../authentication/presenter/widgets/bottom.dart';
 import '../../../authentication/presenter/widgets/custom_textfield.dart';
 import '../../../authentication/presenter/widgets/default_btn.dart';
+import '../../../authentication/presenter/widgets/header.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -24,14 +25,11 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _confirmationPasswordController =
+      TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isChecked = false;
-  final maskFormatter = MaskTextInputFormatter(
-    mask: '(##) ####-####',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
 
   String? validateFullName(String? value) {
     if (value == null || value.isEmpty) {
@@ -43,6 +41,26 @@ class _SignUpPageState extends State<SignUpPage> {
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context)!.pleaseInsertYourPassword;
+    } else if (value.length < 6) {
+      return AppLocalizations.of(context)!.passwordMustBeGreater;
+    } else if (!RegExp(r'^(?=.*[A-Z])').hasMatch(value)) {
+      return AppLocalizations.of(context)!
+          .passwordShouldContainUppercaseCharacter;
+    } else if (!RegExp(r'^(?=.*[a-z])').hasMatch(value)) {
+      return AppLocalizations.of(context)!.passwordMustContainLowercaseLetter;
+    } else if (!RegExp(r'^(?=.*[0-9])').hasMatch(value)) {
+      return AppLocalizations.of(context)!.passwordMustContainOneNumber;
+    } else if (!RegExp(r'^(?=.*[!@#$%^&*(),.?":{}|<>])').hasMatch(value)) {
+      return AppLocalizations.of(context)!
+          .passwordMusContainOneSpecialCharacter;
+    }
+
+    return null;
+  }
+
+  String? samePasswords(String? value) {
+    if (value != _passwordController.text) {
+      return AppLocalizations.of(context)!.passwordsMustBeSame;
     }
     return null;
   }
@@ -97,6 +115,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       return Logo(path: logoPath);
                     },
                   ),
+                  SizedBox(height: 30.h),
+                  Header(
+                    title: AppLocalizations.of(context)!.createAccount,
+                    subtitle: AppLocalizations.of(context)!
+                        .insertYourdataToCreateAccount,
+                  ),
                   SizedBox(height: 20.h),
                   Expanded(
                     child: SingleChildScrollView(
@@ -123,16 +147,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                                 SizedBox(height: 16.h),
                                 CustomTextField(
-                                  inputFormatters: [maskFormatter],
-                                  controller: _phoneNumberController,
-                                  keyboardType: TextInputType.phone,
-                                  validator: validatePhoneNumber,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourPhoneNumber,
-                                  icon: const Icon(Icons.phone),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
                                   obscureText: true,
                                   controller: _passwordController,
                                   validator: validatePassword,
@@ -140,26 +154,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                       .enterYourPassword,
                                   icon: const Icon(Icons.lock),
                                 ),
+                                SizedBox(height: 16.h),
+                                CustomTextField(
+                                  obscureText: true,
+                                  controller: _confirmationPasswordController,
+                                  validator: samePasswords,
+                                  label: AppLocalizations.of(context)!
+                                      .enterYourConfirmationPassword,
+                                  icon: const Icon(Icons.lock),
+                                ),
                               ])),
                           SizedBox(height: 16.h),
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: isChecked,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isChecked = value!;
-                                  });
-                                },
-                              ),
-                              Expanded(
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .byCheckingBoxAgreeTerms,
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),

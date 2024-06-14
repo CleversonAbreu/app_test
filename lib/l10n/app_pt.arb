@@ -43,6 +43,8 @@
     "passwordMustContainLowercaseLetter":"A senha deve conter pelo menos uma letra minúscula",
     "passwordMustContainOneNumber":"A senha deve conter pelo menos um número",
     "passwordMusContainOneSpecialCharacter":"A senha deve conter pelo menos um caractere especial",
-    "passwordsMustBeSame":"Senha e confirmacao de senha devem ser igauis"
+    "passwordsMustBeSame":"Senha e confirmacao de senha devem ser iguais",
+    "createAccount":"Criar sua conta",
+    "insertYourdataToCreateAccount":"Insira seus dados para criar uma conta"
  }
 

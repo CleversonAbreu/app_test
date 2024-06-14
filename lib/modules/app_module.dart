@@ -56,7 +56,7 @@ class AppModule extends Module {
         ChildRoute('/auth', child: (_, __) => const AuthPage()),
         ChildRoute('/signup', child: (_, __) => const SignUpPage()),
         ChildRoute('/home', child: (_, __) => const HomePage()),
-        ChildRoute('/otp', child: (_, __) => const OTPPage()),
+        // ChildRoute('/otp', child: (_, __) => const OTPPage()),
         ChildRoute('/validatePassword',
             child: (_, __) => const ValidatePasswordPage()),
       ];
