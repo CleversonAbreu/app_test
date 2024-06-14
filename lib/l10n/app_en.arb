@@ -35,13 +35,15 @@
   "incorrectOTPCode": "Incorrect OTP code",
   "enterYourNewPassword": "Enter your new password",
   "pleaseInsertYourNewPassword": "Please, insert your new password",
-  "enterYourNewAndConfirmationPassword": "Insert your password and confirmation password",
-  "enterYourConfirmationPassword": "Insert your confirmation password",
+  "enterYourNewAndConfirmationPassword": "Enter your password and confirmation password",
+  "enterYourConfirmationPassword": "Enter your confirmation password",
   "pleaseInsertYourConfirmationPassword": "Please, insert your confirmation password",
   "passwordMustBeGreater": "Password must be greater than 6 characters",
   "passwordShouldContainUppercaseCharacter":"The password should contain at least 1 uppercase character",
   "passwordMustContainLowercaseLetter":"The password must contain at least one lowercase letter",
   "passwordMustContainOneNumber":"The password must contain at least one number",
   "passwordMusContainOneSpecialCharacter":"The password must contain at least one special character",
-  "passwordsMustBeSame":"Password and password confirmation must be the same"
+  "passwordsMustBeSame":"Password and password confirmation must be the same",
+  "createAccount":"Create your account",
+  "insertYourdataToCreateAccount":"Enter your details to create an account"
 }
