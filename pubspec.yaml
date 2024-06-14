@@ -35,8 +35,15 @@ dependencies:
   shared_preferences: ^2.2.3
   flutter_bloc: ^8.0.1
   intl: ^0.18.1
-
-
+  flutter_svg: ^2.0.10+1
+  dartz: ^0.10.1
+  dio: ^5.4.3+1
+  flutter_modular: ^5.0.3
+  equatable: ^2.0.3
+  validators: ^3.0.0
+  flutter_secure_storage: ^7.0.0 
+  mask_text_input_formatter: ^2.0.0
+  email_otp: ^2.1.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -47,6 +54,8 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.1.7
   intl_translation: ^0.18.2
+  flutter_screenutil: ^5.9.3
+  mockito: ^5.4.4
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -66,9 +75,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/logo.png
+    - assets/images/logo2.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
