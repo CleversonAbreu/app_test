@@ -9,6 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:validators/validators.dart';
 import '../../../authentication/presenter/cubit/auth_cubit.dart';
 import '../../../authentication/presenter/cubit/auth_state.dart';
+import '../../../authentication/presenter/pages/auth_page.dart';
 import '../../../authentication/presenter/widgets/bottom.dart';
 import '../../../authentication/presenter/widgets/custom_textfield.dart';
 import '../../../authentication/presenter/widgets/default_btn.dart';
@@ -136,13 +137,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           Form(
                               key: _formKey,
                               child: Column(children: [
-                                // CustomTextField(
-                                //   controller: _emailController,
-                                //   readOnly: true,
-                                //   label: AppLocalizations.of(context)!
-                                //       .enterYourEmail,
-                                //   icon: const Icon(Icons.email),
-                                // ),
                                 SizedBox(height: 16.h),
                                 CustomTextField(
                                   controller: _fullNameController,
@@ -191,7 +185,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     title: AppLocalizations.of(context)!.alreadyMember,
                     textLink: AppLocalizations.of(context)!.logIn,
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const AuthPage(),
+                        ),
+                      );
                     },
                   ),
                 ],
