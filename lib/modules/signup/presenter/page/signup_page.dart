@@ -136,13 +136,13 @@ class _SignUpPageState extends State<SignUpPage> {
                           Form(
                               key: _formKey,
                               child: Column(children: [
-                                CustomTextField(
-                                  controller: _emailController,
-                                  readOnly: true,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourEmail,
-                                  icon: const Icon(Icons.email),
-                                ),
+                                // CustomTextField(
+                                //   controller: _emailController,
+                                //   readOnly: true,
+                                //   label: AppLocalizations.of(context)!
+                                //       .enterYourEmail,
+                                //   icon: const Icon(Icons.email),
+                                // ),
                                 SizedBox(height: 16.h),
                                 CustomTextField(
                                   controller: _fullNameController,
