@@ -83,90 +83,101 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
           padding: const EdgeInsets.all(16.0),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 80.h,
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
                   ),
-                  BlocBuilder<ThemeCubit, ThemeState>(
-                    builder: (context, themeState) {
-                      final logoPath = themeState == ThemeState.dark
-                          ? AppConstants.logo_white_path
-                          : AppConstants.logo_black_path;
-                      return Logo(path: logoPath);
-                    },
-                  ),
-                  SizedBox(height: 30.h),
-                  Header(
-                    title: AppLocalizations.of(context)!.enterYourNewPassword,
-                    subtitle: AppLocalizations.of(context)!
-                        .enterYourNewAndConfirmationPassword,
-                  ),
-                  SizedBox(height: 20.h),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Form(
-                              key: _formKey,
-                              child: Column(children: [
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  readOnly: true,
-                                  controller: _emailController,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourEmail,
-                                  icon: const Icon(Icons.email),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  obscureText: true,
-                                  controller: _passwordController,
-                                  validator: validatePassword,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourNewPassword,
-                                  icon: const Icon(Icons.lock),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  obscureText: true,
-                                  controller: _confirmationPasswordController,
-                                  validator: samePasswords,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourConfirmationPassword,
-                                  icon: const Icon(Icons.lock),
-                                ),
-                                SizedBox(height: 16.h),
-                              ])),
-                        ],
-                      ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 80.h,
+                        ),
+                        BlocBuilder<ThemeCubit, ThemeState>(
+                          builder: (context, themeState) {
+                            final logoPath = themeState == ThemeState.dark
+                                ? AppConstants.logo_white_path
+                                : AppConstants.logo_black_path;
+                            return Logo(path: logoPath);
+                          },
+                        ),
+                        SizedBox(height: 30.h),
+                        Header(
+                          title: AppLocalizations.of(context)!
+                              .enterYourNewPassword,
+                          subtitle: AppLocalizations.of(context)!
+                              .enterYourNewAndConfirmationPassword,
+                        ),
+                        SizedBox(height: 20.h),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Form(
+                                    key: _formKey,
+                                    child: Column(children: [
+                                      // SizedBox(height: 16.h),
+                                      // CustomTextField(
+                                      //   readOnly: true,
+                                      //   controller: _emailController,
+                                      //   label: AppLocalizations.of(context)!
+                                      //       .enterYourEmail,
+                                      //   icon: const Icon(Icons.email),
+                                      // ),
+                                      SizedBox(height: 16.h),
+                                      CustomTextField(
+                                        obscureText: true,
+                                        controller: _passwordController,
+                                        validator: validatePassword,
+                                        label: AppLocalizations.of(context)!
+                                            .enterYourNewPassword,
+                                        icon: const Icon(Icons.lock),
+                                      ),
+                                      SizedBox(height: 16.h),
+                                      CustomTextField(
+                                        obscureText: true,
+                                        controller:
+                                            _confirmationPasswordController,
+                                        validator: samePasswords,
+                                        label: AppLocalizations.of(context)!
+                                            .enterYourConfirmationPassword,
+                                        icon: const Icon(Icons.lock),
+                                      ),
+                                      SizedBox(height: 16.h),
+                                    ])),
+                              ],
+                            ),
+                          ),
+                        ),
+                        BlocBuilder<AuthCubit, AuthState>(
+                          builder: (context, state) {
+                            return DefaultBtn(
+                              title: AppLocalizations.of(context)!.next,
+                              icon: const Icon(Icons.arrow_forward_ios,
+                                  color: Colors.white, size: 18),
+                              onPressed: () => validate(context),
+                              isLoading: state is AuthLoading,
+                            );
+                          },
+                        ),
+                        SizedBox(height: 1.h),
+                        Bottom(
+                          title: AppLocalizations.of(context)!.alreadyMember,
+                          textLink: AppLocalizations.of(context)!.logIn,
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const AuthPage(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  BlocBuilder<AuthCubit, AuthState>(
-                    builder: (context, state) {
-                      return DefaultBtn(
-                        title: AppLocalizations.of(context)!.next,
-                        icon: const Icon(Icons.arrow_forward_ios,
-                            color: Colors.white, size: 18),
-                        onPressed: () => validate(context),
-                        isLoading: state is AuthLoading,
-                      );
-                    },
-                  ),
-                  SizedBox(height: 1.h),
-                  Bottom(
-                    title: AppLocalizations.of(context)!.alreadyMember,
-                    textLink: AppLocalizations.of(context)!.logIn,
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const AuthPage(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                ),
               );
             },
           ),
