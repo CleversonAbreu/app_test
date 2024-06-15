@@ -236,6 +236,7 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _rememberMe = false;
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
@@ -257,8 +258,22 @@ class _AuthPageState extends State<AuthPage> {
     if (_formKey.currentState?.validate() ?? false) {
       final email = _emailController.text;
       final password = _passwordController.text;
-      ReadContext(context).read<AuthCubit>().auth(email, password);
+      ReadContext(context).read<AuthCubit>().auth(email, password, _rememberMe);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthCubit>().getSavedCredentials().then((savedCredentials) {
+      if (savedCredentials != null && savedCredentials.length == 2) {
+        setState(() {
+          _emailController.text = savedCredentials[0];
+          _passwordController.text = savedCredentials[1];
+          _rememberMe = true;
+        });
+      }
+    });
   }
 
   @override
@@ -343,7 +358,14 @@ class _AuthPageState extends State<AuthPage> {
                     Row(
                       children: [
                         CustomCheck(
-                            title: AppLocalizations.of(context)!.rememberMe),
+                          title: AppLocalizations.of(context)!.rememberMe,
+                          isChecked: _rememberMe,
+                          onChanged: (value) {
+                            setState(() {
+                              _rememberMe = value!;
+                            });
+                          },
+                        ),
                         const Spacer(),
                         Link(
                           title: AppLocalizations.of(context)!.forgotPassword,
@@ -369,7 +391,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     Expanded(child: Container()), // Spacer
                     SizedBox(
-                      height: 56.h, // Definindo uma altura fixa para o botão
+                      height: 56.h,
                       child: BlocBuilder<AuthCubit, AuthState>(
                         builder: (context, state) {
                           return DefaultBtn(

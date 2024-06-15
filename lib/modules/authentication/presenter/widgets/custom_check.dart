@@ -1,37 +1,29 @@
+import 'package:app_test/core/theme/app_collors.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/theme/app_collors.dart';
-
-class CustomCheck extends StatefulWidget {
+class CustomCheck extends StatelessWidget {
   final String title;
+  final bool isChecked;
+  final ValueChanged<bool?> onChanged;
 
   const CustomCheck({
-    super.key,
+    Key? key,
     required this.title,
-  });
+    required this.isChecked,
+    required this.onChanged,
+  }) : super(key: key);
 
-  @override
-  State<CustomCheck> createState() => _CustomCheckState();
-}
-
-class _CustomCheckState extends State<CustomCheck> {
-  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Checkbox(
           value: isChecked,
-          onChanged: (bool? value) {
-            setState(() {
-              isChecked = value!;
-            });
-          },
+          onChanged: onChanged,
         ),
         Text(
-          widget.title,
+          title,
           style: TextStyle(
             fontSize: 12.sp,
             color: AppColors.primaryText(context),
