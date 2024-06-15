@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -201,7 +202,13 @@ class _OTPPageState extends State<OTPPage> {
                                             ),
                                           if (otpFieldVisible)
                                             CustomTextField(
+                                              keyboardType:
+                                                  TextInputType.number,
                                               controller: _otpController,
+                                              inputFormatters: <TextInputFormatter>[
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly,
+                                              ],
                                               validator: validateField,
                                               label:
                                                   AppLocalizations.of(context)!
