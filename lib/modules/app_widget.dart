@@ -97,8 +97,9 @@ class _AppWidgetState extends State<AppWidget> {
                     routerDelegate: Modular.routerDelegate,
                     routeInformationProvider: PlatformRouteInformationProvider(
                       initialRouteInformation: RouteInformation(
+                        // location: _token != null ? '/home' : '/auth',
                         // ignore: deprecated_member_use
-                        location: _token != null ? '/home' : '/auth',
+                        location: _token != null ? '/home' : '/onboarding',
                       ),
                     ),
                   );
