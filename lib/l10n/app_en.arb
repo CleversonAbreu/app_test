@@ -46,5 +46,8 @@
   "passwordsMustBeSame":"Password and password confirmation must be the same",
   "createAccount":"Create your account",
   "insertYourdataToCreateAccount":"Enter your details to create an account",
-  "enterYourEmailToCreateAccount":"Enter your email to create an account"
+  "enterYourEmailToCreateAccount":"Enter your email to create an account",
+  "welcomeTo": "Welcome to",
+  "my":"My ",
+  "opportunity":"Opportunity"
 }

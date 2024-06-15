@@ -12,6 +12,7 @@ import 'authentication/presenter/cubit/auth_cubit.dart';
 import 'authentication/presenter/pages/auth_page.dart';
 import 'home/presenter/pages/home_page.dart';
 
+import 'onboarding/presenter/pages/onboarding_one_page.dart';
 import 'otp/data/datasources/otp_remote_datasource.dart';
 import 'otp/data/repositories/otp_repository_impl.dart';
 import 'otp/domain/repositories/otp_repository.dart';
@@ -51,6 +52,7 @@ class AppModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/auth', child: (_, __) => const AuthPage()),
-        ChildRoute('/home', child: (_, __) => const HomePage())
+        ChildRoute('/home', child: (_, __) => const HomePage()),
+        ChildRoute('/onboarding', child: (_, __) => OnboardingOnePage())
       ];
 }
