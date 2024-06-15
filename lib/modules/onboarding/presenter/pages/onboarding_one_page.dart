@@ -32,13 +32,13 @@ class OnboardingOnePage extends StatelessWidget {
             children: [
               Positioned(
                   left: 20.w,
-                  top: 290.h,
+                  top: 190.h,
                   child: FlutterLogo(
                     size: 240.h,
                   )),
               Positioned(
                 left: 20.w,
-                top: 520.h,
+                top: 420.h,
                 child: Text(
                   AppLocalizations.of(context)!.welcomeTo +
                       '\n' +
@@ -53,7 +53,7 @@ class OnboardingOnePage extends StatelessWidget {
               ),
               Positioned(
                 left: 20.w,
-                top: 613.h,
+                top: 523.h,
                 child: Text(
                   'Flutter Framework',
                   style: TextStyle(
@@ -65,7 +65,7 @@ class OnboardingOnePage extends StatelessWidget {
               ),
               Positioned(
                 left: 28.w,
-                top: 800.h,
+                top: 700.h,
                 child: Container(
                   width: 16.w,
                   height: 6.h,
@@ -79,7 +79,7 @@ class OnboardingOnePage extends StatelessWidget {
               ),
               Positioned(
                 left: 46.w,
-                top: 800.h,
+                top: 700.h,
                 child: Container(
                   width: 13.w,
                   height: 6.h,
@@ -92,8 +92,8 @@ class OnboardingOnePage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 360.w,
-                top: 780.h,
+                left: 320.w,
+                top: 680.h,
                 child: CircleAvatar(
                   backgroundColor: Colors.black,
                   child: IconButton(
@@ -105,22 +105,6 @@ class OnboardingOnePage extends StatelessWidget {
                         ),
                       );
                     },
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 20.w,
-                top: 246.h,
-                child: Container(
-                  width: 300.w,
-                  height: 178.h,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [],
                   ),
                 ),
               ),
