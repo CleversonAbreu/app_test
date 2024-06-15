@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OTPPageData {
   final String title;
   final String subtitle;
-  final Widget nextPage;
+  final Widget Function(String) nextPage;
 
   OTPPageData({
     required this.title,

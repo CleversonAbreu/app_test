@@ -1,5 +1,3 @@
-import 'package:app_test/modules/recovery_password/presenter/pages/validate_password_page.dart';
-import 'package:app_test/modules/signup/presenter/page/signup_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,10 +51,6 @@ class AppModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/auth', child: (_, __) => const AuthPage()),
-        ChildRoute('/signup', child: (_, __) => const SignUpPage()),
-        ChildRoute('/home', child: (_, __) => const HomePage()),
-        // ChildRoute('/otp', child: (_, __) => const OTPPage()),
-        ChildRoute('/validatePassword',
-            child: (_, __) => const ValidatePasswordPage()),
+        ChildRoute('/home', child: (_, __) => const HomePage())
       ];
 }
