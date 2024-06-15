@@ -17,24 +17,6 @@ import 'package:app_test/modules/authentication/presenter/widgets/header.dart';
 import '../../data/model/ottp_data_page_model.dart';
 import '../cubit/otp_cubit.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:validators/validators.dart';
-import 'package:app_test/core/constants/app_constants.dart';
-import 'package:app_test/modules/authentication/presenter/widgets/logo.dart';
-import 'package:app_test/modules/settings/presenter/cubit/theme_cubit.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:app_test/modules/authentication/presenter/widgets/bottom.dart';
-import 'package:app_test/modules/authentication/presenter/widgets/custom_textfield.dart';
-import 'package:app_test/modules/authentication/presenter/widgets/default_btn.dart';
-import 'package:app_test/modules/authentication/presenter/widgets/header.dart';
-
-import '../../data/model/ottp_data_page_model.dart';
-import '../cubit/otp_cubit.dart';
-
 class OTPPage extends StatefulWidget {
   final OTPPageData data;
 
