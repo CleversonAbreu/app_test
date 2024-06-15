@@ -1,6 +1,7 @@
 import 'package:app_test/modules/authentication/presenter/pages/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_collors.dart';
 
@@ -31,15 +32,15 @@ class OnboardingTwoPage extends StatelessWidget {
             children: [
               Positioned(
                   left: 20.w,
-                  top: 290.h,
+                  top: 190.h,
                   child: FlutterLogo(
                     size: 240.h,
                   )),
               Positioned(
                 left: 20.w,
-                top: 520.h,
+                top: 420.h,
                 child: Text(
-                  'Oportunidade' + '\n' + 'Full Stack',
+                  AppLocalizations.of(context)!.welcomeTo + '\n' + 'Full Stack',
                   style: TextStyle(
                     color: AppColors.primaryText(context),
                     fontSize: 36,
@@ -49,7 +50,7 @@ class OnboardingTwoPage extends StatelessWidget {
               ),
               Positioned(
                 left: 20.w,
-                top: 613.h,
+                top: 523.h,
                 child: Text(
                   'Flutter Nestjs ',
                   style: TextStyle(
@@ -61,7 +62,7 @@ class OnboardingTwoPage extends StatelessWidget {
               ),
               Positioned(
                 left: 28.w,
-                top: 800.h,
+                top: 700.h,
                 child: Container(
                   width: 16.w,
                   height: 6.h,
@@ -75,7 +76,7 @@ class OnboardingTwoPage extends StatelessWidget {
               ),
               Positioned(
                 left: 46.w,
-                top: 800.h,
+                top: 700.h,
                 child: Container(
                   width: 13.w,
                   height: 6.h,
@@ -88,8 +89,8 @@ class OnboardingTwoPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 360.w,
-                top: 780.h,
+                left: 320.w,
+                top: 680.h,
                 child: CircleAvatar(
                   backgroundColor: Colors.black,
                   child: IconButton(
