@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:app_test/modules/authentication/data/models/auth_model.dart';
-import 'package:app_test/modules/authentication/domain/errors/errors.dart';
-import 'package:app_test/modules/authentication/external/datasources/auth_datasource_impl.dart';
+import 'package:app_test/modules/auth/authentication/data/models/auth_model.dart';
+import 'package:app_test/modules/auth/authentication/domain/errors/errors.dart';
+import 'package:app_test/modules/auth/authentication/external/datasources/auth_datasource_impl.dart';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
