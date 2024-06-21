@@ -1,8 +1,8 @@
-import 'package:app_test/modules/authentication/data/datasources/auth_datasource.dart';
-import 'package:app_test/modules/authentication/data/models/auth_model.dart';
-import 'package:app_test/modules/authentication/data/models/result_auth_model.dart';
-import 'package:app_test/modules/authentication/data/repositories/auth_repository_impl.dart';
-import 'package:app_test/modules/authentication/domain/errors/errors.dart';
+import 'package:app_test/modules/auth/authentication/data/datasources/auth_datasource.dart';
+import 'package:app_test/modules/auth/authentication/data/models/auth_model.dart';
+import 'package:app_test/modules/auth/authentication/data/models/result_auth_model.dart';
+import 'package:app_test/modules/auth/authentication/data/repositories/auth_repository_impl.dart';
+import 'package:app_test/modules/auth/authentication/domain/errors/errors.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
