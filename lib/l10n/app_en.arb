@@ -51,7 +51,7 @@
   "my":"My ",
   "opportunity":"Opportunity",
   "completeRegistration":"Complete Registration",
-  "registrationCompletedSuccessfully":"Registration completed successfully!",
+  "successfullyRegistered":"Successfully registered!",
   "doYouWantEnableBiometrics":"Do you want to enable biometrics?",
   "yes":"Yes",
   "no":"No",
@@ -65,5 +65,12 @@
   "biometricsEnabled":"Biometrics enabled",
   "tapSensorFinish":"Tap the sensor to finish",
   "biometricUnavailable":"Biometric Unavailable",
-  "biometricNotAvailable":"Biometric not available"
+  "biometricNotAvailable":"Biometric not available",
+  "biometry":"Biometry",
+  "enableBiometrics":"Enable Biometrics",
+  "pleaseAuthenticateContinue":"Please authenticate to continue",
+  "yourSafestApp":"Your safest app",
+  "useYourPreferredAuthentication":"Use your preferred authentication",
+  "toContinueUsingApp":"to continue using the app"
+
 }

@@ -1,4 +1,5 @@
 import 'package:app_test/core/constants/app_constants.dart';
+import 'package:app_test/core/theme/app_collors.dart';
 import 'package:app_test/modules/common/presenter/widgets/logo.dart';
 import 'package:app_test/modules/settings/presenter/cubit/theme_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,11 +13,11 @@ import '../../../authentication/presenter/cubit/auth_state.dart';
 import '../../../authentication/presenter/pages/auth_page.dart';
 import '../../../../common/presenter/widgets/bottom.dart';
 import '../../../../common/presenter/widgets/custom_textfield.dart';
-import '../../../../common/presenter/widgets/default_btn.dart';
+import '../../../../common/presenter/widgets/buttons/icon_button_loading.dart';
 import '../../../../common/presenter/widgets/header.dart';
 import '../../../biometry/data/biometric_repository.dart';
 import '../../../biometry/domain/usecases/biometric_usecase.dart';
-import '../widgets/biometric_setup_bottom_sheet.dart';
+import '../widgets/success_signup_bottom_sheet.dart';
 
 class SignUpPage extends StatefulWidget {
   final String email;
@@ -43,7 +44,10 @@ class _SignUpPageState extends State<SignUpPage>
       _passwordController.clear();
       _confirmationPasswordController.clear();
       _fullNameController.clear();
-      showBiometricSetupBottomSheet(context, biometricRepository);
+      showSuccessSignUpBottomSheet(
+        context,
+        biometricRepository,
+      );
     }
   }
 
@@ -151,10 +155,10 @@ class _SignUpPageState extends State<SignUpPage>
                   ),
                   BlocBuilder<AuthCubit, AuthState>(
                     builder: (context, state) {
-                      return DefaultBtn(
+                      return IconButtonLoading(
                         title: AppLocalizations.of(context)!.next,
                         icon: const Icon(Icons.arrow_forward_ios,
-                            color: Colors.white, size: 18),
+                            color: AppColors.lightBackground, size: 18),
                         onPressed: () => validate(context),
                         isLoading: state is AuthLoading,
                       );

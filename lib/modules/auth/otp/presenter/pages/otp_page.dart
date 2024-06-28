@@ -10,7 +10,7 @@ import 'package:app_test/modules/settings/presenter/cubit/theme_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app_test/modules/common/presenter/widgets/bottom.dart';
 import 'package:app_test/modules/common/presenter/widgets/custom_textfield.dart';
-import 'package:app_test/modules/common/presenter/widgets/default_btn.dart';
+import 'package:app_test/modules/common/presenter/widgets/buttons/icon_button_loading.dart';
 import 'package:app_test/modules/common/presenter/widgets/header.dart';
 
 import '../../../../common/utils/validators/validator.dart';
@@ -193,7 +193,7 @@ class _OTPPageState extends State<OTPPage> {
                             ),
                           ),
                         ),
-                        DefaultBtn(
+                        IconButtonLoading(
                           title: AppLocalizations.of(context)!.next,
                           icon: const Icon(Icons.arrow_forward_ios,
                               color: Colors.white, size: 18),

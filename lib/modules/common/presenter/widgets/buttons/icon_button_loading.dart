@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DefaultBtn extends StatelessWidget {
+class IconButtonLoading extends StatelessWidget {
   final String title;
   final Icon icon;
   final VoidCallback onPressed;
   final bool isLoading;
 
-  const DefaultBtn({
+  const IconButtonLoading({
     Key? key,
     required this.title,
     required this.icon,

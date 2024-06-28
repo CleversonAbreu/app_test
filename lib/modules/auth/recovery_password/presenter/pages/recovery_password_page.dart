@@ -12,7 +12,7 @@ import '../../../authentication/presenter/cubit/auth_state.dart';
 import '../../../authentication/presenter/pages/auth_page.dart';
 import '../../../../common/presenter/widgets/bottom.dart';
 import '../../../../common/presenter/widgets/custom_textfield.dart';
-import '../../../../common/presenter/widgets/default_btn.dart';
+import '../../../../common/presenter/widgets/buttons/icon_button_loading.dart';
 import '../../../../common/presenter/widgets/header.dart';
 
 class RecoveryPasswordPage extends StatefulWidget {
@@ -124,7 +124,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                         ),
                         BlocBuilder<AuthCubit, AuthState>(
                           builder: (context, state) {
-                            return DefaultBtn(
+                            return IconButtonLoading(
                               title: AppLocalizations.of(context)!.next,
                               icon: const Icon(Icons.arrow_forward_ios,
                                   color: Colors.white, size: 18),

@@ -10,6 +10,7 @@ import 'auth/authentication/domain/usecases/result_auth_usecase.dart';
 import 'auth/authentication/external/datasources/auth_datasource_impl.dart';
 import 'auth/authentication/presenter/cubit/auth_cubit.dart';
 import 'auth/authentication/presenter/pages/auth_page.dart';
+import 'auth/biometry/presenter/pages/biometry_page.dart';
 import 'auth/otp/data/datasources/otp_remote_datasource.dart';
 import 'auth/otp/data/repositories/otp_repository_impl.dart';
 import 'auth/otp/domain/repositories/otp_repository.dart';
@@ -53,6 +54,7 @@ class AppModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute('/auth', child: (_, __) => const AuthPage()),
         ChildRoute('/home', child: (_, __) => const HomePage()),
+        ChildRoute('/biometry', child: (_, __) => BiometryPage()),
         ChildRoute('/onboarding', child: (_, __) => OnboardingOnePage())
       ];
 }
