@@ -7,3 +7,5 @@ class AppConstants {
   static const String url_base =
       'https://665c9efb3e4ac90a04da2475.mockapi.io/app_test/';
 }
+
+enum AlertType { error, warning, success }

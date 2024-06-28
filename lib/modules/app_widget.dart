@@ -2,18 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'auth/authentication/presenter/cubit/auth_cubit.dart';
-import 'settings/data/repositories/settings_repository.dart';
-import 'settings/presenter/cubit/language_cubit.dart';
-import 'settings/presenter/cubit/theme_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:local_auth/local_auth.dart';
+
+import 'auth/authentication/presenter/cubit/auth_cubit.dart';
+import 'auth/biometry/data/biometric_repository.dart';
+import 'settings/data/repositories/settings_repository.dart';
+import 'settings/presenter/cubit/biometric_cubit.dart';
+import 'settings/presenter/cubit/language_cubit.dart';
+import 'settings/presenter/cubit/theme_cubit.dart';
+import 'auth/biometry/domain/usecases/biometric_usecase.dart';
+import 'settings/domain/get_biometric_preference.dart';
+import 'settings/domain/save_biometric_preference.dart';
 
 class AppWidget extends StatefulWidget {
-  const AppWidget({super.key});
+  const AppWidget({Key? key}) : super(key: key);
 
   @override
   _AppWidgetState createState() => _AppWidgetState();
@@ -25,6 +32,7 @@ class _AppWidgetState extends State<AppWidget> {
   );
   String? _token;
   bool _isLoading = true;
+  bool _useBiometrics = false;
 
   @override
   void initState() {
@@ -33,9 +41,9 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   Future<void> _initializeApp() async {
-    // Use SchedulerBinding to delay the removal of the splash screen
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await _loadToken();
+      await _loadBiometricsPreference();
       FlutterNativeSplash.remove();
     });
   }
@@ -48,6 +56,12 @@ class _AppWidgetState extends State<AppWidget> {
         _isLoading = false;
       });
     }
+  }
+
+  Future<void> _loadBiometricsPreference() async {
+    final settingsRepository = SettingsRepository();
+    _useBiometrics =
+        (await settingsRepository.getBiometricPreference()) ?? false;
   }
 
   Future<void> _checkToken() async {
@@ -66,6 +80,11 @@ class _AppWidgetState extends State<AppWidget> {
     _checkToken();
 
     final settingsRepository = SettingsRepository();
+    final localAuth = LocalAuthentication();
+    final biometricUseCase = BiometricUseCase(localAuth);
+    final biometricRepository = BiometricRepository(biometricUseCase);
+    final getBiometricPreference = GetBiometricPreference(settingsRepository);
+    final saveBiometricPreference = SaveBiometricPreference(settingsRepository);
 
     return MultiBlocProvider(
       providers: [
@@ -78,12 +97,20 @@ class _AppWidgetState extends State<AppWidget> {
         BlocProvider(
           create: (context) => AuthCubit(Modular.get(), Modular.get()),
         ),
+        BlocProvider(
+          create: (context) => BiometricCubit(
+            saveBiometricPreference: saveBiometricPreference,
+            getBiometricPreference: getBiometricPreference,
+            biometricRepository: biometricRepository,
+          ),
+        ),
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
         builder: (context, locale) {
           return BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, themeState) {
               final themeCubit = BlocProvider.of<ThemeCubit>(context);
+
               return ScreenUtilInit(
                 designSize: const Size(360, 690),
                 minTextAdapt: true,
@@ -107,9 +134,10 @@ class _AppWidgetState extends State<AppWidget> {
                     routerDelegate: Modular.routerDelegate,
                     routeInformationProvider: PlatformRouteInformationProvider(
                       initialRouteInformation: RouteInformation(
-                        // location: _token != null ? '/home' : '/auth',
                         // ignore: deprecated_member_use
-                        location: _token != null ? '/home' : '/onboarding',
+                        location: _token != null
+                            ? (_useBiometrics ? '/biometry' : '/home')
+                            : '/auth',
                       ),
                     ),
                   );

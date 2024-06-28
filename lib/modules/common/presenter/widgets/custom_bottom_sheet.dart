@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../../../core/theme/app_collors.dart';
+import '../../../../core/constants/app_constants.dart';
+import '../../../../core/theme/app_collors.dart';
+import 'buttons/custom_elevated_button.dart';
 
 class CustomBottomSheet extends StatefulWidget {
+  final String title;
+  final String? subtitle;
   final VoidCallback onYesPressed;
-  final VoidCallback onNoPressed;
+  final VoidCallback? onNoPressed;
+  final AlertType? alertType;
 
   CustomBottomSheet({
     required this.onYesPressed,
-    required this.onNoPressed,
+    this.onNoPressed,
+    required this.title,
+    this.subtitle,
+    this.alertType,
   });
 
   @override
@@ -26,7 +34,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
 
@@ -44,6 +52,19 @@ class _CustomBottomSheetState extends State<CustomBottomSheet>
     super.dispose();
   }
 
+  IconData _getIcon() {
+    switch (widget.alertType) {
+      case AlertType.success:
+        return Icons.check;
+      case AlertType.error:
+        return Icons.error;
+      case AlertType.warning:
+        return Icons.warning;
+      default:
+        return Icons.info;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,7 +80,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet>
               radius: 50,
               backgroundColor: AppColors.darkBackground,
               child: Icon(
-                Icons.check,
+                _getIcon(),
                 size: 50,
                 color: AppColors.lightBackground,
               ),
@@ -67,7 +88,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet>
           ),
           SizedBox(height: 20.h),
           Text(
-            AppLocalizations.of(context)!.registrationCompletedSuccessfully,
+            widget.title,
             style: TextStyle(
               fontSize: 22.sp,
               fontWeight: FontWeight.w800,
@@ -76,27 +97,29 @@ class _CustomBottomSheetState extends State<CustomBottomSheet>
           ),
           SizedBox(height: 20),
           Text(
-            AppLocalizations.of(context)!.doYouWantEnableBiometrics,
+            widget.subtitle ?? '',
             style: TextStyle(
               fontSize: 18,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ElevatedButton(
+              CustomElevatedButton(
                 onPressed: widget.onYesPressed,
-                child: Text(AppLocalizations.of(context)!.yes),
+                buttonText: AppLocalizations.of(context)!.ok,
               ),
               SizedBox(width: 20.w),
-              ElevatedButton(
-                onPressed: widget.onNoPressed,
-                child: Text(AppLocalizations.of(context)!.no),
-              ),
+              if (widget.onNoPressed != null)
+                ElevatedButton(
+                  onPressed: widget.onNoPressed!,
+                  child: Text(AppLocalizations.of(context)!.no),
+                ),
             ],
           ),
+          SizedBox(height: 20.h),
         ],
       ),
     );

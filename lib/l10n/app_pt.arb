@@ -51,7 +51,7 @@
     "my":"Meu ",
     "opportunity":"Oportunidade",
     "completeRegistration":"Cadastro Completo",
-    "registrationCompletedSuccessfully":"Cadastro realizado com sucesso!",
+    "successfullyRegistered":"Registrado com sucesso!",
     "doYouWantEnableBiometrics":"Deseja habilitar biometria?",
     "yes":"Sim",
     "no":"Não",
@@ -64,9 +64,14 @@
     "youNeedConfigureBiometrics":"Você precisa configurar sua biometria",
     "biometricsEnabled":"Biometria habilitada",
     "tapSensorFinish":"Toque no sensor para finalizar",
-    "tapSensorFinish":"Toque no sensor para finalizar",
     "biometricUnavailable":"Biométrico indisponível",
-    "biometricNotAvailable":"Biometria não disponível"
+    "biometricNotAvailable":"Biometria não disponível",
+    "biometry":"Biometria",
+    "enableBiometrics":"Habilitar Biometria",
+    "pleaseAuthenticateContinue":"Por favor autentique para continuar",
+    "yourSafestApp":"Seu app mais seguro",
+    "useYourPreferredAuthentication":"Use sua autenticação preferida para",
+    "toContinueUsingApp":"continuar usando o aplicativo"
 
  }
 
