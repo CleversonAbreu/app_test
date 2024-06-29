@@ -2,23 +2,24 @@ import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:email_otp/email_otp.dart';
-import 'authentication/data/repositories/auth_repository_impl.dart';
-import 'authentication/data/repositories/token_repository_impl.dart';
-import 'authentication/domain/repositories/auth_repository.dart';
-import 'authentication/domain/repositories/token_repository.dart';
-import 'authentication/domain/usecases/result_auth_usecase.dart';
-import 'authentication/external/datasources/auth_datasource_impl.dart';
-import 'authentication/presenter/cubit/auth_cubit.dart';
-import 'authentication/presenter/pages/auth_page.dart';
+import 'auth/authentication/data/repositories/auth_repository_impl.dart';
+import 'auth/authentication/data/repositories/token_repository_impl.dart';
+import 'auth/authentication/domain/repositories/auth_repository.dart';
+import 'auth/authentication/domain/repositories/token_repository.dart';
+import 'auth/authentication/domain/usecases/result_auth_usecase.dart';
+import 'auth/authentication/external/datasources/auth_datasource_impl.dart';
+import 'auth/authentication/presenter/cubit/auth_cubit.dart';
+import 'auth/authentication/presenter/pages/auth_page.dart';
+import 'auth/biometry/presenter/pages/biometry_page.dart';
+import 'auth/otp/data/datasources/otp_remote_datasource.dart';
+import 'auth/otp/data/repositories/otp_repository_impl.dart';
+import 'auth/otp/domain/repositories/otp_repository.dart';
+import 'auth/otp/domain/usecases/send_otp_usecase.dart';
+import 'auth/otp/domain/usecases/verify_otp_usecase.dart';
+import 'auth/otp/presenter/cubit/otp_cubit.dart';
 import 'home/presenter/pages/home_page.dart';
 
-import 'onboarding/presenter/pages/onboarding_one_page.dart';
-import 'otp/data/datasources/otp_remote_datasource.dart';
-import 'otp/data/repositories/otp_repository_impl.dart';
-import 'otp/domain/repositories/otp_repository.dart';
-import 'otp/domain/usecases/send_otp_usecase.dart';
-import 'otp/domain/usecases/verify_otp_usecase.dart';
-import 'otp/presenter/cubit/otp_cubit.dart';
+import 'auth/onboarding/presenter/pages/onboarding_one_page.dart';
 
 class AppModule extends Module {
   @override
@@ -53,6 +54,7 @@ class AppModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute('/auth', child: (_, __) => const AuthPage()),
         ChildRoute('/home', child: (_, __) => const HomePage()),
+        ChildRoute('/biometry', child: (_, __) => BiometryPage()),
         ChildRoute('/onboarding', child: (_, __) => OnboardingOnePage())
       ];
 }

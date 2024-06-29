@@ -49,6 +49,29 @@
     "enterYourEmailToCreateAccount":"Insira seu email para criar uma conta",
     "welcomeTo": "Bem vindo ao",
     "my":"Meu ",
-    "opportunity":"Oportunidade"
+    "opportunity":"Oportunidade",
+    "completeRegistration":"Cadastro Completo",
+    "successfullyRegistered":"Registrado com sucesso!",
+    "doYouWantEnableBiometrics":"Deseja habilitar biometria?",
+    "yes":"Sim",
+    "no":"Não",
+    "congratulations":"Parabéns",
+    "biometricEnabled":"A autenticação biométrica foi habilitada com sucesso.",
+    "ok":"Ok",
+    "errorBiometrics":"Erro ao ativar a biometria",
+    "deviceNotSupportBiometrics":"Seu dispositivo não suporta o uso de biometria",
+    "configureBiometrics":"Configurar biometria",
+    "youNeedConfigureBiometrics":"Você precisa configurar sua biometria",
+    "biometricsEnabled":"Biometria habilitada",
+    "tapSensorFinish":"Toque no sensor para finalizar",
+    "biometricUnavailable":"Biométrico indisponível",
+    "biometricNotAvailable":"Biometria não disponível",
+    "biometry":"Biometria",
+    "enableBiometrics":"Habilitar Biometria",
+    "pleaseAuthenticateContinue":"Por favor autentique para continuar",
+    "yourSafestApp":"Seu app mais seguro",
+    "useYourPreferredAuthentication":"Use sua autenticação preferida para",
+    "toContinueUsingApp":"continuar usando o aplicativo"
+
  }
 
