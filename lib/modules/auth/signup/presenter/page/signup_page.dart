@@ -87,96 +87,91 @@ class _SignUpPageState extends State<SignUpPage>
           padding: const EdgeInsets.all(16.0),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 80.h,
-                  ),
-                  BlocBuilder<ThemeCubit, ThemeState>(
-                    builder: (context, themeState) {
-                      final logoPath = themeState == ThemeState.dark
-                          ? AppConstants.logo_white_path
-                          : AppConstants.logo_black_path;
-                      return Logo(path: logoPath);
-                    },
-                  ),
-                  SizedBox(height: 30.h),
-                  Header(
-                    title: AppLocalizations.of(context)!.createAccount,
-                    subtitle: AppLocalizations.of(context)!
-                        .insertYourdataToCreateAccount,
-                  ),
-                  SizedBox(height: 20.h),
-                  Expanded(
-                    child: SingleChildScrollView(
+              return SingleChildScrollView(
+                // Adicionado SingleChildScrollView aqui
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 80.h,
+                    ),
+                    BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (context, themeState) {
+                        final logoPath = themeState == ThemeState.dark
+                            ? AppConstants.logo_white_path
+                            : AppConstants.logo_black_path;
+                        return Logo(path: logoPath);
+                      },
+                    ),
+                    SizedBox(height: 30.h),
+                    Header(
+                      title: AppLocalizations.of(context)!.createAccount,
+                      subtitle: AppLocalizations.of(context)!
+                          .insertYourdataToCreateAccount,
+                    ),
+                    SizedBox(height: 20.h),
+                    Form(
+                      key: _formKey,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  controller: _fullNameController,
-                                  validator: (value) =>
-                                      validateFullName(value, context),
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourFullName,
-                                  icon: const Icon(Icons.person),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  obscureText: true,
-                                  controller: _passwordController,
-                                  validator: (value) =>
-                                      validatePassword(value, context),
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourPassword,
-                                  icon: const Icon(Icons.lock),
-                                ),
-                                SizedBox(height: 16.h),
-                                CustomTextField(
-                                  obscureText: true,
-                                  controller: _confirmationPasswordController,
-                                  validator: (value) => samePasswords(
-                                      value, _passwordController, context),
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourConfirmationPassword,
-                                  icon: const Icon(Icons.lock),
-                                ),
-                              ],
-                            ),
+                          SizedBox(height: 16.h),
+                          CustomTextField(
+                            controller: _fullNameController,
+                            validator: (value) =>
+                                validateFullName(value, context),
+                            label:
+                                AppLocalizations.of(context)!.enterYourFullName,
+                            icon: const Icon(Icons.person),
                           ),
                           SizedBox(height: 16.h),
+                          CustomTextField(
+                            obscureText: true,
+                            controller: _passwordController,
+                            validator: (value) =>
+                                validatePassword(value, context),
+                            label:
+                                AppLocalizations.of(context)!.enterYourPassword,
+                            icon: const Icon(Icons.lock),
+                          ),
+                          SizedBox(height: 16.h),
+                          CustomTextField(
+                            obscureText: true,
+                            controller: _confirmationPasswordController,
+                            validator: (value) => samePasswords(
+                                value, _passwordController, context),
+                            label: AppLocalizations.of(context)!
+                                .enterYourConfirmationPassword,
+                            icon: const Icon(Icons.lock),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  BlocBuilder<AuthCubit, AuthState>(
-                    builder: (context, state) {
-                      return IconButtonLoading(
-                        title: AppLocalizations.of(context)!.next,
-                        icon: const Icon(Icons.arrow_forward_ios,
-                            color: AppColors.lightBackground, size: 18),
-                        onPressed: () => validate(context),
-                        isLoading: state is AuthLoading,
-                      );
-                    },
-                  ),
-                  SizedBox(height: 1.h),
-                  Bottom(
-                    title: AppLocalizations.of(context)!.alreadyMember,
-                    textLink: AppLocalizations.of(context)!.logIn,
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const AuthPage(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                    SizedBox(height: 16.h),
+                    BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, state) {
+                        return IconButtonLoading(
+                          title: AppLocalizations.of(context)!.next,
+                          icon: const Icon(Icons.arrow_forward_ios,
+                              color: AppColors.lightBackground, size: 18),
+                          onPressed: () => validate(context),
+                          isLoading: state is AuthLoading,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 1.h),
+                    Bottom(
+                      title: AppLocalizations.of(context)!.alreadyMember,
+                      textLink: AppLocalizations.of(context)!.logIn,
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const AuthPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 20.h),
+                  ],
+                ),
               );
             },
           ),
