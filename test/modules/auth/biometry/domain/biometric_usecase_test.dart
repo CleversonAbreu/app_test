@@ -6,11 +6,13 @@
 
 import 'package:app_test/modules/auth/biometry/domain/usecases/biometric_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:local_auth/local_auth.dart';
 
 import 'biometric_usecase_test.mocks.dart';
 
+@GenerateMocks([LocalAuthentication])
 void main() {
   late BiometricUseCase biometricUseCase;
   late MockLocalAuthentication mockLocalAuthentication;

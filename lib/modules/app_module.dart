@@ -13,6 +13,7 @@ import 'auth/authentication/presenter/cubit/auth_cubit.dart';
 import 'auth/authentication/presenter/pages/auth_page.dart';
 import 'auth/biometry/presenter/pages/biometry_page.dart';
 import 'auth/otp/data/datasources/otp_remote_datasource.dart';
+import 'auth/otp/data/datasources/otp_remote_datasource_impl.dart';
 import 'auth/otp/data/repositories/otp_repository_impl.dart';
 import 'auth/otp/domain/repositories/otp_repository.dart';
 import 'auth/otp/domain/usecases/send_otp_usecase.dart';
@@ -39,7 +40,7 @@ class AppModule extends Module {
       (i) => TokenRepositoryImpl(),
     ),
     Bind((i) => EmailOTP()),
-    Bind<OTPRemoteDataSource>((i) => OTPRemoteDataSourceImpl()),
+    Bind<OTPRemoteDataSource>((i) => OTPRemoteDataSourceImpl(i())),
     Bind<OTPRepository>((i) => OTPRepositoryImpl(i.get<OTPRemoteDataSource>())),
     Bind((i) => SendOTP(i.get<OTPRepository>())),
     Bind((i) => VerifyOTP(i.get<OTPRepository>())),

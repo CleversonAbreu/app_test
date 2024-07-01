@@ -1,20 +1,14 @@
-// import 'package:app_test/modules/auth/biometry/domain/usecases/biometric_usecase.dart';
-// import 'package:local_auth/local_auth.dart';
-// import 'package:mockito/annotations.dart';
-
-// // Anotação para gerar os mocks
-// @GenerateMocks([BiometricUseCase, LocalAuthentication])
-// void main() {}
-// biometric_repository_test.dart
-
 import 'package:app_test/modules/auth/biometry/data/biometric_repository.dart';
+import 'package:app_test/modules/auth/biometry/domain/usecases/biometric_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 // Importe o arquivo de mocks gerado
 import 'biometric_repository_test.mocks.dart';
 
+@GenerateMocks([BiometricUseCase, LocalAuthentication])
 void main() {
   late BiometricRepository repository;
   late MockBiometricUseCase mockBiometricUseCase;
