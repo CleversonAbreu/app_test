@@ -12,7 +12,8 @@ import 'package:app_test/modules/auth/authentication/domain/errors/errors.dart';
 import 'package:app_test/modules/auth/authentication/data/models/auth_model.dart';
 import 'package:app_test/modules/auth/authentication/data/models/result_auth_model.dart';
 import 'package:app_test/modules/auth/authentication/data/datasources/auth_datasource_impl.dart';
-import 'auth_datasource_impl_test.mocks.dart'; // Importe o arquivo .mocks.dart gerado
+
+import 'auth_datasource_impl_test.mocks.dart';
 
 void main() {
   late AuthDataSourceImpl datasource;
