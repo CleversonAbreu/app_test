@@ -1,10 +1,5 @@
-// import 'package:mockito/annotations.dart';
-// import 'package:dio/dio.dart';
-
-// @GenerateMocks([Dio])
-// void main() {}
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dio/dio.dart';
 import 'package:app_test/core/constants/app_constants.dart';
@@ -15,6 +10,7 @@ import 'package:app_test/modules/auth/authentication/data/datasources/auth_datas
 
 import 'auth_datasource_impl_test.mocks.dart';
 
+@GenerateMocks([Dio])
 void main() {
   late AuthDataSourceImpl datasource;
   late MockDio mockDio;
