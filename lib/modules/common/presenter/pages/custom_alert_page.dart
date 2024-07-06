@@ -71,15 +71,17 @@ class CustomAlert extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: 24.0,
+              color: AppColors.darkBackground,
               fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(height: 16.0),
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16.0),
-          ),
+          Text(text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: AppColors.darkBackground,
+              )),
           SizedBox(height: 24.0),
           if (titleBtnLeft != null)
             ElevatedButton(

@@ -2,12 +2,12 @@ import 'package:app_test/core/theme/app_collors.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
 import 'dart:async';
 
 import '../../../../../core/constants/app_constants.dart';
-import '../../../../home/presenter/pages/home_page.dart';
-import '../../../authentication/presenter/pages/auth_page.dart';
+
 import '../../data/biometric_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -89,17 +89,9 @@ class _BiometryConfigAlertPageState extends State<BiometryConfigAlertPage> {
         if (authenticated) {
           String? token = await _secureStorage.read(key: 'token');
           if (token != null) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => HomePage(),
-              ),
-            );
+            GoRouter.of(context).go('/home');
           } else {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => AuthPage(),
-              ),
-            );
+            GoRouter.of(context).go('/auth');
           }
           return;
         } else {
