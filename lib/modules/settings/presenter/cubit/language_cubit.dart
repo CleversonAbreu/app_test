@@ -1,30 +1,17 @@
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter/material.dart';
-
-// class LanguageCubit extends Cubit<Locale> {
-//   LanguageCubit() : super(const Locale('en', 'US'));
-
-//   void toggleLanguage() {
-//     if (state.languageCode == 'en') {
-//       emit(const Locale('pt', 'BR'));
-//     } else {
-//       emit(const Locale('en', 'US'));
-//     }
-//   }
-// }
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import '../../data/repositories/settings_repository.dart';
+
+import '../../domain/usecases/settings_usecase.dart';
 
 class LanguageCubit extends Cubit<Locale> {
-  final SettingsRepository settingsRepository;
+  final SettingsUseCase usecase;
 
-  LanguageCubit(this.settingsRepository) : super(const Locale('en', 'US')) {
+  LanguageCubit(this.usecase) : super(const Locale('en', 'US')) {
     _loadLocale();
   }
 
   Future<void> _loadLocale() async {
-    final localeString = await settingsRepository.getLocale();
+    final localeString = await usecase.fetchLocale();
     if (localeString != null) {
       emit(Locale(localeString.split('_').first, localeString.split('_').last));
     }
@@ -32,10 +19,10 @@ class LanguageCubit extends Cubit<Locale> {
 
   void toggleLanguage() async {
     if (state.languageCode == 'en') {
-      await settingsRepository.saveLocale('pt_BR');
+      await usecase.updateLocale('pt_BR');
       emit(const Locale('pt', 'BR'));
     } else {
-      await settingsRepository.saveLocale('en_US');
+      await usecase.updateLocale('en_US');
       emit(const Locale('en', 'US'));
     }
   }

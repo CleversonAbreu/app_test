@@ -29,7 +29,7 @@ class CustomElevatedButton extends StatelessWidget {
       ),
       child: Text(
         buttonText,
-        style: TextStyle(color: AppColors.darkBackground),
+        style: TextStyle(color: AppColors.lightBackground),
       ),
     );
   }
