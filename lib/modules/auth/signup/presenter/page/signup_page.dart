@@ -6,11 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
 import '../../../../common/utils/validators/validator.dart';
 import '../../../authentication/presenter/cubit/auth_cubit.dart';
 import '../../../authentication/presenter/cubit/auth_state.dart';
-import '../../../authentication/presenter/pages/auth_page.dart';
 import '../../../../common/presenter/widgets/bottom.dart';
 import '../../../../common/presenter/widgets/custom_textfield.dart';
 import '../../../../common/presenter/widgets/buttons/icon_button_loading.dart';
@@ -161,13 +161,7 @@ class _SignUpPageState extends State<SignUpPage>
                     Bottom(
                       title: AppLocalizations.of(context)!.alreadyMember,
                       textLink: AppLocalizations.of(context)!.logIn,
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const AuthPage(),
-                          ),
-                        );
-                      },
+                      onPressed: () => GoRouter.of(context).go('/auth'),
                     ),
                     SizedBox(height: 20.h),
                   ],

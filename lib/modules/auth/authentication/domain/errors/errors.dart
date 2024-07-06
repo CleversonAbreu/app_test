@@ -1,5 +1,5 @@
 abstract class AuthFailure implements Exception {
-  String get message; // Adiciona o getter 'message'
+  String get message;
 }
 
 class InvalidCredentials extends AuthFailure {

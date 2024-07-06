@@ -3,9 +3,9 @@ import 'package:app_test/core/constants/app_constants.dart';
 import 'package:app_test/modules/auth/authentication/domain/errors/errors.dart';
 import 'package:dio/dio.dart';
 
-import '../../data/datasources/auth_datasource.dart';
-import '../../data/models/auth_model.dart';
-import '../../data/models/result_auth_model.dart';
+import 'auth_datasource.dart';
+import '../models/auth_model.dart';
+import '../models/result_auth_model.dart';
 
 class AuthDataSourceImpl implements AuthDatasource {
   final Dio dio;

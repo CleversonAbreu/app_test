@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_test/modules/auth/authentication/presenter/pages/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../../../../../core/constants/app_constants.dart';
@@ -10,8 +10,6 @@ import '../../../../common/presenter/pages/custom_alert_page.dart';
 import '../../../../settings/presenter/cubit/biometric_cubit.dart';
 import '../../data/biometric_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import 'biometry_config_alert_page.dart';
 
 class BiometricSetupAlertPage extends StatelessWidget {
   final BiometricRepository biometricRepository;
@@ -56,23 +54,18 @@ class BiometricSetupAlertPage extends StatelessWidget {
               alertType = AlertType.error;
             }
 
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => BiometryConfigAlertPage(
-                  alertType: alertType,
-                  title: title,
-                  text: text,
-                  biometricRepository: biometricRepository,
-                ),
-              ),
-            );
+            final routeParams = {
+              'alertType': alertType,
+              'title': title,
+              'text': text,
+              'biometricRepository': biometricRepository,
+            };
+
+            GoRouter.of(context)
+                .go('/biometryConfigAlertPage', extra: routeParams);
           },
           titleBtnRight: AppLocalizations.of(context)!.no,
-          onPressedBtnRight: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => AuthPage()),
-            );
-          },
+          onPressedBtnRight: () => GoRouter.of(context).go('/auth'),
           alertType: AlertType.warning,
         ),
       ),

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../common/utils/validators/validator.dart';
 import '../../../../../core/constants/app_constants.dart';
-import '../../../otp/data/model/ottp_data_page_model.dart';
-import '../../../otp/presenter/pages/otp_page.dart';
 import '../../../recovery_password/presenter/pages/recovery_password_page.dart';
 import '../../../../settings/presenter/cubit/theme_cubit.dart';
 import '../../../signup/presenter/page/signup_page.dart';
@@ -61,7 +60,7 @@ class _AuthPageState extends State<AuthPage> {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthAuthenticated) {
-            Navigator.pushReplacementNamed(context, '/home');
+            GoRouter.of(context).go('/home');
           } else if (state is AuthError) {
             String message = '';
             if (state.message == 'invalidCredentials') {
@@ -140,21 +139,16 @@ class _AuthPageState extends State<AuthPage> {
                         Link(
                           title: AppLocalizations.of(context)!.forgotPassword,
                           onPressed: () {
-                            final oTPPageData = OTPPageData(
-                              title:
+                            final routeParams = {
+                              'title':
                                   AppLocalizations.of(context)!.forgotPassword,
-                              subtitle: AppLocalizations.of(context)!
+                              'subtitle': AppLocalizations.of(context)!
                                   .enterYourRegisteredEmailToRecoverYourPassword,
-                              nextPage: (email) =>
+                              'nextPage': (email) =>
                                   RecoveryPasswordPage(email: email),
-                            );
-
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    OTPPage(data: oTPPageData),
-                              ),
-                            );
+                            };
+                            GoRouter.of(context)
+                                .go('/otpPage', extra: routeParams);
                           },
                         ),
                       ],
@@ -184,18 +178,13 @@ class _AuthPageState extends State<AuthPage> {
                       title: AppLocalizations.of(context)!.newMember,
                       textLink: AppLocalizations.of(context)!.registerNow,
                       onPressed: () {
-                        final oTPPageData = OTPPageData(
-                          title: AppLocalizations.of(context)!.createAccount,
-                          subtitle: AppLocalizations.of(context)!
+                        final routeParams = {
+                          'title': AppLocalizations.of(context)!.createAccount,
+                          'subtitle': AppLocalizations.of(context)!
                               .enterYourEmailToCreateAccount,
-                          nextPage: (email) => SignUpPage(email: email),
-                        );
-
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => OTPPage(data: oTPPageData),
-                          ),
-                        );
+                          'nextPage': (email) => SignUpPage(email: email),
+                        };
+                        GoRouter.of(context).go('/otpPage', extra: routeParams);
                       },
                     ),
                     SizedBox(height: 10.h),

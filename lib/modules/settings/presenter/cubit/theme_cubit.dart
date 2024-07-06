@@ -1,50 +1,28 @@
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter/material.dart';
-
-// enum ThemeState { light, dark }
-
-// class ThemeCubit extends Cubit<ThemeState> {
-//   ThemeCubit() : super(ThemeState.light);
-
-//   void toggleTheme() {
-//     if (state == ThemeState.light) {
-//       emit(ThemeState.dark);
-//     } else {
-//       emit(ThemeState.light);
-//     }
-//   }
-
-//   ThemeData get themeData {
-//     return state == ThemeState.light
-//         ? ThemeData.light()
-//         : ThemeData.dark();
-//   }
-// }
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import '../../data/repositories/settings_repository.dart';
+
+import '../../domain/usecases/settings_usecase.dart';
 
 enum ThemeState { light, dark }
 
 class ThemeCubit extends Cubit<ThemeState> {
-  final SettingsRepository settingsRepository;
+  final SettingsUseCase usecase;
 
-  ThemeCubit(this.settingsRepository) : super(ThemeState.light) {
+  ThemeCubit(this.usecase) : super(ThemeState.light) {
     _loadTheme();
   }
 
   Future<void> _loadTheme() async {
-    final isDarkMode = await settingsRepository.getTheme() ?? false;
+    final isDarkMode = await usecase.fetchTheme() ?? false;
     emit(isDarkMode ? ThemeState.dark : ThemeState.light);
   }
 
   void toggleTheme() async {
     if (state == ThemeState.light) {
-      await settingsRepository.saveTheme(true);
+      await usecase.updateTheme(true);
       emit(ThemeState.dark);
     } else {
-      await settingsRepository.saveTheme(false);
+      await usecase.updateTheme(false);
       emit(ThemeState.light);
     }
   }

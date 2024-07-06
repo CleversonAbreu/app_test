@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../../../../../core/constants/app_constants.dart';
@@ -48,12 +49,7 @@ class _BiometryPageState extends State<BiometryPage> {
   }
 
   void _navigateToHomePage() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const HomePage(),
-      ),
-      (Route<dynamic> route) => false,
-    );
+    GoRouter.of(context).go('/home');
   }
 
   @override
