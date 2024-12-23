@@ -35,7 +35,7 @@
     "incorrectOTPCode":"Código OTP incorreto",
     "enterYourNewPassword":"Insira sua nova senha",
     "pleaseInsertYourNewPassword":"Por favor, insira sua nova senha",
-    "insertYourNewAndConfirmationPassword":"Insira sua nova senha e confirmação de senha",
+    "enterYourNewAndConfirmationPassword": "Insira sua nova senha e confirmação de senha",
     "enterYourConfirmationPassword":"Insira sua confirmacao de senha",
     "pleaseInsertYourConfirmationPassword":"Por favor, insira sua confirmacao de senha",
     "passwordMustBeGreater":"Senha deve ser maior que 6 caracteres",

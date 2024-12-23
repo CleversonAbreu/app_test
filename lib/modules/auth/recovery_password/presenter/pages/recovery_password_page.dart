@@ -26,8 +26,7 @@ class RecoveryPasswordPage extends StatefulWidget {
 class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmationPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmationPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   // mandar para futuro cubit
@@ -71,18 +70,14 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                         ),
                         BlocBuilder<ThemeCubit, ThemeState>(
                           builder: (context, themeState) {
-                            final logoPath = themeState == ThemeState.dark
-                                ? AppConstants.logo_white_path
-                                : AppConstants.logo_black_path;
+                            final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                             return Logo(path: logoPath);
                           },
                         ),
                         SizedBox(height: 30.h),
                         Header(
-                          title: AppLocalizations.of(context)!
-                              .enterYourNewPassword,
-                          subtitle: AppLocalizations.of(context)!
-                              .enterYourNewAndConfirmationPassword,
+                          title: AppLocalizations.of(context)!.enterYourNewPassword,
+                          subtitle: AppLocalizations.of(context)!.enterYourNewAndConfirmationPassword,
                         ),
                         SizedBox(height: 20.h),
                         Expanded(
@@ -97,23 +92,16 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                                       CustomTextField(
                                         obscureText: true,
                                         controller: _passwordController,
-                                        validator: (value) =>
-                                            validatePassword(value, context),
-                                        label: AppLocalizations.of(context)!
-                                            .enterYourNewPassword,
+                                        validator: (value) => validatePassword(value, context),
+                                        label: AppLocalizations.of(context)!.enterYourNewPassword,
                                         icon: const Icon(Icons.lock),
                                       ),
                                       SizedBox(height: 16.h),
                                       CustomTextField(
                                         obscureText: true,
-                                        controller:
-                                            _confirmationPasswordController,
-                                        validator: (value) => samePasswords(
-                                            value,
-                                            _passwordController,
-                                            context),
-                                        label: AppLocalizations.of(context)!
-                                            .enterYourConfirmationPassword,
+                                        controller: _confirmationPasswordController,
+                                        validator: (value) => samePasswords(value, _passwordController, context),
+                                        label: AppLocalizations.of(context)!.enterYourConfirmationPassword,
                                         icon: const Icon(Icons.lock),
                                       ),
                                       SizedBox(height: 16.h),
@@ -126,8 +114,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                           builder: (context, state) {
                             return IconButtonLoading(
                               title: AppLocalizations.of(context)!.next,
-                              icon: const Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white, size: 18),
+                              icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18),
                               onPressed: () => validate(context),
                               isLoading: state is AuthLoading,
                             );
