@@ -2,28 +2,24 @@
 
 import 'package:app_test/core/errors/app_exceptions.dart';
 import 'package:app_test/core/network/dio_client.dart';
-import 'package:app_test/modules/auth/authentication/domain/errors/errors.dart';
-import 'package:dio/dio.dart';
-import '../models/auth_model.dart';
-import '../models/result_auth_model.dart';
-import 'auth_datasource.dart';
+import 'package:app_test/modules/user/profile/data/datasources/profile_remote_datasource.dart';
+import 'package:app_test/modules/user/profile/data/models/profile_model.dart';
 
-class AuthDataSourceImpl implements AuthDatasource {
+import 'package:dio/dio.dart';
+
+class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   final DioClient dioClient;
 
-  AuthDataSourceImpl(this.dioClient);
+  ProfileRemoteDataSourceImpl(this.dioClient);
 
   @override
-  Future<ResultAuthModel> auth(AuthModel authModel) async {
+  Future<ProfileModel> getProfile() async {
     try {
-      final response = await dioClient.dio.post(
-        '/login',
-        data: authModel,
-      );
+      final response = await dioClient.dio.get('/profile');
       if (response.statusCode == 200) {
-        return ResultAuthModel.fromMap(response.data);
+        return ProfileModel.fromJson(response.data as Map<String, dynamic>);
       } else {
-        throw DataSourceError();
+        throw ApiException('Error fetching profile: ${response.statusCode}');
       }
     } on DioError catch (dioError) {
       if (dioError.type == DioErrorType.connectionTimeout || dioError.type == DioErrorType.receiveTimeout) {
@@ -37,4 +33,7 @@ class AuthDataSourceImpl implements AuthDatasource {
       throw UnknownException('An unexpected error occurred: $e');
     }
   }
+
+  @override
+  Future<void> updateProfile(ProfileModel profile) async => throw UnimplementedError();
 }

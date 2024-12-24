@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:app_test/modules/settings/domain/repositories/settings_repository.dart';
 import 'package:app_test/modules/settings/data/repositories/settings_repository_impl.dart';
 import 'package:app_test/modules/settings/data/datasources/settings_datasource.dart';
 
@@ -81,8 +80,7 @@ void main() {
     test('should fetch biometric preference', () async {
       // Arrange
       const isEnabled = true;
-      when(mockLocalDataSource.getBiometricPreference())
-          .thenAnswer((_) async => isEnabled);
+      when(mockLocalDataSource.getBiometricPreference()).thenAnswer((_) async => isEnabled);
 
       // Act
       final result = await repository.getBiometricPreference();

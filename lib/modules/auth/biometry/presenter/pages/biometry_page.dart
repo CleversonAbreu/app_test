@@ -8,7 +8,6 @@ import 'package:local_auth/local_auth.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../common/presenter/widgets/header.dart';
 import '../../../../common/presenter/widgets/logo.dart';
-import '../../../../home/presenter/pages/home_page.dart';
 import '../../../../settings/presenter/cubit/theme_cubit.dart';
 
 class BiometryPage extends StatefulWidget {
@@ -30,8 +29,7 @@ class _BiometryPageState extends State<BiometryPage> {
   Future<void> _authenticate() async {
     try {
       bool authenticated = await auth.authenticate(
-        localizedReason:
-            AppLocalizations.of(context)!.pleaseAuthenticateContinue,
+        localizedReason: AppLocalizations.of(context)!.pleaseAuthenticateContinue,
         options: const AuthenticationOptions(
           biometricOnly: true,
         ),
@@ -79,19 +77,14 @@ class _BiometryPageState extends State<BiometryPage> {
                     ),
                     BlocBuilder<ThemeCubit, ThemeState>(
                       builder: (context, themeState) {
-                        final logoPath = themeState == ThemeState.dark
-                            ? AppConstants.logo_white_path
-                            : AppConstants.logo_black_path;
+                        final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                         return Logo(path: logoPath);
                       },
                     ),
                     SizedBox(height: 30.h),
                     Header(
                       title: AppLocalizations.of(context)!.yourSafestApp,
-                      subtitle: AppLocalizations.of(context)!
-                              .useYourPreferredAuthentication +
-                          '\n' +
-                          AppLocalizations.of(context)!.toContinueUsingApp,
+                      subtitle: AppLocalizations.of(context)!.useYourPreferredAuthentication + '\n' + AppLocalizations.of(context)!.toContinueUsingApp,
                     ),
                     SizedBox(
                       height: 250.h,

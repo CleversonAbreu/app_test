@@ -3,7 +3,6 @@ import 'package:app_test/modules/settings/domain/usecases/settings_usecase_impl.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:app_test/modules/settings/domain/usecases/settings_usecase.dart';
 
 import 'settings_usecase_impl_test.mocks.dart';
 
@@ -33,8 +32,7 @@ void main() {
     test('should fetch theme preference', () async {
       // Arrange
       const isDarkMode = true;
-      when(mockSettingsRepository.getTheme())
-          .thenAnswer((_) async => isDarkMode);
+      when(mockSettingsRepository.getTheme()).thenAnswer((_) async => isDarkMode);
 
       // Act
       final result = await useCase.fetchTheme();
@@ -47,8 +45,7 @@ void main() {
     test('should get biometric preference', () async {
       // Arrange
       const isEnabled = true;
-      when(mockSettingsRepository.getBiometricPreference())
-          .thenAnswer((_) async => isEnabled);
+      when(mockSettingsRepository.getBiometricPreference()).thenAnswer((_) async => isEnabled);
 
       // Act
       final result = await useCase.getBiometricPreference();
@@ -66,8 +63,7 @@ void main() {
       await useCase.saveBiometricPreference(isEnabled);
 
       // Assert
-      verify(mockSettingsRepository.saveBiometricPreference(isEnabled))
-          .called(1);
+      verify(mockSettingsRepository.saveBiometricPreference(isEnabled)).called(1);
     });
 
     test('should update locale', () async {

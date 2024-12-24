@@ -16,7 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/app_constants.dart';
 import 'settings/data/datasources/settings_datasource_impl.dart';
 import 'settings/data/repositories/settings_repository_impl.dart';
-import 'settings/domain/repositories/settings_repository.dart';
 
 class AppRouter {
   final FlutterSecureStorage _secureStorage;
@@ -26,19 +25,16 @@ class AppRouter {
 
   Future<void> init() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    final settingsLocalDataSource =
-        SettingsLocalDataSourceImpl(sharedPreferences);
+    final settingsLocalDataSource = SettingsLocalDataSourceImpl(sharedPreferences);
     final settingsRepository = SettingsRepositoryImpl(settingsLocalDataSource);
 
-    final useBiometrics =
-        await settingsRepository.getBiometricPreference() ?? false;
+    final useBiometrics = await settingsRepository.getBiometricPreference() ?? false;
 
     //token
     final token = await _secureStorage.read(key: 'token');
 
     _router = GoRouter(
-      initialLocation:
-          token != null ? (useBiometrics ? '/biometry' : '/home') : '/auth',
+      initialLocation: token != null ? (useBiometrics ? '/biometry' : '/home') : '/auth',
       routes: [
         GoRoute(
           path: '/auth',
@@ -81,8 +77,7 @@ class AppRouter {
               alertType: params['alertType'] as AlertType,
               title: params['title'] as String,
               text: params['text'] as String,
-              biometricRepository:
-                  params['biometricRepository'] as BiometricRepository,
+              biometricRepository: params['biometricRepository'] as BiometricRepository,
             );
           },
         ),
@@ -91,8 +86,7 @@ class AppRouter {
           builder: (context, state) {
             final params = state.extra as Map<String, dynamic>;
             return BiometricSetupAlertPage(
-              biometricRepository:
-                  params['biometricRepository'] as BiometricRepository,
+              biometricRepository: params['biometricRepository'] as BiometricRepository,
             );
           },
         ),
