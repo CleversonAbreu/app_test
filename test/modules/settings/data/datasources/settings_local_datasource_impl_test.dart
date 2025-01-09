@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:app_test/modules/settings/data/datasources/settings_datasource.dart';
 import 'package:app_test/modules/settings/data/datasources/settings_datasource_impl.dart';
 
 import 'settings_local_datasource_impl_test.mocks.dart';
@@ -25,8 +24,7 @@ void main() {
     test('should save theme preference', () async {
       // Arrange
       const isDarkMode = true;
-      when(mockSharedPreferences.setBool(any, any))
-          .thenAnswer((_) async => true);
+      when(mockSharedPreferences.setBool(any, any)).thenAnswer((_) async => true);
 
       // Act
       await dataSource.saveTheme(isDarkMode);
@@ -51,8 +49,7 @@ void main() {
     test('should save locale', () async {
       // Arrange
       const locale = 'en_US';
-      when(mockSharedPreferences.setString(any, any))
-          .thenAnswer((_) async => true);
+      when(mockSharedPreferences.setString(any, any)).thenAnswer((_) async => true);
 
       // Act
       await dataSource.saveLocale(locale);
@@ -77,8 +74,7 @@ void main() {
     test('should save biometric preference', () async {
       // Arrange
       const isEnabled = true;
-      when(mockSharedPreferences.setBool(any, any))
-          .thenAnswer((_) async => true);
+      when(mockSharedPreferences.setBool(any, any)).thenAnswer((_) async => true);
 
       // Act
       await dataSource.saveBiometricPreference(isEnabled);

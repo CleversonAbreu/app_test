@@ -1,3 +1,5 @@
+import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/modules/user/profile/presenter/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/app_constants.dart';
 import 'settings/data/datasources/settings_datasource_impl.dart';
 import 'settings/data/repositories/settings_repository_impl.dart';
-import 'settings/domain/repositories/settings_repository.dart';
 
 class AppRouter {
   final FlutterSecureStorage _secureStorage;
@@ -26,42 +27,47 @@ class AppRouter {
 
   Future<void> init() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    final settingsLocalDataSource =
-        SettingsLocalDataSourceImpl(sharedPreferences);
+    final settingsLocalDataSource = SettingsLocalDataSourceImpl(sharedPreferences);
     final settingsRepository = SettingsRepositoryImpl(settingsLocalDataSource);
 
-    final useBiometrics =
-        await settingsRepository.getBiometricPreference() ?? false;
+    final useBiometrics = await settingsRepository.getBiometricPreference() ?? false;
 
     //token
     final token = await _secureStorage.read(key: 'token');
 
     _router = GoRouter(
-      initialLocation:
-          token != null ? (useBiometrics ? '/biometry' : '/home') : '/auth',
+      initialLocation: token != null ? (useBiometrics ? AppRoutes.biometry : AppRoutes.home) : AppRoutes.auth,
       routes: [
         GoRoute(
-          path: '/auth',
+          path: '/',
+          builder: (context, state) => token != null ? (useBiometrics ? BiometryPage() : HomePage()) : AuthPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.auth,
           builder: (context, state) => const AuthPage(),
         ),
         GoRoute(
-          path: '/home',
+          path: AppRoutes.home,
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          path: '/biometry',
+          path: AppRoutes.biometry,
           builder: (context, state) => BiometryPage(),
         ),
         GoRoute(
-          path: '/onboarding',
+          path: AppRoutes.onboarding,
           builder: (context, state) => OnboardingOnePage(),
         ),
         GoRoute(
-          path: '/settings',
+          path: AppRoutes.settings,
           builder: (context, state) => const SettingsPage(),
         ),
         GoRoute(
-          path: '/otpPage',
+          path: AppRoutes.profile,
+          builder: (context, state) => const ProfilePage(),
+        ),
+        GoRoute(
+          path: AppRoutes.otp,
           builder: (context, state) {
             final params = state.extra as Map<String, dynamic>;
             return OTPPage(
@@ -74,25 +80,23 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: '/biometryConfigAlertPage',
+          path: AppRoutes.biometryConfig,
           builder: (context, state) {
             final params = state.extra as Map<String, dynamic>;
             return BiometryConfigAlertPage(
               alertType: params['alertType'] as AlertType,
               title: params['title'] as String,
               text: params['text'] as String,
-              biometricRepository:
-                  params['biometricRepository'] as BiometricRepository,
+              biometricRepository: params['biometricRepository'] as BiometricRepository,
             );
           },
         ),
         GoRoute(
-          path: '/biometricSetupAlertPage',
+          path: AppRoutes.biometricSetup,
           builder: (context, state) {
             final params = state.extra as Map<String, dynamic>;
             return BiometricSetupAlertPage(
-              biometricRepository:
-                  params['biometricRepository'] as BiometricRepository,
+              biometricRepository: params['biometricRepository'] as BiometricRepository,
             );
           },
         ),

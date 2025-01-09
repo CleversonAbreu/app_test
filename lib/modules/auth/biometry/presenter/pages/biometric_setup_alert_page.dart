@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_test/core/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -33,8 +34,7 @@ class BiometricSetupAlertPage extends StatelessWidget {
             // Checks if the device is capable of performing biometrics
             bool canCheck = await biometricRepository.checkBiometrics();
             if (canCheck) {
-              List<BiometricType> listBiometrics =
-                  await biometricRepository.getAvailableBiometrics();
+              List<BiometricType> listBiometrics = await biometricRepository.getAvailableBiometrics();
               //checks if the device has any biometrics registered
               if (listBiometrics.length > 0) {
                 //enable biometry
@@ -61,11 +61,13 @@ class BiometricSetupAlertPage extends StatelessWidget {
               'biometricRepository': biometricRepository,
             };
 
-            GoRouter.of(context)
-                .go('/biometryConfigAlertPage', extra: routeParams);
+            GoRouter.of(context).go(
+              AppRoutes.biometryConfig,
+              extra: routeParams,
+            );
           },
           titleBtnRight: AppLocalizations.of(context)!.no,
-          onPressedBtnRight: () => GoRouter.of(context).go('/auth'),
+          onPressedBtnRight: () => GoRouter.of(context).go(AppRoutes.auth),
           alertType: AlertType.warning,
         ),
       ),

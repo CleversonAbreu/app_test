@@ -1,4 +1,7 @@
 import 'package:app_test/core/constants/app_constants.dart';
+import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/core/constants/app_sizes.dart';
+import 'package:app_test/core/theme/app_collors.dart';
 import 'package:app_test/modules/common/presenter/widgets/logo.dart';
 import 'package:app_test/modules/settings/presenter/cubit/theme_cubit.dart';
 // ignore: depend_on_referenced_packages
@@ -54,7 +57,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(AppSizes.s16),
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
@@ -65,16 +68,14 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                   child: IntrinsicHeight(
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 80.h,
-                        ),
+                        SizedBox(height: AppSizes.spacingLarge),
                         BlocBuilder<ThemeCubit, ThemeState>(
                           builder: (context, themeState) {
                             final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                             return Logo(path: logoPath);
                           },
                         ),
-                        SizedBox(height: 30.h),
+                        SizedBox(height: AppSizes.s32.h),
                         Header(
                           title: AppLocalizations.of(context)!.enterYourNewPassword,
                           subtitle: AppLocalizations.of(context)!.enterYourNewAndConfirmationPassword,
@@ -88,7 +89,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                                 Form(
                                     key: _formKey,
                                     child: Column(children: [
-                                      SizedBox(height: 16.h),
+                                      SizedBox(height: AppSizes.s16.h),
                                       CustomTextField(
                                         obscureText: true,
                                         controller: _passwordController,
@@ -96,7 +97,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                                         label: AppLocalizations.of(context)!.enterYourNewPassword,
                                         icon: const Icon(Icons.lock),
                                       ),
-                                      SizedBox(height: 16.h),
+                                      SizedBox(height: AppSizes.s16.h),
                                       CustomTextField(
                                         obscureText: true,
                                         controller: _confirmationPasswordController,
@@ -114,7 +115,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                           builder: (context, state) {
                             return IconButtonLoading(
                               title: AppLocalizations.of(context)!.next,
-                              icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18),
+                              icon: const Icon(Icons.arrow_forward_ios, color: AppColors.lightBackground, size: AppSizes.fontMedium),
                               onPressed: () => validate(context),
                               isLoading: state is AuthLoading,
                             );
@@ -124,7 +125,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                         Bottom(
                           title: AppLocalizations.of(context)!.alreadyMember,
                           textLink: AppLocalizations.of(context)!.logIn,
-                          onPressed: () => GoRouter.of(context).go('/auth'),
+                          onPressed: () => GoRouter.of(context).go(AppRoutes.auth),
                         ),
                       ],
                     ),

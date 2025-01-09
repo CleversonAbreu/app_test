@@ -1,3 +1,6 @@
+import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
+import 'package:app_test/modules/user/profile/presenter/cubit/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -24,12 +27,25 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.settingsTitle),
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => GoRouter.of(context).go('/home'))),
+        title: Text(AppLocalizations.of(context)!.settingsTitle),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => GoRouter.of(context).go(AppRoutes.home),
+        ),
+      ),
       body: Column(
         children: [
+          BlocBuilder<ProfileCubit, ProfileState>(
+            builder: (context, authState) {
+              return ListTile(
+                title: const Text('Meu Perfil'),
+                onTap: () async {
+                  context.read<ProfileCubit>().loadProfile();
+                  GoRouter.of(context).go(AppRoutes.profile);
+                },
+              );
+            },
+          ),
           BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, themeState) {
               return ListTile(
@@ -68,31 +84,23 @@ class SettingsPage extends StatelessWidget {
                   trailing: Switch(
                     value: isEnabled ?? false,
                     onChanged: (value) async {
-                      context
-                          .read<BiometricCubit>()
-                          .toggleBiometricPreference();
+                      context.read<BiometricCubit>().toggleBiometricPreference();
                       final biometricRepository = getIt<BiometricRepository>();
                       final routeParams = {
                         'alertType': AlertType.warning,
-                        'title':
-                            AppLocalizations.of(context)!.configureBiometrics,
-                        'text': AppLocalizations.of(context)!
-                            .youNeedConfigureBiometrics,
+                        'title': AppLocalizations.of(context)!.configureBiometrics,
+                        'text': AppLocalizations.of(context)!.youNeedConfigureBiometrics,
                         'biometricRepository': biometricRepository,
                       };
 
                       if (value) {
                         if (await biometricRepository.checkBiometrics()) {
-                          List<BiometricType> listBiometrics =
-                              await biometricRepository
-                                  .getAvailableBiometrics();
+                          List<BiometricType> listBiometrics = await biometricRepository.getAvailableBiometrics();
                           if (listBiometrics.isEmpty) {
-                            GoRouter.of(context).go('/biometryConfigAlertPage',
-                                extra: routeParams);
+                            GoRouter.of(context).go(AppRoutes.biometryConfig, extra: routeParams);
                           }
                         } else {
-                          GoRouter.of(context).go('/biometryConfigAlertPage',
-                              extra: routeParams);
+                          GoRouter.of(context).go(AppRoutes.biometryConfig, extra: routeParams);
                         }
                       }
                     },
@@ -108,7 +116,7 @@ class SettingsPage extends StatelessWidget {
                 onTap: () async {
                   await storage.delete(key: 'token');
                   context.read<AuthCubit>().logout();
-                  GoRouter.of(context).go('/auth');
+                  GoRouter.of(context).go(AppRoutes.auth);
                 },
               );
             },
