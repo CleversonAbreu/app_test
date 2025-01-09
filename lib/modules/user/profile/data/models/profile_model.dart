@@ -2,7 +2,7 @@ import '../../domain/entities/profile_entity.dart';
 
 class ProfileModel extends ProfileEntity {
   ProfileModel({
-    required int id,
+    required String id,
     required String name,
     required String email,
     required String avatarUrl,

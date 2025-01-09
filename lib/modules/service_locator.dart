@@ -123,15 +123,15 @@ Future<void> setupLocator() async {
         verifyOTP: getIt<VerifyOTP>(),
       ));
 
-  // Registre o caso de uso do perfil
-  getIt.registerLazySingleton<GetProfileUseCase>(() => GetProfileUseCase(getIt<ProfileRepository>()));
-
-  getIt.registerLazySingleton<UpdateProfileUseCase>(() => UpdateProfileUseCase(getIt<ProfileRepository>()));
-
 // No seu service_locator.dart
   getIt.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(getIt<ProfileRemoteDataSource>()),
   );
+
+  // Registre o caso de uso do perfil
+  getIt.registerLazySingleton<GetProfileUseCase>(() => GetProfileUseCase(getIt<ProfileRepository>()));
+
+  getIt.registerLazySingleton<UpdateProfileUseCase>(() => UpdateProfileUseCase(getIt<ProfileRepository>()));
 
   getIt.registerFactory<ProfileCubit>(
     () => ProfileCubit(getProfileUseCase: getIt<GetProfileUseCase>(), updateProfileUseCase: getIt<UpdateProfileUseCase>()),

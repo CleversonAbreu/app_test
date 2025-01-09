@@ -20,7 +20,7 @@ void main() {
 
   group('ProfileRepositoryImpl', () {
     test('should return a ProfileEntity when getProfile is called', () async {
-      final profileModel = ProfileModel(id: 1, name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
+      final profileModel = ProfileModel(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
       when(mockRemoteDataSource.getProfile()).thenAnswer((_) async => profileModel);
 
       final result = await repository.getProfile();
@@ -31,8 +31,8 @@ void main() {
     });
 
     test('should call updateProfile with the correct profile model', () async {
-      final profileEntity = ProfileEntity(id: 1, name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
-      final profileModel = ProfileModel(id: 1, name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
+      final profileEntity = ProfileEntity(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
+      final profileModel = ProfileModel(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
 
       when(mockRemoteDataSource.updateProfile(profileModel)).thenAnswer((_) async => {});
 

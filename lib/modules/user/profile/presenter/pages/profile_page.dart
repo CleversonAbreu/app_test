@@ -1,8 +1,10 @@
+import 'package:app_test/modules/service_locator.dart';
 import 'package:app_test/modules/user/profile/domain/usecases/get_profile_usecase.dart';
 import 'package:app_test/modules/user/profile/domain/usecases/update_profile_usecase.dart';
 import 'package:app_test/modules/user/profile/presenter/cubit/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../cubit/profile_cubit.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -11,11 +13,17 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Meu Perfil')),
+      appBar: AppBar(
+        title: const Text('Meu Perfil'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => GoRouter.of(context).go('/settings'),
+        ),
+      ),
       body: BlocProvider(
         create: (context) => ProfileCubit(
-          getProfileUseCase: GetProfileUseCase(context.read()),
-          updateProfileUseCase: UpdateProfileUseCase(context.read()),
+          getProfileUseCase: getIt<GetProfileUseCase>(),
+          updateProfileUseCase: getIt<UpdateProfileUseCase>(),
         )..loadProfile(),
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
@@ -53,6 +61,21 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Container para exibir a foto de perfil
+                  Center(
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: NetworkImage(profile.avatarUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   TextFormField(
                     initialValue: profile.name,
                     decoration: const InputDecoration(labelText: 'Nome'),

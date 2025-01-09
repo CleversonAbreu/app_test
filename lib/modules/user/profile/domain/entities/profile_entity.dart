@@ -1,5 +1,5 @@
 class ProfileEntity {
-  final int id;
+  final String id;
   final String name;
   final String email;
   final String avatarUrl;
@@ -12,7 +12,7 @@ class ProfileEntity {
   });
 
   ProfileEntity copyWith({
-    int? id,
+    String? id,
     String? name,
     String? email,
     String? avatarUrl,

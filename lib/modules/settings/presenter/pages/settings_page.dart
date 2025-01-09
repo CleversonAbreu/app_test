@@ -1,4 +1,5 @@
 import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
+import 'package:app_test/modules/user/profile/presenter/cubit/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,6 +29,17 @@ class SettingsPage extends StatelessWidget {
           title: Text(AppLocalizations.of(context)!.settingsTitle), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => GoRouter.of(context).go('/home'))),
       body: Column(
         children: [
+          BlocBuilder<ProfileCubit, ProfileState>(
+            builder: (context, authState) {
+              return ListTile(
+                title: const Text('Meu Perfil'),
+                onTap: () async {
+                  context.read<ProfileCubit>().loadProfile();
+                  GoRouter.of(context).go('/profile');
+                },
+              );
+            },
+          ),
           BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, themeState) {
               return ListTile(
@@ -101,15 +113,6 @@ class SettingsPage extends StatelessWidget {
                   GoRouter.of(context).go('/auth');
                 },
               );
-            },
-          ),
-          // Novo ListTile para navegar para ProfilePage
-          ListTile(
-            title: const Text('Meu Perfil'),
-            onTap: () async {
-              // Inicia o ProfileCubit para carregar os dados do perfil
-              context.read<ProfileCubit>().loadProfile(); // Carrega os dados ao navegar para o perfil
-              GoRouter.of(context).go('/profile');
             },
           ),
         ],

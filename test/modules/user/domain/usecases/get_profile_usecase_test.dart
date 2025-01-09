@@ -19,7 +19,7 @@ void main() {
 
   group('GetProfileUseCase', () {
     test('should return a ProfileEntity when call is successful', () async {
-      final profileEntity = ProfileEntity(id: 1, name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
+      final profileEntity = ProfileEntity(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatarUrl: '');
       when(mockRepository.getProfile()).thenAnswer((_) async => profileEntity);
 
       final result = await useCase.call();
