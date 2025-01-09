@@ -1,3 +1,4 @@
+import 'package:app_test/core/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,7 +81,7 @@ class _OTPPageState extends State<OTPPage> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(AppSizes.s16),
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
@@ -92,27 +93,20 @@ class _OTPPageState extends State<OTPPage> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 80.h,
+                          height: AppSizes.spacingLarge,
                         ),
                         BlocBuilder<ThemeCubit, ThemeState>(
                           builder: (context, themeState) {
-                            final logoPath = themeState == ThemeState.dark
-                                ? AppConstants.logo_white_path
-                                : AppConstants.logo_black_path;
+                            final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                             return Logo(path: logoPath);
                           },
                         ),
-                        SizedBox(height: 30.h),
+                        SizedBox(height: AppSizes.s32.h),
                         Header(
-                          title: emailFieldVisible
-                              ? widget.data.title
-                              : AppLocalizations.of(context)!.enterYourOtp,
-                          subtitle: emailFieldVisible
-                              ? widget.data.subtitle
-                              : AppLocalizations.of(context)!
-                                  .youReceivedOtpCodeEmail,
+                          title: emailFieldVisible ? widget.data.title : AppLocalizations.of(context)!.enterYourOtp,
+                          subtitle: emailFieldVisible ? widget.data.subtitle : AppLocalizations.of(context)!.youReceivedOtpCodeEmail,
                         ),
-                        SizedBox(height: 20.h),
+                        SizedBox(height: AppSizes.s20.h),
                         BlocProvider(
                           create: (context) => otpCubit,
                           child: BlocListener<OTPCubit, OTPState>(
@@ -136,16 +130,14 @@ class _OTPPageState extends State<OTPPage> {
                                 loading();
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        widget.data.nextPage(email),
+                                    builder: (context) => widget.data.nextPage(email),
                                   ),
                                 );
                               } else if (state is OTPCodeError) {
                                 loading();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text(AppLocalizations.of(context)!
-                                        .incorrectOTPCode),
+                                    content: Text(AppLocalizations.of(context)!.incorrectOTPCode),
                                   ),
                                 );
                               }
@@ -154,14 +146,12 @@ class _OTPPageState extends State<OTPPage> {
                               key: _formKey,
                               child: Column(
                                 children: [
-                                  SizedBox(height: 16.h),
+                                  SizedBox(height: AppSizes.s16.h),
                                   if (emailFieldVisible)
                                     CustomTextField(
                                       controller: _emailController,
-                                      validator: (value) =>
-                                          validateEmail(value, context),
-                                      label: AppLocalizations.of(context)!
-                                          .enterYourEmail,
+                                      validator: (value) => validateEmail(value, context),
+                                      label: AppLocalizations.of(context)!.enterYourEmail,
                                       icon: const Icon(Icons.email),
                                     ),
                                   if (otpFieldVisible)
@@ -171,13 +161,11 @@ class _OTPPageState extends State<OTPPage> {
                                       inputFormatters: <TextInputFormatter>[
                                         FilteringTextInputFormatter.digitsOnly,
                                       ],
-                                      validator: (value) =>
-                                          validateOtp(value, context),
-                                      label: AppLocalizations.of(context)!
-                                          .enterYourOtp,
+                                      validator: (value) => validateOtp(value, context),
+                                      label: AppLocalizations.of(context)!.enterYourOtp,
                                       icon: const Icon(Icons.password),
                                     ),
-                                  SizedBox(height: 16.h),
+                                  SizedBox(height: AppSizes.s16.h),
                                 ],
                               ),
                             ),
@@ -186,8 +174,7 @@ class _OTPPageState extends State<OTPPage> {
                         const Spacer(),
                         IconButtonLoading(
                           title: AppLocalizations.of(context)!.next,
-                          icon: const Icon(Icons.arrow_forward_ios,
-                              color: Colors.white, size: 18),
+                          icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18),
                           onPressed: () => validate(context),
                           isLoading: isLoading,
                         ),

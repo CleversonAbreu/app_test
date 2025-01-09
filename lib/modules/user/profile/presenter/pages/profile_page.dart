@@ -1,3 +1,8 @@
+import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/core/theme/app_collors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:app_test/modules/common/presenter/widgets/buttons/icon_button_loading.dart';
 import 'package:app_test/modules/service_locator.dart';
 import 'package:app_test/modules/user/profile/domain/usecases/get_profile_usecase.dart';
 import 'package:app_test/modules/user/profile/domain/usecases/update_profile_usecase.dart';
@@ -12,12 +17,24 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
+    // ScreenUtil.init(
+    //   context,
+    //   designSize: Size(width, height),
+    //   minTextAdapt: true,
+    //   splitScreenMode: true,
+    // );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meu Perfil'),
+        backgroundColor: AppColors.lightSecondary,
+        title: const Text(
+          'Profile',
+          style: TextStyle(color: AppColors.lightBackground),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => GoRouter.of(context).go('/settings'),
+          onPressed: () => GoRouter.of(context).go(AppRoutes.settings),
         ),
       ),
       body: BlocProvider(
@@ -38,7 +55,7 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     Text(
                       state.error!,
-                      style: const TextStyle(color: Colors.red),
+                      style: const TextStyle(color: AppColors.lightSecondary),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 16),
@@ -56,54 +73,84 @@ class ProfilePage extends StatelessWidget {
               return const Center(child: Text('Perfil não encontrado'));
             }
 
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
+            return SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Container para exibir a foto de perfil
-                  Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(profile.avatarUrl),
-                          fit: BoxFit.cover,
-                        ),
+                  Container(
+                    height: 150,
+                    color: AppColors.lightSecondary,
+                    child: Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 16),
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(profile.avatarUrl),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Change Picture',
+                              style: TextStyle(
+                                color: AppColors.lightBackground,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  TextFormField(
-                    initialValue: profile.name,
-                    decoration: const InputDecoration(labelText: 'Nome'),
-                    onChanged: (value) {
-                      context.read<ProfileCubit>().updateProfile(
-                            profile.copyWith(name: value),
-                          );
-                    },
-                  ),
-                  TextFormField(
-                    initialValue: profile.email,
-                    decoration: const InputDecoration(labelText: 'E-mail'),
-                    onChanged: (value) {
-                      context.read<ProfileCubit>().updateProfile(
-                            profile.copyWith(email: value),
-                          );
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      final updatedProfile = profile.copyWith(
-                        name: profile.name,
-                        email: profile.email,
-                      );
-                      context.read<ProfileCubit>().updateProfile(updatedProfile);
-                    },
-                    child: const Text('Salvar Alterações'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          initialValue: profile.name,
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            context.read<ProfileCubit>().updateProfile(
+                                  profile.copyWith(name: value),
+                                );
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          initialValue: profile.email,
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            context.read<ProfileCubit>().updateProfile(
+                                  profile.copyWith(email: value),
+                                );
+                          },
+                        ),
+                        Expanded(child: Container()), // Spacer
+                        SizedBox(
+                          height: 56.h,
+                          child: IconButtonLoading(
+                            title: 'Update',
+                            icon: const Icon(
+                              Icons.arrow_forward_ios,
+                              color: AppColors.lightBackground,
+                              size: 18,
+                            ),
+                            onPressed: () => {},
+                            isLoading: false,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

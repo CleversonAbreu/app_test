@@ -1,3 +1,4 @@
+import 'package:app_test/core/constants/app_routes.dart';
 import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
 import 'package:app_test/modules/user/profile/presenter/cubit/profile_state.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,12 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.settingsTitle), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => GoRouter.of(context).go('/home'))),
+        title: Text(AppLocalizations.of(context)!.settingsTitle),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => GoRouter.of(context).go(AppRoutes.home),
+        ),
+      ),
       body: Column(
         children: [
           BlocBuilder<ProfileCubit, ProfileState>(
@@ -35,7 +41,7 @@ class SettingsPage extends StatelessWidget {
                 title: const Text('Meu Perfil'),
                 onTap: () async {
                   context.read<ProfileCubit>().loadProfile();
-                  GoRouter.of(context).go('/profile');
+                  GoRouter.of(context).go(AppRoutes.profile);
                 },
               );
             },
@@ -91,10 +97,10 @@ class SettingsPage extends StatelessWidget {
                         if (await biometricRepository.checkBiometrics()) {
                           List<BiometricType> listBiometrics = await biometricRepository.getAvailableBiometrics();
                           if (listBiometrics.isEmpty) {
-                            GoRouter.of(context).go('/biometryConfigAlertPage', extra: routeParams);
+                            GoRouter.of(context).go(AppRoutes.biometryConfig, extra: routeParams);
                           }
                         } else {
-                          GoRouter.of(context).go('/biometryConfigAlertPage', extra: routeParams);
+                          GoRouter.of(context).go(AppRoutes.biometryConfig, extra: routeParams);
                         }
                       }
                     },
@@ -110,7 +116,7 @@ class SettingsPage extends StatelessWidget {
                 onTap: () async {
                   await storage.delete(key: 'token');
                   context.read<AuthCubit>().logout();
-                  GoRouter.of(context).go('/auth');
+                  GoRouter.of(context).go(AppRoutes.auth);
                 },
               );
             },

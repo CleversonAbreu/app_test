@@ -1,4 +1,6 @@
 import 'package:app_test/core/constants/app_constants.dart';
+import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/core/constants/app_sizes.dart';
 import 'package:app_test/core/theme/app_collors.dart';
 import 'package:app_test/modules/common/presenter/widgets/logo.dart';
 import 'package:app_test/modules/settings/presenter/cubit/theme_cubit.dart';
@@ -27,18 +29,16 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage>
-    with SingleTickerProviderStateMixin {
+class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateMixin {
   final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _confirmationPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmationPasswordController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isChecked = false;
   late AnimationController _controller;
   late final BiometricRepository biometricRepository;
 
-  //mandar para futuro cubit
+  // Todo: Add biometric authentication
   void validate(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       _passwordController.clear();
@@ -84,11 +84,10 @@ class _SignUpPageState extends State<SignUpPage>
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(AppSizes.s16),
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
-                // Adicionado SingleChildScrollView aqui
                 child: Column(
                   children: [
                     SizedBox(
@@ -96,74 +95,64 @@ class _SignUpPageState extends State<SignUpPage>
                     ),
                     BlocBuilder<ThemeCubit, ThemeState>(
                       builder: (context, themeState) {
-                        final logoPath = themeState == ThemeState.dark
-                            ? AppConstants.logo_white_path
-                            : AppConstants.logo_black_path;
+                        final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                         return Logo(path: logoPath);
                       },
                     ),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: AppSizes.s32.h),
                     Header(
                       title: AppLocalizations.of(context)!.createAccount,
-                      subtitle: AppLocalizations.of(context)!
-                          .insertYourdataToCreateAccount,
+                      subtitle: AppLocalizations.of(context)!.insertYourdataToCreateAccount,
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: AppSizes.s20.h),
                     Form(
                       key: _formKey,
                       child: Column(
                         children: [
-                          SizedBox(height: 16.h),
+                          SizedBox(height: AppSizes.s16.h),
                           CustomTextField(
                             controller: _fullNameController,
-                            validator: (value) =>
-                                validateFullName(value, context),
-                            label:
-                                AppLocalizations.of(context)!.enterYourFullName,
+                            validator: (value) => validateFullName(value, context),
+                            label: AppLocalizations.of(context)!.enterYourFullName,
                             icon: const Icon(Icons.person),
                           ),
-                          SizedBox(height: 16.h),
+                          SizedBox(height: AppSizes.s16.h),
                           CustomTextField(
                             obscureText: true,
                             controller: _passwordController,
-                            validator: (value) =>
-                                validatePassword(value, context),
-                            label:
-                                AppLocalizations.of(context)!.enterYourPassword,
+                            validator: (value) => validatePassword(value, context),
+                            label: AppLocalizations.of(context)!.enterYourPassword,
                             icon: const Icon(Icons.lock),
                           ),
-                          SizedBox(height: 16.h),
+                          SizedBox(height: AppSizes.s16.h),
                           CustomTextField(
                             obscureText: true,
                             controller: _confirmationPasswordController,
-                            validator: (value) => samePasswords(
-                                value, _passwordController, context),
-                            label: AppLocalizations.of(context)!
-                                .enterYourConfirmationPassword,
+                            validator: (value) => samePasswords(value, _passwordController, context),
+                            label: AppLocalizations.of(context)!.enterYourConfirmationPassword,
                             icon: const Icon(Icons.lock),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: AppSizes.s16.h),
                     BlocBuilder<AuthCubit, AuthState>(
                       builder: (context, state) {
                         return IconButtonLoading(
                           title: AppLocalizations.of(context)!.next,
-                          icon: const Icon(Icons.arrow_forward_ios,
-                              color: AppColors.lightBackground, size: 18),
+                          icon: const Icon(Icons.arrow_forward_ios, color: AppColors.lightBackground, size: 18),
                           onPressed: () => validate(context),
                           isLoading: state is AuthLoading,
                         );
                       },
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: AppSizes.s2.h),
                     Bottom(
                       title: AppLocalizations.of(context)!.alreadyMember,
                       textLink: AppLocalizations.of(context)!.logIn,
-                      onPressed: () => GoRouter.of(context).go('/auth'),
+                      onPressed: () => GoRouter.of(context).go(AppRoutes.auth),
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: AppSizes.s20.h),
                   ],
                 ),
               );

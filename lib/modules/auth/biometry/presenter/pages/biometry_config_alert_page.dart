@@ -1,3 +1,4 @@
+import 'package:app_test/core/constants/app_routes.dart';
 import 'package:app_test/core/theme/app_collors.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +37,7 @@ class BiometryConfigAlertPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BiometryConfigAlertPageState createState() =>
-      _BiometryConfigAlertPageState();
+  _BiometryConfigAlertPageState createState() => _BiometryConfigAlertPageState();
 }
 
 class _BiometryConfigAlertPageState extends State<BiometryConfigAlertPage> {
@@ -82,32 +82,26 @@ class _BiometryConfigAlertPageState extends State<BiometryConfigAlertPage> {
   Future<void> _checkBiometricSetup() async {
     bool canCheck = await widget.biometricRepository.checkBiometrics();
     if (canCheck) {
-      List<BiometricType> availableBiometrics =
-          await widget.biometricRepository.getAvailableBiometrics();
+      List<BiometricType> availableBiometrics = await widget.biometricRepository.getAvailableBiometrics();
       if (availableBiometrics.isNotEmpty) {
         bool authenticated = await widget.biometricRepository.authenticate();
         if (authenticated) {
           String? token = await _secureStorage.read(key: 'token');
           if (token != null) {
-            GoRouter.of(context).go('/home');
+            GoRouter.of(context).go(AppRoutes.home);
           } else {
-            GoRouter.of(context).go('/auth');
+            GoRouter.of(context).go(AppRoutes.auth);
           }
           return;
         } else {
-          _updateAlert(AppLocalizations.of(context)!.biometricsEnabled,
-              AppLocalizations.of(context)!.tapSensorFinish, AlertType.success);
+          _updateAlert(AppLocalizations.of(context)!.biometricsEnabled, AppLocalizations.of(context)!.tapSensorFinish, AlertType.success);
         }
       } else {
         DeviceApps.openApp('com.android.settings');
-        _updateAlert(
-            AppLocalizations.of(context)!.configureBiometrics,
-            AppLocalizations.of(context)!.youNeedConfigureBiometrics,
-            AlertType.warning);
+        _updateAlert(AppLocalizations.of(context)!.configureBiometrics, AppLocalizations.of(context)!.youNeedConfigureBiometrics, AlertType.warning);
       }
     } else {
-      _updateAlert(AppLocalizations.of(context)!.biometricUnavailable,
-          AppLocalizations.of(context)!.biometricNotAvailable, AlertType.error);
+      _updateAlert(AppLocalizations.of(context)!.biometricUnavailable, AppLocalizations.of(context)!.biometricNotAvailable, AlertType.error);
     }
   }
 

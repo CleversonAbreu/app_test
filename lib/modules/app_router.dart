@@ -1,3 +1,4 @@
+import 'package:app_test/core/constants/app_routes.dart';
 import 'package:app_test/modules/user/profile/presenter/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -35,34 +36,38 @@ class AppRouter {
     final token = await _secureStorage.read(key: 'token');
 
     _router = GoRouter(
-      initialLocation: token != null ? (useBiometrics ? '/biometry' : '/home') : '/auth',
+      initialLocation: token != null ? (useBiometrics ? AppRoutes.biometry : AppRoutes.home) : AppRoutes.auth,
       routes: [
         GoRoute(
-          path: '/auth',
+          path: '/',
+          builder: (context, state) => token != null ? (useBiometrics ? BiometryPage() : HomePage()) : AuthPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.auth,
           builder: (context, state) => const AuthPage(),
         ),
         GoRoute(
-          path: '/home',
+          path: AppRoutes.home,
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          path: '/biometry',
+          path: AppRoutes.biometry,
           builder: (context, state) => BiometryPage(),
         ),
         GoRoute(
-          path: '/onboarding',
+          path: AppRoutes.onboarding,
           builder: (context, state) => OnboardingOnePage(),
         ),
         GoRoute(
-          path: '/settings',
+          path: AppRoutes.settings,
           builder: (context, state) => const SettingsPage(),
         ),
         GoRoute(
-          path: '/profile',
+          path: AppRoutes.profile,
           builder: (context, state) => const ProfilePage(),
         ),
         GoRoute(
-          path: '/otpPage',
+          path: AppRoutes.otp,
           builder: (context, state) {
             final params = state.extra as Map<String, dynamic>;
             return OTPPage(
@@ -75,7 +80,7 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: '/biometryConfigAlertPage',
+          path: AppRoutes.biometryConfig,
           builder: (context, state) {
             final params = state.extra as Map<String, dynamic>;
             return BiometryConfigAlertPage(
@@ -87,7 +92,7 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: '/biometricSetupAlertPage',
+          path: AppRoutes.biometricSetup,
           builder: (context, state) {
             final params = state.extra as Map<String, dynamic>;
             return BiometricSetupAlertPage(

@@ -1,3 +1,5 @@
+import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/core/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,6 +11,8 @@ import '../../../../../core/constants/app_constants.dart';
 import '../../../../common/presenter/widgets/header.dart';
 import '../../../../common/presenter/widgets/logo.dart';
 import '../../../../settings/presenter/cubit/theme_cubit.dart';
+
+const int kHeight = 250;
 
 class BiometryPage extends StatefulWidget {
   const BiometryPage({Key? key}) : super(key: key);
@@ -47,7 +51,7 @@ class _BiometryPageState extends State<BiometryPage> {
   }
 
   void _navigateToHomePage() {
-    GoRouter.of(context).go('/home');
+    GoRouter.of(context).go(AppRoutes.home);
   }
 
   @override
@@ -67,27 +71,25 @@ class _BiometryPageState extends State<BiometryPage> {
       child: Scaffold(
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(AppSizes.s16),
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return Column(
                   children: [
-                    SizedBox(
-                      height: 80.h,
-                    ),
+                    SizedBox(height: AppSizes.spacingLarge),
                     BlocBuilder<ThemeCubit, ThemeState>(
                       builder: (context, themeState) {
                         final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                         return Logo(path: logoPath);
                       },
                     ),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: AppSizes.s32.h),
                     Header(
                       title: AppLocalizations.of(context)!.yourSafestApp,
                       subtitle: AppLocalizations.of(context)!.useYourPreferredAuthentication + '\n' + AppLocalizations.of(context)!.toContinueUsingApp,
                     ),
                     SizedBox(
-                      height: 250.h,
+                      height: kHeight.h,
                     ),
                     Center(
                       child: CircularProgressIndicator(),
