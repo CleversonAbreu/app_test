@@ -1,3 +1,4 @@
+import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -24,10 +25,7 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.settingsTitle),
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => GoRouter.of(context).go('/home'))),
+          title: Text(AppLocalizations.of(context)!.settingsTitle), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => GoRouter.of(context).go('/home'))),
       body: Column(
         children: [
           BlocBuilder<ThemeCubit, ThemeState>(
@@ -68,31 +66,23 @@ class SettingsPage extends StatelessWidget {
                   trailing: Switch(
                     value: isEnabled ?? false,
                     onChanged: (value) async {
-                      context
-                          .read<BiometricCubit>()
-                          .toggleBiometricPreference();
+                      context.read<BiometricCubit>().toggleBiometricPreference();
                       final biometricRepository = getIt<BiometricRepository>();
                       final routeParams = {
                         'alertType': AlertType.warning,
-                        'title':
-                            AppLocalizations.of(context)!.configureBiometrics,
-                        'text': AppLocalizations.of(context)!
-                            .youNeedConfigureBiometrics,
+                        'title': AppLocalizations.of(context)!.configureBiometrics,
+                        'text': AppLocalizations.of(context)!.youNeedConfigureBiometrics,
                         'biometricRepository': biometricRepository,
                       };
 
                       if (value) {
                         if (await biometricRepository.checkBiometrics()) {
-                          List<BiometricType> listBiometrics =
-                              await biometricRepository
-                                  .getAvailableBiometrics();
+                          List<BiometricType> listBiometrics = await biometricRepository.getAvailableBiometrics();
                           if (listBiometrics.isEmpty) {
-                            GoRouter.of(context).go('/biometryConfigAlertPage',
-                                extra: routeParams);
+                            GoRouter.of(context).go('/biometryConfigAlertPage', extra: routeParams);
                           }
                         } else {
-                          GoRouter.of(context).go('/biometryConfigAlertPage',
-                              extra: routeParams);
+                          GoRouter.of(context).go('/biometryConfigAlertPage', extra: routeParams);
                         }
                       }
                     },
@@ -111,6 +101,15 @@ class SettingsPage extends StatelessWidget {
                   GoRouter.of(context).go('/auth');
                 },
               );
+            },
+          ),
+          // Novo ListTile para navegar para ProfilePage
+          ListTile(
+            title: const Text('Meu Perfil'),
+            onTap: () async {
+              // Inicia o ProfileCubit para carregar os dados do perfil
+              context.read<ProfileCubit>().loadProfile(); // Carrega os dados ao navegar para o perfil
+              GoRouter.of(context).go('/profile');
             },
           ),
         ],

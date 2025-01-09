@@ -1,4 +1,11 @@
 import 'package:app_test/core/network/dio_client.dart';
+import 'package:app_test/modules/user/profile/data/datasources/profile_remote_datasource.dart';
+import 'package:app_test/modules/user/profile/data/datasources/profile_remote_datasource_impl.dart';
+import 'package:app_test/modules/user/profile/data/repositories/profile_repository_impl.dart';
+import 'package:app_test/modules/user/profile/domain/repositories/profile_repository.dart';
+import 'package:app_test/modules/user/profile/domain/usecases/get_profile_usecase.dart';
+import 'package:app_test/modules/user/profile/domain/usecases/update_profile_usecase.dart';
+import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -115,4 +122,23 @@ Future<void> setupLocator() async {
         sendOTP: getIt<SendOTP>(),
         verifyOTP: getIt<VerifyOTP>(),
       ));
+
+  // Registre o caso de uso do perfil
+  getIt.registerLazySingleton<GetProfileUseCase>(() => GetProfileUseCase(getIt<ProfileRepository>()));
+
+  getIt.registerLazySingleton<UpdateProfileUseCase>(() => UpdateProfileUseCase(getIt<ProfileRepository>()));
+
+// No seu service_locator.dart
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(getIt<ProfileRemoteDataSource>()),
+  );
+
+  getIt.registerFactory<ProfileCubit>(
+    () => ProfileCubit(getProfileUseCase: getIt<GetProfileUseCase>(), updateProfileUseCase: getIt<UpdateProfileUseCase>()),
+  );
+
+  // Registrar ProfileRemoteDataSource
+  getIt.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(getIt<DioClient>()),
+  );
 }

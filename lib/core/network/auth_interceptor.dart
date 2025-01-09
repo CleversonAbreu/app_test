@@ -14,7 +14,7 @@ class AuthInterceptor extends Interceptor {
         options.headers['Authorization'] = 'Bearer $token';
       }
     } catch (e) {
-      print('Erro ao adicionar o token no cabeçalho: $e');
+      print('Error adding token to header: $e');
     }
     return super.onRequest(options, handler);
   }
