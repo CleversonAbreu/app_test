@@ -18,7 +18,7 @@ class AuthDataSourceImpl implements AuthDatasource {
     try {
       final response = await dioClient.dio.post(
         '/login',
-        data: authModel,
+        data: authModel.toJson(),
       );
       if (response.statusCode == 200) {
         return ResultAuthModel.fromMap(response.data);
@@ -36,5 +36,5 @@ class AuthDataSourceImpl implements AuthDatasource {
     } catch (e) {
       throw UnknownException('An unexpected error occurred: $e');
     }
-  }
+  }s
 }

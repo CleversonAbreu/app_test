@@ -18,7 +18,7 @@
     "pleaseInsertYourPassword":"Por favor, insira sua senha",
     "pleaseInsertYourOtp":"Por favor, insira seu OTP",
     "invalidCredentials":"Credenciais inválidas",
-    "authError": "Erro ao tentar fazer auth",
+    "authError": "Erro ao tentar fazer login",
     "errorLoadingToken": "Erro ao carregar token",
     "logout":"Deslogar",
     "enterYourFullName":"Insira seu nome completo",
