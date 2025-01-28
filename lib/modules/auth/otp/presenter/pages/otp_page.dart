@@ -1,4 +1,5 @@
 import 'package:app_test/core/constants/app_sizes.dart';
+import 'package:app_test/modules/auth/otp/errors/otp_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,10 +53,14 @@ class _OTPPageState extends State<OTPPage> {
   void validate(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       if (emailFieldVisible) {
-        email = _emailController.text;
+        try {
+          email;
+        } catch (_) {
+          email = _emailController.text; 
+        }
         otpCubit.sendOTPCode(_emailController.text);
       } else {
-        otpCubit.verifyOTPCode(_otpController.text);
+        otpCubit.verifyOTPCode(email,_otpController.text);
       }
     }
   }
@@ -111,29 +116,51 @@ class _OTPPageState extends State<OTPPage> {
                           create: (context) => otpCubit,
                           child: BlocListener<OTPCubit, OTPState>(
                             listener: (context, state) {
-                              if (state is OTPLoading) {
+                              if (state is OTPLoadingState) {
                                 loading();
-                              } else if (state is OTPError) {
+                              } else if (state is OTPErrorState) {
+                                String errorMessage;
+                                switch (state.errorType) {
+                                  case OTPErrorType.timeoutError:
+                                    errorMessage = AppLocalizations.of(context)!.requestTimedOut;
+                                    break;
+                                  case OTPErrorType.incorrectOtpError:
+                                    errorMessage = AppLocalizations.of(context)!.incorrectOTPCode;
+                                    break;
+                                  case OTPErrorType.emailNotFoundError:
+                                    errorMessage = AppLocalizations.of(context)!.noAccountFoundWithEmail;
+                                    break;
+                                  case OTPErrorType.generateOtpError:
+                                    errorMessage = AppLocalizations.of(context)!.failedToGenerateOtp;
+                                    break;
+                                  case OTPErrorType.failedSendOtpError:
+                                    errorMessage =AppLocalizations.of(context)!.failedToSendOtp;
+                                    break;
+                                  case OTPErrorType.invalidOtpError:
+                                    errorMessage =AppLocalizations.of(context)!.incorrectOTPCode;
+                                    break;  
+                                  default:
+                                    errorMessage = AppLocalizations.of(context)!.unknownErrorOccurred;
+                                    break;
+                                }
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(state.message),
-                                  ),
+                                  SnackBar(content: Text(errorMessage)),
                                 );
                                 loading();
-                              } else if (state is OTPSent) {
+                              } else if (state is OTPSentState) {
                                 loading();
                                 setState(() {
                                   emailFieldVisible = false;
                                   otpFieldVisible = true;
                                 });
-                              } else if (state is OTPVerified) {
+                              } else if (state is OTPVerifiedState) {
                                 loading();
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => widget.data.nextPage(email),
                                   ),
                                 );
-                              } else if (state is OTPCodeError) {
+                              } else if (state is OTPCodeErrorState) {
                                 loading();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

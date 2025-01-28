@@ -10,7 +10,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:email_otp/email_otp.dart';
 
 import 'package:app_test/modules/auth/authentication/data/datasources/auth_datasource.dart';
 import 'package:app_test/modules/auth/authentication/data/datasources/auth_datasource_impl.dart';
@@ -102,11 +101,8 @@ Future<void> setupLocator() async {
   //  BiometricCubit
   getIt.registerFactory<BiometricCubit>(() => BiometricCubit(useCase: getIt<SettingsUseCase>(), biometricRepository: getIt<BiometricRepository>()));
 
-  // Config EmailOTP with preferences
-  final EmailOTP emailOTP = EmailOTP();
-
   //  OTPRemoteDataSourceImpl using EmailOTP
-  getIt.registerSingleton<OTPRemoteDataSource>(OTPRemoteDataSourceImpl(emailOTP));
+  getIt.registerSingleton<OTPRemoteDataSource>(OTPRemoteDataSourceImpl(getIt<DioClient>()));
 
   //  OTPRepositoryImpl using OTPRemoteDataSource
   getIt.registerSingleton<OTPRepository>(OTPRepositoryImpl(getIt<OTPRemoteDataSource>()));

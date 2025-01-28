@@ -3,18 +3,18 @@ part of 'otp_cubit.dart';
 @immutable
 abstract class OTPState {}
 
-class OTPInitial extends OTPState {}
+class OTPInitialState extends OTPState {}
 
-class OTPLoading extends OTPState {}
+class OTPLoadingState extends OTPState {}
 
-class OTPSent extends OTPState {}
+class OTPSentState extends OTPState {}
 
-class OTPVerified extends OTPState {}
+class OTPVerifiedState extends OTPState {}
 
-class OTPCodeError extends OTPState {}
+class OTPCodeErrorState extends OTPState {}
 
-class OTPError extends OTPState {
-  final String message;
+class OTPErrorState extends OTPState {
+  final OTPErrorType? errorType;
 
-  OTPError(this.message);
+  OTPErrorState(this.errorType);
 }
