@@ -12,7 +12,7 @@ class OTPRepositoryImpl implements OTPRepository {
   }
 
   @override
-  Future<bool> verifyOTP(String code) {
-    return remoteDataSource.verifyOTP(code);
+  Future<bool> verifyOTP(String email, String code) {
+    return remoteDataSource.verifyOTP(email, code);
   }
 }

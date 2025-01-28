@@ -1,4 +1,4 @@
-{
+{  
     "language": "Idioma",
     "homeTitle": "Home Screen",
     "welcomeMessage":"Bem Vindo",
@@ -71,7 +71,12 @@
     "pleaseAuthenticateContinue":"Por favor autentique para continuar",
     "yourSafestApp":"Seu app mais seguro",
     "useYourPreferredAuthentication":"Use sua autenticação preferida para",
-    "toContinueUsingApp":"continuar usando o aplicativo"
-
+    "toContinueUsingApp":"continuar usando o aplicativo",
+    "failedToSendOtp": "Falha ao enviar o OTP. Por favor, tente novamente.",
+    "failedToGenerateOtp": "Falha ao gerar o OTP. Por favor, tente novamente.",
+    "noAccountFoundWithEmail": "Nenhuma conta encontrada com este e-mail.",
+    "incorrectOtpEntered": "O OTP inserido está incorreto.",
+    "unknownErrorOccurred": "Ocorreu um erro desconhecido.",
+    "requestTimedOut": "A solicitação expirou. Por favor, tente novamente."
  }
 
