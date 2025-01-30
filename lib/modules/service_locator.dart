@@ -1,4 +1,11 @@
 import 'package:app_test/core/network/dio_client.dart';
+import 'package:app_test/modules/auth/change_password/data/datasource/change_password_remote_datasource.dart';
+import 'package:app_test/modules/auth/change_password/data/datasource/change_password_remote_datasource_impl.dart';
+import 'package:app_test/modules/auth/change_password/data/repositories/change_password_repository_impl.dart';
+import 'package:app_test/modules/auth/change_password/domain/repositories/change_password_repository.dart';
+import 'package:app_test/modules/auth/change_password/domain/usecases/change_password_usecase.dart';
+import 'package:app_test/modules/auth/change_password/presenter/cubit/change_password_cubit.dart';
+
 import 'package:app_test/modules/user/profile/data/datasources/profile_remote_datasource.dart';
 import 'package:app_test/modules/user/profile/data/datasources/profile_remote_datasource_impl.dart';
 import 'package:app_test/modules/user/profile/data/repositories/profile_repository_impl.dart';
@@ -77,6 +84,7 @@ Future<void> setupLocator() async {
   //  AuthCubit
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<ResultAuthUsecase>(), getIt<TokenRepository>()));
 
+
   //  Settings Data Source
   getIt.registerFactory<SettingsLocalDataSource>(() => SettingsLocalDataSourceImpl(getIt<SharedPreferences>()));
 
@@ -139,4 +147,25 @@ Future<void> setupLocator() async {
   getIt.registerLazySingleton<ProfileRemoteDataSource>(
     () => ProfileRemoteDataSourceImpl(getIt<DioClient>()),
   );
+
+
+  // RecoveryPassword DataSource
+  getIt.registerFactory<ChangePasswordRemoteDataSource>(
+    () => ChangePasswordRemoteDataSourceImpl(getIt<DioClient>()),
+  );
+
+  // RecoveryPassword UseCase
+  getIt.registerFactory<ChangePasswordUseCase>(
+    () => ChangePasswordUseCase(getIt<ChangePasswordRepository>()),
+  );
+
+  // RecoveryPasswordCubit
+  getIt.registerFactory<ChangePasswordCubit>(
+    () => ChangePasswordCubit(getIt<ChangePasswordUseCase>()),
+  );
+
+   getIt.registerLazySingleton<ChangePasswordRepository>(
+    () => ChangePasswordRepositoryImpl(getIt<ChangePasswordRemoteDataSource>()),
+  );
+
 }

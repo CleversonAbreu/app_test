@@ -1,7 +1,6 @@
 import 'package:app_test/core/constants/app_routes.dart';
 import 'package:app_test/core/theme/app_collors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:app_test/modules/common/presenter/widgets/buttons/icon_button_loading.dart';
 import 'package:app_test/modules/service_locator.dart';
 import 'package:app_test/modules/user/profile/domain/usecases/get_profile_usecase.dart';

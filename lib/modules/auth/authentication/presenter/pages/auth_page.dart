@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../common/utils/validators/validator.dart';
 import '../../../../../core/constants/app_constants.dart';
-import '../../../recovery_password/presenter/pages/recovery_password_page.dart';
+import '../../../change_password/presenter/pages/change_password_page.dart';
 import '../../../../settings/presenter/cubit/theme_cubit.dart';
 import '../../../signup/presenter/page/signup_page.dart';
 import '../cubit/auth_cubit.dart';
@@ -64,7 +64,7 @@ class _AuthPageState extends State<AuthPage> {
         listener: (context, state) {
           if (state is AuthAuthenticated) {
             GoRouter.of(context).go(AppRoutes.home);
-          } else if (state is AuthError) {
+          } else if (state is AuthErrorState) {
             String message = '';
             if (state.message == 'invalidCredentials') {
               message = AppLocalizations.of(context)!.invalidCredentials;
@@ -141,7 +141,7 @@ class _AuthPageState extends State<AuthPage> {
                             final routeParams = {
                               'title': AppLocalizations.of(context)!.forgotPassword,
                               'subtitle': AppLocalizations.of(context)!.enterYourRegisteredEmailToRecoverYourPassword,
-                              'nextPage': (email) => RecoveryPasswordPage(email: email),
+                              'nextPage': (email) => ChangePasswordPage(email: email),
                             };
                             GoRouter.of(context).go(AppRoutes.otp, extra: routeParams);
                           },

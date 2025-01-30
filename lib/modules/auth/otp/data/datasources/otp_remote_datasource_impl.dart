@@ -58,7 +58,8 @@ class OTPRemoteDataSourceImpl implements OTPRemoteDataSource {
       _handleDioError(dioError);
       return false; 
     } catch (e) {
-      throw UnknownException('An unexpected error occurred: $e');
+      logger.e('An unexpected error occurred: $e');    
+      throw OTPError(OTPErrorType.unknownError);
     }
   }
 

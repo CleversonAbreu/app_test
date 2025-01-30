@@ -18,7 +18,7 @@
     "pleaseInsertYourPassword":"Por favor, insira sua senha",
     "pleaseInsertYourOtp":"Por favor, insira seu OTP",
     "invalidCredentials":"Credenciais inválidas",
-    "authError": "Erro ao tentar fazer auth",
+    "authError": "Erro ao tentar fazer login",
     "errorLoadingToken": "Erro ao carregar token",
     "logout":"Deslogar",
     "enterYourFullName":"Insira seu nome completo",
@@ -76,7 +76,9 @@
     "failedToGenerateOtp": "Falha ao gerar o OTP. Por favor, tente novamente.",
     "noAccountFoundWithEmail": "Nenhuma conta encontrada com este e-mail.",
     "incorrectOtpEntered": "O OTP inserido está incorreto.",
-    "unknownErrorOccurred": "Ocorreu um erro desconhecido.",
-    "requestTimedOut": "A solicitação expirou. Por favor, tente novamente."
+    "unknownErrorOccurred": "Ocorreu um erro desconhecido.Por favor, tente novamente.",
+    "requestTimedOut": "A solicitação expirou. Por favor, tente novamente.",
+    "passwordChangedSuccessfully": "Senha atualizada com sucesso."
+    
  }
 

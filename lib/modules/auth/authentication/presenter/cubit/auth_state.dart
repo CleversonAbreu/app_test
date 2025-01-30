@@ -13,10 +13,10 @@ class AuthLoading extends AuthState {}
 
 class AuthAuthenticated extends AuthState {}
 
-class AuthError extends AuthState {
+class AuthErrorState extends AuthState {
   final String message;
 
-  const AuthError(this.message);
+  const AuthErrorState(this.message);
 
   @override
   List<Object> get props => [message];
