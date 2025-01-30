@@ -47,6 +47,7 @@ void main() {
       when(mockDioClient.dio.post(
         '/otp/generate',
         data: {"phone_or_email": testEmail},
+      // ignore: deprecated_member_use
       )).thenThrow(DioError(
         requestOptions: RequestOptions(path: '/otp/generate'),
         error: 'Network error',
@@ -84,6 +85,7 @@ void main() {
       when(mockDioClient.dio.post(
         '/otp/validate',
         data: {"phone_or_email": testEmail, "otp_code": testCode},
+      // ignore: deprecated_member_use
       )).thenThrow(DioError(
         requestOptions: RequestOptions(path: '/otp/validate'),
         error: 'Network error',
@@ -99,6 +101,7 @@ void main() {
       when(mockDioClient.dio.post(
         '/otp/validate',
         data: {"phone_or_email": testEmail, "otp_code": testCode},
+      // ignore: deprecated_member_use
       )).thenThrow(DioError(
         requestOptions: RequestOptions(path: '/otp/validate'),
         response: Response(

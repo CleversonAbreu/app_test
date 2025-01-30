@@ -25,7 +25,7 @@ class AuthCubit extends Cubit<AuthState> {
           if (kDebugMode) {
             print('AuthUsecase Error : ${failure.message}');
           }
-          emit(const AuthError('authError'));
+          emit(const AuthErrorState('authError'));
         },
         (success) async {
           if (rememberMe) {
@@ -45,12 +45,12 @@ class AuthCubit extends Cubit<AuthState> {
             if (kDebugMode) {
               print('Error saving token: $e');
             }
-            emit(const AuthError('tokenSaveError'));
+            emit(const AuthErrorState('tokenSaveError'));
           }
         },
       );
     } catch (e) {
-      emit(const AuthError('authError'));
+      emit(const AuthErrorState('authError'));
       if (kDebugMode) {
         print(e);
       }
@@ -63,7 +63,7 @@ class AuthCubit extends Cubit<AuthState> {
       await tokenRepository.removeToken();
       emit(AuthInitial());
     } catch (e) {
-      emit(const AuthError('logoutError'));
+      emit(const AuthErrorState('logoutError'));
       if (kDebugMode) {
         print(e);
       }
