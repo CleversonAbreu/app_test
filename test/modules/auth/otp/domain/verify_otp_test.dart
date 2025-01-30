@@ -17,41 +17,39 @@ void main() {
   });
 
   group('VerifyOTP', () {
+    final String testEmail = 'test@example.com';
     final String testCode = '123456';
 
     test('should call verifyOTP on the repository and return true', () async {
       // Arrange
-      when(mockOTPRepository.verifyOTP(testCode)).thenAnswer((_) async => true);
+      when(mockOTPRepository.verifyOTP(testEmail, testCode)).thenAnswer((_) async => true);
 
       // Act
-      final result = await verifyOTP.call(testCode);
+      final result = await verifyOTP.call(testEmail, testCode);
 
       // Assert
       expect(result, true);
-      verify(mockOTPRepository.verifyOTP(testCode)).called(1);
+      verify(mockOTPRepository.verifyOTP(testEmail, testCode)).called(1);
     });
 
     test('should call verifyOTP on the repository and return false', () async {
       // Arrange
-      when(mockOTPRepository.verifyOTP(testCode))
-          .thenAnswer((_) async => false);
+      when(mockOTPRepository.verifyOTP(testEmail, testCode)).thenAnswer((_) async => false);
 
       // Act
-      final result = await verifyOTP.call(testCode);
+      final result = await verifyOTP.call(testEmail, testCode);
 
       // Assert
       expect(result, false);
-      verify(mockOTPRepository.verifyOTP(testCode)).called(1);
+      verify(mockOTPRepository.verifyOTP(testEmail, testCode)).called(1);
     });
 
-    test('should throw an exception if verifyOTP on the repository throws',
-        () async {
+    test('should throw an exception if verifyOTP on the repository throws', () async {
       // Arrange
-      when(mockOTPRepository.verifyOTP(testCode))
-          .thenThrow(Exception('Error verifying OTP'));
+      when(mockOTPRepository.verifyOTP(testEmail, testCode)).thenThrow(Exception('Error verifying OTP'));
 
       // Act & Assert
-      expect(() => verifyOTP.call(testCode), throwsA(isA<Exception>()));
+      expect(() => verifyOTP.call(testEmail, testCode), throwsA(isA<Exception>()));
     });
   });
 }

@@ -1,3 +1,5 @@
+import 'package:app_test/core/constants/app_sizes.dart';
+import 'package:app_test/modules/auth/otp/errors/otp_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,10 +53,14 @@ class _OTPPageState extends State<OTPPage> {
   void validate(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       if (emailFieldVisible) {
-        email = _emailController.text;
+        try {
+          email;
+        } catch (_) {
+          email = _emailController.text; 
+        }
         otpCubit.sendOTPCode(_emailController.text);
       } else {
-        otpCubit.verifyOTPCode(_otpController.text);
+        otpCubit.verifyOTPCode(email,_otpController.text);
       }
     }
   }
@@ -80,7 +86,7 @@ class _OTPPageState extends State<OTPPage> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(AppSizes.s16),
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
@@ -92,60 +98,73 @@ class _OTPPageState extends State<OTPPage> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 80.h,
+                          height: AppSizes.spacingLarge,
                         ),
                         BlocBuilder<ThemeCubit, ThemeState>(
                           builder: (context, themeState) {
-                            final logoPath = themeState == ThemeState.dark
-                                ? AppConstants.logo_white_path
-                                : AppConstants.logo_black_path;
+                            final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                             return Logo(path: logoPath);
                           },
                         ),
-                        SizedBox(height: 30.h),
+                        SizedBox(height: AppSizes.s32.h),
                         Header(
-                          title: emailFieldVisible
-                              ? widget.data.title
-                              : AppLocalizations.of(context)!.enterYourOtp,
-                          subtitle: emailFieldVisible
-                              ? widget.data.subtitle
-                              : AppLocalizations.of(context)!
-                                  .youReceivedOtpCodeEmail,
+                          title: emailFieldVisible ? widget.data.title : AppLocalizations.of(context)!.enterYourOtp,
+                          subtitle: emailFieldVisible ? widget.data.subtitle : AppLocalizations.of(context)!.youReceivedOtpCodeEmail,
                         ),
-                        SizedBox(height: 20.h),
+                        SizedBox(height: AppSizes.s20.h),
                         BlocProvider(
                           create: (context) => otpCubit,
                           child: BlocListener<OTPCubit, OTPState>(
                             listener: (context, state) {
-                              if (state is OTPLoading) {
+                              if (state is OTPLoadingState) {
                                 loading();
-                              } else if (state is OTPError) {
+                              } else if (state is OTPErrorState) {
+                                String errorMessage;
+                                switch (state.errorType) {
+                                  case OTPErrorType.timeoutError:
+                                    errorMessage = AppLocalizations.of(context)!.requestTimedOut;
+                                    break;
+                                  case OTPErrorType.incorrectOtpError:
+                                    errorMessage = AppLocalizations.of(context)!.incorrectOTPCode;
+                                    break;
+                                  case OTPErrorType.emailNotFoundError:
+                                    errorMessage = AppLocalizations.of(context)!.noAccountFoundWithEmail;
+                                    break;
+                                  case OTPErrorType.generateOtpError:
+                                    errorMessage = AppLocalizations.of(context)!.failedToGenerateOtp;
+                                    break;
+                                  case OTPErrorType.failedSendOtpError:
+                                    errorMessage =AppLocalizations.of(context)!.failedToSendOtp;
+                                    break;
+                                  case OTPErrorType.invalidOtpError:
+                                    errorMessage =AppLocalizations.of(context)!.incorrectOTPCode;
+                                    break;  
+                                  default:
+                                    errorMessage = AppLocalizations.of(context)!.unknownErrorOccurred;
+                                    break;
+                                }
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(state.message),
-                                  ),
+                                  SnackBar(content: Text(errorMessage)),
                                 );
                                 loading();
-                              } else if (state is OTPSent) {
+                              } else if (state is OTPSentState) {
                                 loading();
                                 setState(() {
                                   emailFieldVisible = false;
                                   otpFieldVisible = true;
                                 });
-                              } else if (state is OTPVerified) {
+                              } else if (state is OTPVerifiedState) {
                                 loading();
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        widget.data.nextPage(email),
+                                    builder: (context) => widget.data.nextPage(email),
                                   ),
                                 );
-                              } else if (state is OTPCodeError) {
+                              } else if (state is OTPCodeErrorState) {
                                 loading();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text(AppLocalizations.of(context)!
-                                        .incorrectOTPCode),
+                                    content: Text(AppLocalizations.of(context)!.incorrectOTPCode),
                                   ),
                                 );
                               }
@@ -154,14 +173,12 @@ class _OTPPageState extends State<OTPPage> {
                               key: _formKey,
                               child: Column(
                                 children: [
-                                  SizedBox(height: 16.h),
+                                  SizedBox(height: AppSizes.s16.h),
                                   if (emailFieldVisible)
                                     CustomTextField(
                                       controller: _emailController,
-                                      validator: (value) =>
-                                          validateEmail(value, context),
-                                      label: AppLocalizations.of(context)!
-                                          .enterYourEmail,
+                                      validator: (value) => validateEmail(value, context),
+                                      label: AppLocalizations.of(context)!.enterYourEmail,
                                       icon: const Icon(Icons.email),
                                     ),
                                   if (otpFieldVisible)
@@ -171,13 +188,11 @@ class _OTPPageState extends State<OTPPage> {
                                       inputFormatters: <TextInputFormatter>[
                                         FilteringTextInputFormatter.digitsOnly,
                                       ],
-                                      validator: (value) =>
-                                          validateOtp(value, context),
-                                      label: AppLocalizations.of(context)!
-                                          .enterYourOtp,
+                                      validator: (value) => validateOtp(value, context),
+                                      label: AppLocalizations.of(context)!.enterYourOtp,
                                       icon: const Icon(Icons.password),
                                     ),
-                                  SizedBox(height: 16.h),
+                                  SizedBox(height: AppSizes.s16.h),
                                 ],
                               ),
                             ),
@@ -186,8 +201,7 @@ class _OTPPageState extends State<OTPPage> {
                         const Spacer(),
                         IconButtonLoading(
                           title: AppLocalizations.of(context)!.next,
-                          icon: const Icon(Icons.arrow_forward_ios,
-                              color: Colors.white, size: 18),
+                          icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18),
                           onPressed: () => validate(context),
                           isLoading: isLoading,
                         ),

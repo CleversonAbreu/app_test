@@ -5,7 +5,7 @@ class VerifyOTP {
 
   VerifyOTP(this.repository);
 
-  Future<bool> call(String code) {
-    return repository.verifyOTP(code);
+  Future<bool> call(String email, String code) {
+    return repository.verifyOTP(email, code);
   }
 }

@@ -1,3 +1,6 @@
+import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/core/constants/app_sizes.dart';
+import 'package:app_test/core/theme/app_collors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../common/utils/validators/validator.dart';
 import '../../../../../core/constants/app_constants.dart';
-import '../../../recovery_password/presenter/pages/recovery_password_page.dart';
+import '../../../change_password/presenter/pages/change_password_page.dart';
 import '../../../../settings/presenter/cubit/theme_cubit.dart';
 import '../../../signup/presenter/page/signup_page.dart';
 import '../cubit/auth_cubit.dart';
@@ -60,8 +63,8 @@ class _AuthPageState extends State<AuthPage> {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthAuthenticated) {
-            GoRouter.of(context).go('/home');
-          } else if (state is AuthError) {
+            GoRouter.of(context).go(AppRoutes.home);
+          } else if (state is AuthErrorState) {
             String message = '';
             if (state.message == 'invalidCredentials') {
               message = AppLocalizations.of(context)!.invalidCredentials;
@@ -76,7 +79,7 @@ class _AuthPageState extends State<AuthPage> {
         },
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.s20.w),
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 minHeight: height,
@@ -85,22 +88,19 @@ class _AuthPageState extends State<AuthPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 100.h),
+                    SizedBox(height: AppSizes.spacingLarge),
                     BlocBuilder<ThemeCubit, ThemeState>(
                       builder: (context, themeState) {
-                        final logoPath = themeState == ThemeState.dark
-                            ? AppConstants.logo_white_path
-                            : AppConstants.logo_black_path;
+                        final logoPath = themeState == ThemeState.dark ? AppConstants.logo_white_path : AppConstants.logo_black_path;
                         return Logo(path: logoPath);
                       },
                     ),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: AppSizes.s32.h),
                     Header(
                       title: AppLocalizations.of(context)!.welcomeBack,
-                      subtitle: AppLocalizations.of(context)!
-                          .signInToAccessYourAccount,
+                      subtitle: AppLocalizations.of(context)!.signInToAccessYourAccount,
                     ),
-                    SizedBox(height: 40.h),
+                    SizedBox(height: AppSizes.s40.h),
                     Form(
                       key: _formKey,
                       child: Column(
@@ -111,11 +111,10 @@ class _AuthPageState extends State<AuthPage> {
                             label: AppLocalizations.of(context)!.enterYourEmail,
                             icon: const Icon(Icons.email),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: AppSizes.s20.h),
                           CustomTextField(
                             controller: _passwordController,
-                            validator: (value) =>
-                                validatePassword(value, context),
+                            validator: (value) => validatePassword(value, context),
                             label: AppLocalizations.of(context)!.password,
                             obscureText: true,
                             icon: const Icon(Icons.lock),
@@ -123,7 +122,7 @@ class _AuthPageState extends State<AuthPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: AppSizes.s12.h),
                     Row(
                       children: [
                         CustomCheck(
@@ -140,54 +139,53 @@ class _AuthPageState extends State<AuthPage> {
                           title: AppLocalizations.of(context)!.forgotPassword,
                           onPressed: () {
                             final routeParams = {
-                              'title':
-                                  AppLocalizations.of(context)!.forgotPassword,
-                              'subtitle': AppLocalizations.of(context)!
-                                  .enterYourRegisteredEmailToRecoverYourPassword,
-                              'nextPage': (email) =>
-                                  RecoveryPasswordPage(email: email),
+                              'title': AppLocalizations.of(context)!.forgotPassword,
+                              'subtitle': AppLocalizations.of(context)!.enterYourRegisteredEmailToRecoverYourPassword,
+                              'nextPage': (email) => ChangePasswordPage(email: email),
                             };
-                            GoRouter.of(context)
-                                .go('/otpPage', extra: routeParams);
+                            GoRouter.of(context).go(AppRoutes.otp, extra: routeParams);
                           },
                         ),
                       ],
                     ),
-                    Expanded(child: Container()), // Spacer
+                    Expanded(child: Container()),
                     SizedBox(
                       height: 56.h,
                       child: BlocBuilder<AuthCubit, AuthState>(
                         builder: (context, state) {
                           return IconButtonLoading(
                             title: AppLocalizations.of(context)!.next,
-                            icon: const Icon(Icons.arrow_forward_ios,
-                                color: Colors.white, size: 18),
+                            icon: Icon(
+                              Icons.arrow_forward_ios,
+                              color: AppColors.lightBackground,
+                              size: AppSizes.s8.h,
+                            ),
                             onPressed: () => context.read<AuthCubit>().validate(
-                                context,
-                                _formKey,
-                                _emailController,
-                                _passwordController,
-                                _rememberMe),
+                                  context,
+                                  _formKey,
+                                  _emailController,
+                                  _passwordController,
+                                  _rememberMe,
+                                ),
                             isLoading: state is AuthLoading,
                           );
                         },
                       ),
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: AppSizes.s2.h),
                     Bottom(
                       title: AppLocalizations.of(context)!.newMember,
                       textLink: AppLocalizations.of(context)!.registerNow,
                       onPressed: () {
                         final routeParams = {
                           'title': AppLocalizations.of(context)!.createAccount,
-                          'subtitle': AppLocalizations.of(context)!
-                              .enterYourEmailToCreateAccount,
+                          'subtitle': AppLocalizations.of(context)!.enterYourEmailToCreateAccount,
                           'nextPage': (email) => SignUpPage(email: email),
                         };
-                        GoRouter.of(context).go('/otpPage', extra: routeParams);
+                        GoRouter.of(context).go(AppRoutes.otp, extra: routeParams);
                       },
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: AppSizes.s12.h),
                   ],
                 ),
               ),

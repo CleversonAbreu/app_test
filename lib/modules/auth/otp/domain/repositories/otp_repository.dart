@@ -1,4 +1,4 @@
 abstract class OTPRepository {
   Future<void> sendOTP(String email);
-  Future<bool> verifyOTP(String code);
+  Future<bool> verifyOTP(String email,String code);
 }

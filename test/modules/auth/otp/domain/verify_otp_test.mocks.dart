@@ -41,10 +41,17 @@ class MockOTPRepository extends _i1.Mock implements _i2.OTPRepository {
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<bool> verifyOTP(String? code) => (super.noSuchMethod(
+  _i3.Future<bool> verifyOTP(
+    String? email,
+    String? code,
+  ) =>
+      (super.noSuchMethod(
         Invocation.method(
           #verifyOTP,
-          [code],
+          [
+            email,
+            code,
+          ],
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);

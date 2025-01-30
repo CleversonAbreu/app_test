@@ -32,17 +32,39 @@ void main() {
       verify(mockRemoteDataSource.sendOTP(testEmail)).called(1);
     });
 
-    test('should call verifyOTP on the remote data source', () async {
+    test('should call verifyOTP on the remote data source and return true', () async {
       // Arrange
-      when(mockRemoteDataSource.verifyOTP(testCode))
-          .thenAnswer((_) async => Future.value(true));
+      when(mockRemoteDataSource.verifyOTP(testEmail, testCode))
+          .thenAnswer((_) async => true);
 
       // Act
-      final result = await repository.verifyOTP(testCode);
+      final result = await repository.verifyOTP(testEmail, testCode);
 
       // Assert
       expect(result, true);
-      verify(mockRemoteDataSource.verifyOTP(testCode)).called(1);
+      verify(mockRemoteDataSource.verifyOTP(testEmail, testCode)).called(1);
+    });
+
+    test('should call verifyOTP on the remote data source and return false', () async {
+      // Arrange
+      when(mockRemoteDataSource.verifyOTP(testEmail, testCode))
+          .thenAnswer((_) async => false);
+
+      // Act
+      final result = await repository.verifyOTP(testEmail, testCode);
+
+      // Assert
+      expect(result, false);
+      verify(mockRemoteDataSource.verifyOTP(testEmail, testCode)).called(1);
+    });
+
+    test('should throw an exception if verifyOTP on the remote data source throws', () async {
+      // Arrange
+      when(mockRemoteDataSource.verifyOTP(testEmail, testCode))
+          .thenThrow(Exception('Error verifying OTP'));
+
+      // Act & Assert
+      expect(() => repository.verifyOTP(testEmail, testCode), throwsA(isA<Exception>()));
     });
   });
 }

@@ -42,10 +42,17 @@ class MockOTPRemoteDataSource extends _i1.Mock
       ) as _i3.Future<void>);
 
   @override
-  _i3.Future<bool> verifyOTP(String? code) => (super.noSuchMethod(
+  _i3.Future<bool> verifyOTP(
+    String? eamil,
+    String? code,
+  ) =>
+      (super.noSuchMethod(
         Invocation.method(
           #verifyOTP,
-          [code],
+          [
+            eamil,
+            code,
+          ],
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);

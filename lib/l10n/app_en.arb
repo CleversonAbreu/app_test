@@ -71,6 +71,12 @@
   "pleaseAuthenticateContinue":"Please authenticate to continue",
   "yourSafestApp":"Your safest app",
   "useYourPreferredAuthentication":"Use your preferred authentication",
-  "toContinueUsingApp":"to continue using the app"
-
+  "toContinueUsingApp":"to continue using the app",
+  "failedToSendOtp": "Failed to send OTP. Please try again.",
+  "failedToGenerateOtp": "Failed to generate OTP. Please try again.",
+  "noAccountFoundWithEmail": "No account found with this email.",
+  "incorrectOtpEntered": "The OTP entered is incorrect.",
+  "unknownErrorOccurred": "An unknown error occurred. Please try again.",
+  "requestTimedOut": "The request timed out. Please try again.",
+  "passwordChangedSuccessfully": "Password changed successfully."
 }

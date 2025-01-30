@@ -1,9 +1,22 @@
+import 'package:app_test/core/network/dio_client.dart';
+import 'package:app_test/modules/auth/change_password/data/datasource/change_password_remote_datasource.dart';
+import 'package:app_test/modules/auth/change_password/data/datasource/change_password_remote_datasource_impl.dart';
+import 'package:app_test/modules/auth/change_password/data/repositories/change_password_repository_impl.dart';
+import 'package:app_test/modules/auth/change_password/domain/repositories/change_password_repository.dart';
+import 'package:app_test/modules/auth/change_password/domain/usecases/change_password_usecase.dart';
+import 'package:app_test/modules/auth/change_password/presenter/cubit/change_password_cubit.dart';
+
+import 'package:app_test/modules/user/profile/data/datasources/profile_remote_datasource.dart';
+import 'package:app_test/modules/user/profile/data/datasources/profile_remote_datasource_impl.dart';
+import 'package:app_test/modules/user/profile/data/repositories/profile_repository_impl.dart';
+import 'package:app_test/modules/user/profile/domain/repositories/profile_repository.dart';
+import 'package:app_test/modules/user/profile/domain/usecases/get_profile_usecase.dart';
+import 'package:app_test/modules/user/profile/domain/usecases/update_profile_usecase.dart';
+import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:email_otp/email_otp.dart';
 
 import 'package:app_test/modules/auth/authentication/data/datasources/auth_datasource.dart';
 import 'package:app_test/modules/auth/authentication/data/datasources/auth_datasource_impl.dart';
@@ -41,92 +54,118 @@ final GetIt getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
   final sharedPreferences = await SharedPreferences.getInstance();
-  final dio = Dio();
   final flutterSecureStorage = FlutterSecureStorage();
   final localAuthentication = LocalAuthentication();
 
-  // Registrar SharedPreferences
+  //   SharedPreferences
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);
 
-  // Registrar Dio
-  getIt.registerSingleton<Dio>(dio);
-
-  // Registrar FlutterSecureStorage
+  //  FlutterSecureStorage
   getIt.registerSingleton<FlutterSecureStorage>(flutterSecureStorage);
 
-  // Registrar LocalAuthentication
+  //  LocalAuthentication
   getIt.registerSingleton<LocalAuthentication>(localAuthentication);
 
-  // Registrar Auth Datasource
-  getIt.registerFactory<AuthDatasource>(() => AuthDataSourceImpl(getIt<Dio>()));
+  //  DioClient
+  getIt.registerLazySingleton<DioClient>(() => DioClient(getIt<FlutterSecureStorage>()));
 
-  // Registrar Auth Repository
-  getIt.registerFactory<AuthRepository>(
-      () => AuthRepositoryImpl(getIt<AuthDatasource>()));
+  //  Auth DataSource
+  getIt.registerFactory<AuthDatasource>(() => AuthDataSourceImpl(getIt<DioClient>()));
 
-  // Registrar Token Repository
+  //  Auth Repository
+  getIt.registerFactory<AuthRepository>(() => AuthRepositoryImpl(getIt<AuthDatasource>()));
+
+  //  Token Repository
   getIt.registerFactory<TokenRepository>(() => TokenRepositoryImpl());
 
   // Registrar ResultAuthUsecase
-  getIt.registerFactory<ResultAuthUsecase>(
-      () => ResultAuthUsecaseImpl(repository: getIt<AuthRepository>()));
+  getIt.registerFactory<ResultAuthUsecase>(() => ResultAuthUsecaseImpl(repository: getIt<AuthRepository>()));
 
-  // Registrar AuthCubit
-  getIt.registerFactory<AuthCubit>(
-      () => AuthCubit(getIt<ResultAuthUsecase>(), getIt<TokenRepository>()));
+  //  AuthCubit
+  getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<ResultAuthUsecase>(), getIt<TokenRepository>()));
 
-  // Registrar Settings Data Source
-  getIt.registerFactory<SettingsLocalDataSource>(
-      () => SettingsLocalDataSourceImpl(getIt<SharedPreferences>()));
 
-  // Registrar Settings Repository
-  getIt.registerFactory<SettingsRepository>(
-      () => SettingsRepositoryImpl(getIt<SettingsLocalDataSource>()));
+  //  Settings Data Source
+  getIt.registerFactory<SettingsLocalDataSource>(() => SettingsLocalDataSourceImpl(getIt<SharedPreferences>()));
 
-  // Registrar Settings UseCase
-  getIt.registerFactory<SettingsUseCase>(() =>
-      SettingsUseCaseImpl(settingsRepository: getIt<SettingsRepository>()));
+  //  Settings Repository
+  getIt.registerFactory<SettingsRepository>(() => SettingsRepositoryImpl(getIt<SettingsLocalDataSource>()));
 
-  // Registrar ThemeCubit
+  //  Settings UseCase
+  getIt.registerFactory<SettingsUseCase>(() => SettingsUseCaseImpl(settingsRepository: getIt<SettingsRepository>()));
+
+  //  ThemeCubit
   getIt.registerFactory<ThemeCubit>(() => ThemeCubit(getIt<SettingsUseCase>()));
 
-  // Registrar LanguageCubit
-  getIt.registerFactory<LanguageCubit>(
-      () => LanguageCubit(getIt<SettingsUseCase>()));
+  //  LanguageCubit
+  getIt.registerFactory<LanguageCubit>(() => LanguageCubit(getIt<SettingsUseCase>()));
 
-  // Registrar BiometricUseCase
-  getIt.registerFactory<BiometricUseCase>(
-      () => BiometricUseCase(getIt<LocalAuthentication>()));
+  //  BiometricUseCase
+  getIt.registerFactory<BiometricUseCase>(() => BiometricUseCase(getIt<LocalAuthentication>()));
 
-  // Registrar BiometricRepository
-  getIt.registerFactory<BiometricRepository>(
-      () => BiometricRepository(getIt<BiometricUseCase>()));
+  //  BiometricRepository
+  getIt.registerFactory<BiometricRepository>(() => BiometricRepository(getIt<BiometricUseCase>()));
 
-  // Registrar BiometricCubit
-  getIt.registerFactory<BiometricCubit>(() => BiometricCubit(
-      useCase: getIt<SettingsUseCase>(),
-      biometricRepository: getIt<BiometricRepository>()));
+  //  BiometricCubit
+  getIt.registerFactory<BiometricCubit>(() => BiometricCubit(useCase: getIt<SettingsUseCase>(), biometricRepository: getIt<BiometricRepository>()));
 
-  // Configurar EmailOTP com suas preferências
-  final EmailOTP emailOTP = EmailOTP();
+  //  OTPRemoteDataSourceImpl using EmailOTP
+  getIt.registerSingleton<OTPRemoteDataSource>(OTPRemoteDataSourceImpl(getIt<DioClient>()));
 
-  // Registrar OTPRemoteDataSourceImpl usando a instância configurada de EmailOTP
-  getIt.registerSingleton<OTPRemoteDataSource>(
-      OTPRemoteDataSourceImpl(emailOTP));
+  //  OTPRepositoryImpl using OTPRemoteDataSource
+  getIt.registerSingleton<OTPRepository>(OTPRepositoryImpl(getIt<OTPRemoteDataSource>()));
 
-  // Registrar OTPRepositoryImpl usando a instância de OTPRemoteDataSource
-  getIt.registerSingleton<OTPRepository>(
-      OTPRepositoryImpl(getIt<OTPRemoteDataSource>()));
-
-  // Registrar SendOTP usando a instância de OTPRepository
+  //  SendOTP using OTPRepository
   getIt.registerFactory<SendOTP>(() => SendOTP(getIt<OTPRepository>()));
 
-  // Registrar VerifyOTP usando a instância de OTPRepository
+  //  VerifyOTP using OTPRepository
   getIt.registerFactory<VerifyOTP>(() => VerifyOTP(getIt<OTPRepository>()));
 
-  // Registrar OTPCubit
+  //  OTPCubit
   getIt.registerFactory<OTPCubit>(() => OTPCubit(
         sendOTP: getIt<SendOTP>(),
         verifyOTP: getIt<VerifyOTP>(),
       ));
+
+  // ProfileRepository
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(getIt<ProfileRemoteDataSource>()),
+  );
+
+  // GetProfileUseCase
+  getIt.registerLazySingleton<GetProfileUseCase>(() => GetProfileUseCase(getIt<ProfileRepository>()));
+
+  // UpdateProfileUseCase
+  getIt.registerLazySingleton<UpdateProfileUseCase>(() => UpdateProfileUseCase(getIt<ProfileRepository>()));
+
+  // ProfileCubit
+  getIt.registerFactory<ProfileCubit>(
+    () => ProfileCubit(getProfileUseCase: getIt<GetProfileUseCase>(), updateProfileUseCase: getIt<UpdateProfileUseCase>()),
+  );
+
+  //  ProfileRemoteDataSource
+  getIt.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(getIt<DioClient>()),
+  );
+
+
+  // RecoveryPassword DataSource
+  getIt.registerFactory<ChangePasswordRemoteDataSource>(
+    () => ChangePasswordRemoteDataSourceImpl(getIt<DioClient>()),
+  );
+
+  // RecoveryPassword UseCase
+  getIt.registerFactory<ChangePasswordUseCase>(
+    () => ChangePasswordUseCase(getIt<ChangePasswordRepository>()),
+  );
+
+  // RecoveryPasswordCubit
+  getIt.registerFactory<ChangePasswordCubit>(
+    () => ChangePasswordCubit(getIt<ChangePasswordUseCase>()),
+  );
+
+   getIt.registerLazySingleton<ChangePasswordRepository>(
+    () => ChangePasswordRepositoryImpl(getIt<ChangePasswordRemoteDataSource>()),
+  );
+
 }
