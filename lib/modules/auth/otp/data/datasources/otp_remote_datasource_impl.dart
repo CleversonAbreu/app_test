@@ -14,19 +14,19 @@ class OTPRemoteDataSourceImpl implements OTPRemoteDataSource {
 
   var logger = Logger(
     printer: PrettyPrinter(
-      methodCount: 2, 
+      methodCount: 2,
       errorMethodCount: 3,
-      lineLength: 80, 
-      colors: true, 
+      lineLength: 80,
+      colors: true,
     ),
   );
 
   @override
-  Future<void> sendOTP(String email) async {
+  Future<void> sendOTP(String email, String typeGenerate) async {
     logger.i('Info Log: email: ${email}');
     try {
-      await _sendOtpRequest(email);
-    // ignore: deprecated_member_use
+      await _sendOtpRequest(email, typeGenerate);
+      // ignore: deprecated_member_use
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -34,16 +34,19 @@ class OTPRemoteDataSourceImpl implements OTPRemoteDataSource {
     }
   }
 
-  Future<Response> _sendOtpRequest(String email) async {
+  Future<Response> _sendOtpRequest(String email, String typeGenerate) async {
     logger.i('Info Log: email: ${email}');
     try {
       final response = await dioClient.dio.post(
         '/otp/generate',
-        data: {"phone_or_email": email},
+        data: {
+          "phone_or_email": email,
+          "type_generate": typeGenerate,
+        },
       );
       return response;
     } catch (e) {
-      rethrow; 
+      rethrow;
     }
   }
 
@@ -52,13 +55,13 @@ class OTPRemoteDataSourceImpl implements OTPRemoteDataSource {
     logger.i('Info Log: email: ${email} | code: ${code}');
     try {
       await _verifyOtpRequest(email, code);
-      return true;  
-    // ignore: deprecated_member_use
+      return true;
+      // ignore: deprecated_member_use
     } on DioError catch (dioError) {
       _handleDioError(dioError);
-      return false; 
+      return false;
     } catch (e) {
-      logger.e('An unexpected error occurred: $e');    
+      logger.e('An unexpected error occurred: $e');
       throw OTPError(OTPErrorType.unknownError);
     }
   }
@@ -101,13 +104,19 @@ class OTPRemoteDataSourceImpl implements OTPRemoteDataSource {
     if (statusCode != null) {
       if (statusCode == 404 && errorData['error_type'] == 'EMAIL_NOT_FOUND') {
         throw OTPError(OTPErrorType.emailNotFoundError);
-      } else if (statusCode == 500 && errorData['error_type'] == 'FAILED_TO_GENERATE_OTP') {
+      } else if (statusCode == 500 &&
+          errorData['error_type'] == 'FAILED_TO_GENERATE_OTP') {
         throw OTPError(OTPErrorType.generateOtpError);
-      } else if (statusCode == 503 && errorData['error_type'] == 'FAILED_TO_SEND_OTP') {
+      } else if (statusCode == 503 &&
+          errorData['error_type'] == 'FAILED_TO_SEND_OTP') {
         throw OTPError(OTPErrorType.failedSendOtpError);
-      } else if (statusCode == 400 && errorData['error_type'] == 'INVALID_OTP') {
+      } else if (statusCode == 400 &&
+          errorData['error_type'] == 'INVALID_OTP') {
         throw OTPError(OTPErrorType.invalidOtpError);
-      }else{
+      } else if (statusCode == 409 &&
+          errorData['error_type'] == 'EMAIL_ALREADY_EXISTS') {
+        throw OTPError(OTPErrorType.emailAlreadyExists);
+      } else {
         throw OTPError(OTPErrorType.unknownError);
       }
     } else {

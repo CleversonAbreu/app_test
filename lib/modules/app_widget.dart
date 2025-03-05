@@ -1,4 +1,5 @@
 import 'package:app_test/modules/auth/change_password/presenter/cubit/change_password_cubit.dart';
+import 'package:app_test/modules/auth/signup/presenter/cubit/signup_cubit.dart';
 import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,6 +65,9 @@ class _AppWidgetState extends State<AppWidget> {
         ),
         BlocProvider(
           create: (_) => GetIt.instance<ChangePasswordCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => GetIt.instance<SignUpCubit>(),
         ),
       ],
       child: BlocBuilder<LanguageCubit, Locale>(

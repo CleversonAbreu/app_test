@@ -47,6 +47,7 @@
   "createAccount":"Create your account",
   "insertYourdataToCreateAccount":"Enter your details to create an account",
   "enterYourEmailToCreateAccount":"Enter your email to create an account",
+  "createAccountSuccess": "Account created successfully",
   "welcomeTo": "Welcome to",
   "my":"My ",
   "opportunity":"Opportunity",
@@ -78,5 +79,7 @@
   "incorrectOtpEntered": "The OTP entered is incorrect.",
   "unknownErrorOccurred": "An unknown error occurred. Please try again.",
   "requestTimedOut": "The request timed out. Please try again.",
-  "passwordChangedSuccessfully": "Password changed successfully."
+  "passwordChangedSuccessfully": "Password changed successfully.",
+  "emailAlreadyExists": "An account with this email already exists."
+  
 }

@@ -25,7 +25,7 @@ void main() {
       // Arrange
       when(mockDioClient.dio.post(
         '/otp/generate',
-        data: {"phone_or_email": testEmail},
+        data: {"phone_or_email": testEmail, "type_generate": "email"},
       )).thenAnswer((_) async => Response(
             statusCode: 200,
             data: {"message": "OTP sent successfully"},
@@ -33,12 +33,12 @@ void main() {
           ));
 
       // Act
-      await datasource.sendOTP(testEmail);
+      await datasource.sendOTP(testEmail, "email");
 
       // Assert
       verify(mockDioClient.dio.post(
         '/otp/generate',
-        data: {"phone_or_email": testEmail},
+        data: {"phone_or_email": testEmail, "type_generate": "email"},
       )).called(1);
     });
 
@@ -46,7 +46,7 @@ void main() {
       // Arrange
       when(mockDioClient.dio.post(
         '/otp/generate',
-        data: {"phone_or_email": testEmail},
+        data: {"phone_or_email": testEmail, "type_generate": "email"},
       // ignore: deprecated_member_use
       )).thenThrow(DioError(
         requestOptions: RequestOptions(path: '/otp/generate'),
@@ -55,7 +55,7 @@ void main() {
       ));
 
       // Act & Assert
-      expect(() => datasource.sendOTP(testEmail), throwsA(isA<OTPError>()));
+      expect(() => datasource.sendOTP(testEmail, "email"), throwsA(isA<OTPError>()));
     });
 
     test('should verify OTP successfully', () async {

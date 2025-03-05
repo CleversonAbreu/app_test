@@ -30,10 +30,10 @@ class OTPCubit extends Cubit<OTPState> {
     }
   }
 
-  Future<void> sendOTPCode(String email) async {
+  Future<void> sendOTPCode(String email, String typeGenerate) async {
       _guardedEmit(OTPLoadingState());
     try {
-      await sendOTP(email);
+      await sendOTP(email,typeGenerate);
       _guardedEmit(OTPSentState());
     } on OTPError catch (error) {
       _guardedEmit(OTPErrorState(error.type));
@@ -58,10 +58,10 @@ class OTPCubit extends Cubit<OTPState> {
     }
   }
 
-  Future<void> resendOTPCode(String email) async {
+  Future<void> resendOTPCode(String email, String typeGenerate) async {
     _guardedEmit(OTPLoadingState());
     try {
-      await sendOTP(email);
+      await sendOTP(email,typeGenerate);
       _guardedEmit(OTPSentState());
     } on OTPError catch (error) {
       _guardedEmit(OTPErrorState(error.errorType));

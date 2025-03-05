@@ -5,7 +5,7 @@ class SendOTP {
 
   SendOTP(this.repository);
 
-  Future<void> call(String email) {
-    return repository.sendOTP(email);
+  Future<void> call(String email, String typeGenerate) {
+    return repository.sendOTP(email, typeGenerate);
   }
 }

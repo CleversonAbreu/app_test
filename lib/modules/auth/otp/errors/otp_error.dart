@@ -1,5 +1,5 @@
 enum OTPErrorType { timeoutError, networkError, incorrectOtpError, emailNotFoundError, generateOtpError,
-                    failedSendOtpError, invalidOtpError, unknownError 
+                    failedSendOtpError, invalidOtpError, unknownError, emailAlreadyExists 
                   }
 
 class OTPError implements Exception {

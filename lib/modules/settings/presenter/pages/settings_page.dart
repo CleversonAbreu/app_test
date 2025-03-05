@@ -1,4 +1,5 @@
 import 'package:app_test/core/constants/app_routes.dart';
+import 'package:app_test/core/dependencies/biometric_dependencies.dart';
 import 'package:app_test/modules/user/profile/presenter/cubit/profile_cubit.dart';
 import 'package:app_test/modules/user/profile/presenter/cubit/profile_state.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../auth/authentication/presenter/cubit/auth_cubit.dart';
 import '../../../auth/authentication/presenter/cubit/auth_state.dart';
-import '../../../service_locator.dart';
 import '../../domain/usecases/settings_usecase.dart';
 import '../cubit/language_cubit.dart';
 import '../cubit/theme_cubit.dart';

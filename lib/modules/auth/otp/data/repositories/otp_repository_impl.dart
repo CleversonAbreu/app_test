@@ -7,8 +7,8 @@ class OTPRepositoryImpl implements OTPRepository {
   OTPRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<void> sendOTP(String email) {
-    return remoteDataSource.sendOTP(email);
+  Future<void> sendOTP(String email, String typeGenerate) {
+    return remoteDataSource.sendOTP(email, typeGenerate);
   }
 
   @override

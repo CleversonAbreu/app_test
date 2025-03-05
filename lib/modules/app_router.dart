@@ -74,6 +74,7 @@ class AppRouter {
               data: OTPPageData(
                 title: params['title'] as String,
                 subtitle: params['subtitle'] as String,
+                typeGenerate: params['typeGenerate'] as String,
                 nextPage: (email) => params['nextPage'](email) as Widget,
               ),
             );

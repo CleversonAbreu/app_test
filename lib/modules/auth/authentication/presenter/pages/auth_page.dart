@@ -141,6 +141,7 @@ class _AuthPageState extends State<AuthPage> {
                             final routeParams = {
                               'title': AppLocalizations.of(context)!.forgotPassword,
                               'subtitle': AppLocalizations.of(context)!.enterYourRegisteredEmailToRecoverYourPassword,
+                              'typeGenerate': AppConstants.otp_type_change_password,
                               'nextPage': (email) => ChangePasswordPage(email: email),
                             };
                             GoRouter.of(context).go(AppRoutes.otp, extra: routeParams);
@@ -180,6 +181,7 @@ class _AuthPageState extends State<AuthPage> {
                         final routeParams = {
                           'title': AppLocalizations.of(context)!.createAccount,
                           'subtitle': AppLocalizations.of(context)!.enterYourEmailToCreateAccount,
+                          'typeGenerate': AppConstants.otp_type_signup,
                           'nextPage': (email) => SignUpPage(email: email),
                         };
                         GoRouter.of(context).go(AppRoutes.otp, extra: routeParams);
