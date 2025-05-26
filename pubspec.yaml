@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -32,23 +32,23 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter  
-  url_launcher: ^6.0.13  
+  url_launcher: ^6.3.1  
   shared_preferences: ^2.2.3
-  flutter_bloc: ^8.0.1
-  intl: ^0.18.1
+  flutter_bloc: ^9.1.1
+  intl: ^0.20.2
   flutter_svg: ^2.0.10+1
   dartz: ^0.10.1
   dio: ^5.4.3+1
   equatable: ^2.0.3
   validators: ^3.0.0
-  flutter_secure_storage: ^7.0.0 
+  flutter_secure_storage: ^9.2.4 
   mask_text_input_formatter: ^2.0.0
-  email_otp: ^2.1.2
+  email_otp: ^3.0.2
   local_auth: ^2.1.3
-  device_apps: ^2.2.0
+  app_settings: ^5.0.2
   page_transition: ^2.0.9
-  get_it: ^7.2.0
-  go_router: ^6.0.0
+  get_it: ^8.0.3
+  go_router: ^15.1.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,11 +59,11 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.1.7
   flutter_screenutil: ^5.9.3
-  intl_translation: ^0.18.2
+  intl_translation: ^0.20.1
   logger: ^2.2.1
   mockito: ^5.0.0
   flutter_native_splash: ^2.3.1
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.3
   
 
   
@@ -106,28 +106,22 @@ flutter:
     - assets/images/splash.png
   #   - images/a_dot_ham.jpeg
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # Localization configuration should be at the root level
+flutter_gen:
+  output: lib/l10n/
+  line_length: 80
+  
+  integrations:
+    flutter_svg: true
+    
+  colors:
+    inputs:
+      - assets/colors/*.xml
+    
+  localizations:
+    inputs:
+      - l10n/*.arb
+    
+    outputs:
+      template: localization.dart
+      locales: supported_locales.dart

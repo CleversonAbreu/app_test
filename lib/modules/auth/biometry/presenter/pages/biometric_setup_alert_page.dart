@@ -10,7 +10,7 @@ import '../../../../../core/theme/app_collors.dart';
 import '../../../../common/presenter/pages/custom_alert_page.dart';
 import '../../../../settings/presenter/cubit/biometric_cubit.dart';
 import '../../data/biometric_repository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:app_test/l10n/localization.dart';
 
 class BiometricSetupAlertPage extends StatelessWidget {
   final BiometricRepository biometricRepository;

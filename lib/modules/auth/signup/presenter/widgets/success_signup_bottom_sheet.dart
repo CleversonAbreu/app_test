@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../common/presenter/widgets/custom_bottom_sheet.dart';
 import '../../../biometry/data/biometric_repository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:app_test/l10n/localization.dart';
 
 void showSuccessSignUpBottomSheet(BuildContext context, BiometricRepository biometricRepository) {
   showModalBottomSheet(

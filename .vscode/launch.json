@@ -1,7 +1,24 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
-}
+    "configurations": [
+      {
+        "name": "Flutter iPhone 16 Plus",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "F3B1CDF0-B46A-4D73-B4A7-8BD215550536"
+      },
+      {
+        "name": "Flutter Moto G31",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "ZF523VQHCD"
+      },
+      {
+        "name": "Android 15 (API 35) (emulator)",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "emulator-5554"
+      }
+    ]
+  }
+  

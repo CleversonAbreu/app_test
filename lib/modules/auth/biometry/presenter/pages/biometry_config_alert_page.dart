@@ -1,6 +1,6 @@
 import 'package:app_test/core/constants/app_routes.dart';
 import 'package:app_test/core/theme/app_collors.dart';
-import 'package:device_apps/device_apps.dart';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +10,7 @@ import 'dart:async';
 import '../../../../../core/constants/app_constants.dart';
 
 import '../../data/biometric_repository.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:app_test/l10n/localization.dart';
 
 import '../../../../common/presenter/pages/custom_alert_page.dart';
 
@@ -97,7 +97,7 @@ class _BiometryConfigAlertPageState extends State<BiometryConfigAlertPage> {
           _updateAlert(AppLocalizations.of(context)!.biometricsEnabled, AppLocalizations.of(context)!.tapSensorFinish, AlertType.success);
         }
       } else {
-        DeviceApps.openApp('com.android.settings');
+        AppSettings.openAppSettings();
         _updateAlert(AppLocalizations.of(context)!.configureBiometrics, AppLocalizations.of(context)!.youNeedConfigureBiometrics, AlertType.warning);
       }
     } else {
