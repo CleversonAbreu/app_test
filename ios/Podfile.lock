@@ -1,4 +1,6 @@
 PODS:
+  - app_settings (5.1.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_native_splash (2.4.3):
     - Flutter
@@ -17,6 +19,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
@@ -26,6 +29,8 @@ DEPENDENCIES:
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 EXTERNAL SOURCES:
+  app_settings:
+    :path: ".symlinks/plugins/app_settings/ios"
   Flutter:
     :path: Flutter
   flutter_native_splash:
@@ -42,6 +47,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  app_settings: 5127ae0678de1dcc19f2293271c51d37c89428b2
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
