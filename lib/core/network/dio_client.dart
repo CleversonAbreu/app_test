@@ -6,7 +6,7 @@ class DioClient {
   final Dio dio;
 
   DioClient(FlutterSecureStorage secureStorage) : dio = Dio() {
-    dio.options.baseUrl = 'http://192.168.1.5:8080/api/v1/';
+    dio.options.baseUrl = 'http://192.168.1.105:8080/api/';
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 10);
 

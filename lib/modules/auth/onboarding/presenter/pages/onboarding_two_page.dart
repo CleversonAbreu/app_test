@@ -1,6 +1,6 @@
 import 'package:app_test/modules/auth/onboarding/presenter/pages/onboarding_standart_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:app_test/l10n/localization.dart';
 
 import '../../../authentication/presenter/pages/auth_page.dart';
 
